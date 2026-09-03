@@ -1,0 +1,32 @@
+#pensez a créér un secret pour le mdp
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_pass
+      #ne pas toucher le nom user pour le moment sinon pas de bdd deja faite
+      POSTGRES_USER: user
+    secrets:
+      - pg_pass
+    volumes:
+      - pg_data:/var/lib/postgresql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+secrets:
+  pg_pass:
+    file: ./srcs/secrets/secretsPostGres_Password
+volumes:
+  pg_data:
+    #pour le dev, a commenter lorsque l'on passera en production
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./srcs/data-test
