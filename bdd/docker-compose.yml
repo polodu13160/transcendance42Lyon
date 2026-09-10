@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/pg_pass
       #do not touch the user name for the moment otherwise no database already made
-      POSTGRES_USER: user
+      POSTGRES_USER: root
     secrets:
       - pg_pass
     volumes:

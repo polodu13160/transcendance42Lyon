@@ -1,1 +1,3 @@
-srcs/secrets/
+srcs/data-test
+srcs/secrets
+.init
