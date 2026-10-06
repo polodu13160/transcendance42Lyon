@@ -19,7 +19,6 @@ pip install uv
 To set up the project and start the development server, run the following commands at the root of the project:
 
 ```bash
-uv venv
 uv sync
 ```
 
@@ -31,20 +30,24 @@ after create .env with the root of directory backend :
 DATABASE_URL=postgresql://userRoot:PasswordRoot@ip:Port/NameBD 
 ````
 
+>[!WARNING]
+>Avoir lancer la bdd c pas compliqué c un docker-compose
+    Actuellement le mdp c toi qui choisit, et le user root c root (simple comme le mot simple)
+
 And run :
 
 ```bash
+uv run alembic upgrade head
 uv run dev
 ```
 
 
-## API Documentation
+## API Documentation - see the good URL fonctionnal
 
 Once the backend is running (via the `uv run dev` command), the interactive API documentation (Swagger UI) is automatically generated and available at:
 
 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-*Note: Currently, only one API endpoint is fully functional and documented on this page. and is used just for integrations, not endpoint final*
 
 ## Research for me
 
