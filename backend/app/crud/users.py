@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.models import Users
-from app.models.models import t_get_differents_answers_secondary
+from app.models import Users
+from app.models import t_get_differents_answers_secondary
 
 def getAllUsers(db: Session, skip: int = 0, limit: int = 100):
     if limit == 0:

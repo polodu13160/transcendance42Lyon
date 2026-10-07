@@ -6,7 +6,6 @@ from .classes.events import Events
 from .classes.users import Users
 from .classes.bets import Bet
 from .classes.answers import Answers
-from .classes.subevents import Subevents
 from .classes.commentaires import Commentaire
 from .classes.status import Status
 from .classes.leveluser import Leveluser

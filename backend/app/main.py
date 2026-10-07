@@ -1,7 +1,7 @@
 from fastapi import FastAPI, dependencies
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session
-from .models.class.base import SessionLocal
+from .models.base import SessionLocal
 
 load_dotenv()
 

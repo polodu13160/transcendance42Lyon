@@ -2,6 +2,7 @@ CREATE TABLE Answers(
    id_answer INTEGER,
    Name VARCHAR(50)  NOT NULL,
    Date_expiration TIMESTAMPTZ,
+   cote NUMERIC(25,10)  ,
    PRIMARY KEY(id_answer)
 );
 
@@ -39,7 +40,7 @@ CREATE TABLE Users(
    FOREIGN KEY(id_level) REFERENCES LevelUser(id_level)
 );
 
-CREATE TABLE Event(
+CREATE TABLE Events(
    id_event INTEGER,
    Description VARCHAR(300)  NOT NULL,
    Name VARCHAR(300)  NOT NULL,
@@ -66,7 +67,7 @@ CREATE TABLE Bet(
    PRIMARY KEY(id_bet),
    FOREIGN KEY(id_answer) REFERENCES Answers(id_answer),
    FOREIGN KEY(id_status) REFERENCES Status(id_status),
-   FOREIGN KEY(id_event) REFERENCES Event(id_event),
+   FOREIGN KEY(id_event) REFERENCES Events(id_event),
    FOREIGN KEY(id_user) REFERENCES Users(id_user)
 );
 
@@ -77,36 +78,6 @@ CREATE TABLE Commentaire(
    id_user INTEGER NOT NULL,
    PRIMARY KEY(id_comment),
    FOREIGN KEY(id_user) REFERENCES Users(id_user)
-);
-
-CREATE TABLE Post(
-   id_post INTEGER,
-   Description VARCHAR(1000) ,
-   Url_Images VARCHAR(1000) ,
-   Title VARCHAR(300)  NOT NULL,
-   Date_created TIMESTAMPTZ NOT NULL,
-   Date_modified TIMESTAMPTZ,
-   id_user INTEGER NOT NULL,
-   PRIMARY KEY(id_post),
-   FOREIGN KEY(id_user) REFERENCES Users(id_user)
-);
-
-CREATE TABLE SubEvents(
-   id_subevent INTEGER,
-   Description VARCHAR(300) ,
-   Url_Images VARCHAR(1000) ,
-   Name VARCHAR(300) ,
-   id_event INTEGER NOT NULL,
-   PRIMARY KEY(id_subevent),
-   FOREIGN KEY(id_event) REFERENCES Event(id_event)
-);
-
-CREATE TABLE Liked_post(
-   id_user INTEGER,
-   id_post INTEGER,
-   PRIMARY KEY(id_user, id_post),
-   FOREIGN KEY(id_user) REFERENCES Users(id_user),
-   FOREIGN KEY(id_post) REFERENCES Post(id_post)
 );
 
 CREATE TABLE Liked_users(
@@ -125,27 +96,19 @@ CREATE TABLE Liked_comment(
    FOREIGN KEY(id_comment) REFERENCES Commentaire(id_comment)
 );
 
-CREATE TABLE Associated(
+CREATE TABLE Liked_event(
+   id_user INTEGER,
    id_event INTEGER,
-   id_post INTEGER,
-   PRIMARY KEY(id_event, id_post),
-   FOREIGN KEY(id_event) REFERENCES Event(id_event),
-   FOREIGN KEY(id_post) REFERENCES Post(id_post)
-);
-
-CREATE TABLE get_comment_for_post(
-   id_comment INTEGER,
-   id_post INTEGER,
-   PRIMARY KEY(id_comment, id_post),
-   FOREIGN KEY(id_comment) REFERENCES Commentaire(id_comment),
-   FOREIGN KEY(id_post) REFERENCES Post(id_post)
+   PRIMARY KEY(id_user, id_event),
+   FOREIGN KEY(id_user) REFERENCES Users(id_user),
+   FOREIGN KEY(id_event) REFERENCES Events(id_event)
 );
 
 CREATE TABLE get_comment_for_event(
    id_event INTEGER,
    id_comment INTEGER,
    PRIMARY KEY(id_event, id_comment),
-   FOREIGN KEY(id_event) REFERENCES Event(id_event),
+   FOREIGN KEY(id_event) REFERENCES Events(id_event),
    FOREIGN KEY(id_comment) REFERENCES Commentaire(id_comment)
 );
 
@@ -153,7 +116,7 @@ CREATE TABLE get_differents_answers(
    id_event INTEGER,
    id_answer INTEGER,
    PRIMARY KEY(id_event, id_answer),
-   FOREIGN KEY(id_event) REFERENCES Event(id_event),
+   FOREIGN KEY(id_event) REFERENCES Events(id_event),
    FOREIGN KEY(id_answer) REFERENCES Answers(id_answer)
 );
 
@@ -163,14 +126,6 @@ CREATE TABLE Liked_category(
    PRIMARY KEY(id_user, id_cat),
    FOREIGN KEY(id_user) REFERENCES Users(id_user),
    FOREIGN KEY(id_cat) REFERENCES Category(id_cat)
-);
-
-CREATE TABLE shared_post(
-   id_post_id_post INTEGER,
-   id_post_id_post_shared INTEGER,
-   PRIMARY KEY(id_post_id_post, id_post_id_post_shared),
-   FOREIGN KEY(id_post_id_post) REFERENCES Post(id_post),
-   FOREIGN KEY(id_post_id_post_shared) REFERENCES Post(id_post)
 );
 
 CREATE TABLE answer_commentaire(

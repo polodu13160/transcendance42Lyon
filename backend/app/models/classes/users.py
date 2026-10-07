@@ -5,6 +5,7 @@ import decimal
 from sqlalchemy import Column, DateTime, ForeignKeyConstraint, Integer, Numeric, PrimaryKeyConstraint, String, Table, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ..base import Base
+from ..associative_table.user_user import t_liked_users
 
 
 

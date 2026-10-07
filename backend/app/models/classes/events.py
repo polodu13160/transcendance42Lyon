@@ -33,7 +33,6 @@ class Events(Base):
     users: Mapped[list['Users']] = relationship('Users', secondary='liked_events', back_populates='events')
     bet: Mapped[list['Bet']] = relationship('Bet', back_populates='events')
     commentaire: Mapped[list['Commentaire']] = relationship('Commentaire', secondary='get_comment_for_events', back_populates='events')
-    subevents: Mapped[list['Subevents']] = relationship('Subevents', back_populates='events')
 
 
 
