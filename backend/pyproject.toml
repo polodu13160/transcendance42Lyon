@@ -12,6 +12,7 @@ dependencies = [
     "cookiecutter>=2.7.1",
     "fastapi[standard]>=0.141.1",
     "psycopg2-binary>=2.9.13",
+    "sqlacodegen>=4.0.4",
     "sqlalchemy>=2.0.54",
 ]
 
