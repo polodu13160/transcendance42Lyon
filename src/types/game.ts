@@ -1,15 +1,19 @@
-export type GameCard = {
+export type Rarity =
+    | "common"
+    | "uncommon"
+    | "rare"
+    | "ultra-rare"
+    | "legendary";
 
+export type GameCard = {
     id: number;
     name: string;
     imageUrl: string;
-    resume: string;
-    
-    // For rarity and attack/defense power
-    rating: number;
-    reviewNumber: number;
-    rarity: rarity
-    isShiny: boolean;
-}
+    description: string;
+    funfact: string;
 
-export type rarity =  "common" | "uncommon" | "rare" | "ultra-rare" | "legendary";
+    rating: number;
+    reviewCount: number;
+    rarity: Rarity;
+    isShiny: boolean;
+};
