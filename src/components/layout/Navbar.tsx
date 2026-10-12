@@ -1,4 +1,5 @@
 import { NavLink } from "react-router";
+import ThemeToggle from "../ui/ThemeToggle";
 
 export default function NavBar() {
 
@@ -18,6 +19,7 @@ export default function NavBar() {
                 <NavLink to="/browse-all" className={getNavLinkClass}>Browse all cards</NavLink>
                 <NavLink to="/profil" className={getNavLinkClass}>Profil</NavLink>
             </nav>
+            <ThemeToggle />
         </div>
     )
 }
