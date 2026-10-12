@@ -1,1 +1,112 @@
-    
+[
+  {
+    "id": 1,
+    "name": "Elden Ring",
+    "imageUrl": "https://placehold.co/300x420?text=Elden+Ring",
+    "description": "Un action-RPG en monde ouvert développé par FromSoftware.",
+    "funfact": "George R. R. Martin a participé à la création de l'univers du jeu.",
+    "rating": 9.5,
+    "reviewCount": 850000,
+    "rarity": "legendary",
+    "isShiny": false
+  },
+  {
+    "id": 2,
+    "name": "Minecraft",
+    "imageUrl": "https://placehold.co/300x420?text=Minecraft",
+    "description": "Un jeu de construction et de survie dans un monde composé de blocs.",
+    "funfact": "Minecraft est l'un des jeux vidéo les plus vendus de l'histoire.",
+    "rating": 9.2,
+    "reviewCount": 1200000,
+    "rarity": "legendary",
+    "isShiny": true
+  },
+  {
+    "id": 3,
+    "name": "Cyberpunk 2077",
+    "imageUrl": "https://placehold.co/300x420?text=Cyberpunk+2077",
+    "description": "Un RPG futuriste se déroulant dans la ville de Night City.",
+    "funfact": "Keanu Reeves incarne Johnny Silverhand.",
+    "rating": 8.7,
+    "reviewCount": 620000,
+    "rarity": "ultra-rare",
+    "isShiny": false
+  },
+  {
+    "id": 4,
+    "name": "Stardew Valley",
+    "imageUrl": "https://placehold.co/300x420?text=Stardew+Valley",
+    "description": "Un jeu de simulation agricole et de vie à la campagne.",
+    "funfact": "Le jeu a été développé principalement par une seule personne.",
+    "rating": 9.6,
+    "reviewCount": 740000,
+    "rarity": "legendary",
+    "isShiny": false
+  },
+  {
+    "id": 5,
+    "name": "Hollow Knight",
+    "imageUrl": "https://placehold.co/300x420?text=Hollow+Knight",
+    "description": "Un metroidvania dans un royaume souterrain mystérieux.",
+    "funfact": "Le jeu a été développé par le petit studio indépendant Team Cherry.",
+    "rating": 9.4,
+    "reviewCount": 410000,
+    "rarity": "ultra-rare",
+    "isShiny": true
+  },
+  {
+    "id": 6,
+    "name": "Among Us",
+    "imageUrl": "https://placehold.co/300x420?text=Among+Us",
+    "description": "Un jeu multijoueur de déduction sociale à bord d'un vaisseau spatial.",
+    "funfact": "Le jeu est devenu mondialement populaire deux ans après sa sortie.",
+    "rating": 7.8,
+    "reviewCount": 580000,
+    "rarity": "uncommon",
+    "isShiny": false
+  },
+  {
+    "id": 7,
+    "name": "The Witcher 3",
+    "imageUrl": "https://placehold.co/300x420?text=The+Witcher+3",
+    "description": "Un RPG narratif dans un univers médiéval fantastique.",
+    "funfact": "Le jeu s'inspire de la série de romans d'Andrzej Sapkowski.",
+    "rating": 9.7,
+    "reviewCount": 920000,
+    "rarity": "legendary",
+    "isShiny": false
+  },
+  {
+    "id": 8,
+    "name": "No Man's Sky",
+    "imageUrl": "https://placehold.co/300x420?text=No+Mans+Sky",
+    "description": "Un jeu d'exploration spatiale dans un univers généré procéduralement.",
+    "funfact": "Le jeu propose plus de 18 trillions de planètes potentielles.",
+    "rating": 8.4,
+    "reviewCount": 360000,
+    "rarity": "rare",
+    "isShiny": false
+  },
+  {
+    "id": 9,
+    "name": "Celeste",
+    "imageUrl": "https://placehold.co/300x420?text=Celeste",
+    "description": "Un jeu de plateforme exigeant qui raconte une histoire personnelle.",
+    "funfact": "Le prototype du jeu a été créé lors d'une game jam.",
+    "rating": 9.3,
+    "reviewCount": 190000,
+    "rarity": "rare",
+    "isShiny": true
+  },
+  {
+    "id": 10,
+    "name": "Goat Simulator",
+    "imageUrl": "https://placehold.co/300x420?text=Goat+Simulator",
+    "description": "Un jeu humoristique où l'on incarne une chèvre semant le chaos.",
+    "funfact": "Le jeu est né d'un prototype humoristique.",
+    "rating": 6.8,
+    "reviewCount": 95000,
+    "rarity": "common",
+    "isShiny": false
+  }
+]
