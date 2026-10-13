@@ -10,16 +10,18 @@ import { BrowserRouter, Routes, Route } from "react-router"
 export default function App () {
     return(
         <BrowserRouter>
-            <NavBar />
-            <main>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/collection" element={<CollectionPage />} />
-                    <Route path="/market" element={<MarketPage />} />
-                    <Route path="/browse-all" element={<Browse />} />
-                    <Route path="/profil" element={<ProfilPage />} />
-                </Routes>
-            </main>
+            <div className="flex">
+                <NavBar />
+                <main>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/collection" element={<CollectionPage />} />
+                        <Route path="/market" element={<MarketPage />} />
+                        <Route path="/browse-all" element={<Browse />} />
+                        <Route path="/profil" element={<ProfilPage />} />
+                    </Routes>
+                </main>
+            </div>
         </BrowserRouter>
     )
 }
