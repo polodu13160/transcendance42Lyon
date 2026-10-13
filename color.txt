@@ -1,0 +1,11 @@
+| Élément | ☀️ Light Mode | 🌙 Dark Mode |
+|---|---|---|
+| Fond principal | `#F8F9FC` | `#18181B` |
+| Sidebar | `#FFFFFF` | `#232326` |
+| Cartes / panneaux | `#FFFFFF` | `#2D2D32` |
+| Bordures | `#E4E4E7` | `#3F3F46` |
+| Violet principal | `#7C3AED` | `#A78BFA` |
+| Violet hover | `#6D28D9` | `#C4B5FD` |
+| Fond lien actif | `#F3EEFF` | `#352B48` |
+| Texte principal | `#18181B` | `#F5F5F5` |
+| Texte secondaire | `#71717A` | `#A1A1AA` |

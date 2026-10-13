@@ -1,3 +1,6 @@
 export default function Browse() {
-    return <h1>Browse Page</h1>
+    return (
+        <div className="flex flex-col justify-center items-center w-auto h-screen gap-14 bg-neutral-100 dark:bg-[#18181B]">
+        </div>
+    )
 }

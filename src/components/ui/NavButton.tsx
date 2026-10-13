@@ -6,18 +6,25 @@ interface NavProps {
     pageName: string;
 }
 
-
 export default function NavButton(props: NavProps) {
 
-    function getNavLinkClass({isActive}: {isActive: boolean}) {
+    function getNavLinkClass({ isActive }: { isActive: boolean }) {
 
-        const basics = "flex items-center text-xl p-3 rounded-xl flex gap-2"
+        const basics = "flex items-center w-full min-w-0 gap-2 p-3 text-xl rounded-xl border transition-colors duration-200 ease-in-out";
+
         return isActive
-            ? "text-violet-500 dark:text-[#C4B5FD] dark:bg-neutral-700/50" + basics
-            : "text-gray-600 dark:text-[#C4B5FD] text-xl hover:bg-neutral-700/20 hover:sticky" + basics
+            ? basics + " text-[#7C3AED] dark:text-[#C4B5FD] bg-[#F3EEFF] dark:bg-[#352B48] border-[#A78BFA]"
+            : basics + " text-[#71717A] dark:text-[#A1A1AA] hover:text-[#7C3AED] dark:hover:text-[#C4B5FD] hover:bg-[#F3EEFF] dark:hover:bg-[#352B48]/50 border-transparent";
     }
 
     return (
-        <NavLink to={props.linkTo} className={getNavLinkClass}><img className="w-6 h-6" src={props.imgSrc} />{props.pageName}</NavLink>
-    )
+        <NavLink to={props.linkTo} className={getNavLinkClass}>
+            <img
+                className="w-6 h-6 shrink-0"
+                src={props.imgSrc}
+                alt=""
+            />
+            <span className="min-w-0">{props.pageName}</span>
+        </NavLink>
+    );
 }
