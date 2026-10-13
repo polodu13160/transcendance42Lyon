@@ -11,6 +11,10 @@ export default function ThemeToggle() {
         setToggleButton(prevToggleButton => !prevToggleButton);
     }
 
+    React.useEffect(() => {
+        document.documentElement.classList.toggle('dark', toggleButton === true);
+    }, [toggleButton])
+
 return (
     <>
         <label className="select-none cursor-pointer">
@@ -20,7 +24,7 @@ return (
                 className="sr-only peer"
             />
 
-            <span className="border border-stone-800 h-6 w-12 bg-sky-100 peer-checked:bg-slate-800 peer-checked:[&>span]:bg-indigo-400 transition-colors duration-300 ease-in-out rounded-full flex items-center p-0.5 peer-checked:[&>span]:translate-x-6">
+            <span className="border border-stone-800 h-6 w-12 bg-sky-100 peer-checked:border-stone-300 peer-checked:bg-slate-800 peer-checked:[&>span]:bg-indigo-400 transition-colors duration-300 ease-in-out rounded-full flex items-center p-0.5 peer-checked:[&>span]:translate-x-6">
                 <span className="h-5 w-5 rounded-full bg-amber-400 flex transition-transform duration-400 ease-in-out items-center justify-center">
                     <img
                         src={toggleButton ? moonIcon : sunIcon} 
