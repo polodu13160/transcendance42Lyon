@@ -5,7 +5,7 @@ import moonIcon from "../../assets/icons/moon-star.svg"
 
 export default function ThemeToggle() {
 
-    const [toggleButton, setToggleButton] = React.useState(false)
+    const [toggleButton, setToggleButton] = React.useState(true)
 
     function toggleAction(): void {
         setToggleButton(prevToggleButton => !prevToggleButton);
@@ -17,7 +17,7 @@ export default function ThemeToggle() {
 
 return (
     <>
-        <label className="select-none cursor-pointer">
+        <label className="inline-flex w-fit self-start cursor-pointer select-none">
             <input
                 type="checkbox"
                 onChange={toggleAction}

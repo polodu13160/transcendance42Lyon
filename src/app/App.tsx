@@ -10,9 +10,9 @@ import { BrowserRouter, Routes, Route } from "react-router"
 export default function App () {
     return(
         <BrowserRouter>
-            <div className="flex">
+            <div className="flex min-h-screen">
                 <NavBar />
-                <main>
+                <main className="flex-1 min-w-0">
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/collection" element={<CollectionPage />} />
