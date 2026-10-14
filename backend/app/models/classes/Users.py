@@ -111,7 +111,7 @@ class Users(Base):
     nick_name: Mapped[str] = mapped_column(type_=String(100), nullable= False)
     date_created: Mapped[datetime.datetime] = mapped_column(type_= DateTime(timezone=True), default=func.now())
     id_wallet: Mapped[int | None] = mapped_column(type_= Integer, nullable= True, unique=True)
-
+    date_free_pack: Mapped[datetime.datetime] = mapped_column(type_= DateTime(True), default=func.now())
 
 
 
