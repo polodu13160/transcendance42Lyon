@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
+import { useState } from "react";
 
 import profilImg from "../../assets/icons/user-round.svg"
 
@@ -9,13 +9,30 @@ interface MoreButtonProps {
     pageName: string;
 }
 
+// en gros on recup la page actuelle avec useLocation
+// menuState garde si le menu est ouvert et sur quelle page on l'a ouvert
+// dropDown verifie si le menu est ouvert ET si on est tjr sur la meme page
+// qd on clique sur More ca inverse l'etat du menu
+// si on change de page les url correspondent plus donc le menu se ferme tout seul
+
 
 export default function MoreButton(props: MoreButtonProps) {
 
-    const [dropDown, setDropDown] = useState(false);
+    const location = useLocation();
+
+    const [menuState, setMenuState] = useState({
+        isOpen: false,
+        pathname: location.pathname,
+    });
+
+    const dropDown =
+        menuState.isOpen && menuState.pathname === location.pathname;
 
     function changeDropState(): void {
-        setDropDown(prevDropDown => !prevDropDown);
+        setMenuState(prev => ({
+            isOpen: !dropDown,
+            pathname: location.pathname,
+        }));
     }
 
     function getNavLinkClass({isActive}: {isActive : boolean}) {
