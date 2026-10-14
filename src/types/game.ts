@@ -5,7 +5,7 @@ export type Rarity =
     | "ultra-rare"
     | "legendary";
 
-export type GameCard = {
+export interface GameProps {
     id: number;
     name: string;
     imageUrl: string;
