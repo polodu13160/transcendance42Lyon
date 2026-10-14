@@ -2,6 +2,11 @@ import { NavLink, useLocation } from "react-router";
 import { useState } from "react";
 
 import profilImg from "../../assets/icons/user-round.svg"
+import bookImg from "../../assets/icons/book-open.svg"
+import settingsImg from "../../assets/icons/settings.svg"
+import playImg from "../../assets/icons/swords.svg"
+// import ThemeToggle from "../ui/ThemeToggle";
+
 
 interface MoreButtonProps {
 
@@ -29,7 +34,7 @@ export default function MoreButton(props: MoreButtonProps) {
         menuState.isOpen && menuState.pathname === location.pathname;
 
     function changeDropState(): void {
-        setMenuState(prev => ({
+        setMenuState(({
             isOpen: !dropDown,
             pathname: location.pathname,
         }));
@@ -37,7 +42,7 @@ export default function MoreButton(props: MoreButtonProps) {
 
     function getNavLinkClass({isActive}: {isActive : boolean}) {
 
-        const basics = "flex flex-row justify-start items-center w-full min-w-0 gap-1 transition-colors duration-200 ease-in-out";
+        const basics = "flex flex-row justify-start items-center w-full h-10 min-w-0 gap-1 transition-colors duration-200 ease-in-out";
 
         return isActive
             ? basics + " text-[#7C3AED] md:dark:text-[#C4B5FD] dark:text-white bg-[#F3EEFF] dark:bg-[#352B48] border-[#A78BFA]"
@@ -67,6 +72,22 @@ export default function MoreButton(props: MoreButtonProps) {
             {
                     dropDown 
                     ?   <div className="items-start p-2 text-[#A78BFA] text-[14px] dark:bg-[#2D2D32] border-4 border-[#3F3F46] gap-2 rounded-xl w-[40vw] flex flex-col absolute bottom-full right-0">
+                            <NavLink to="/play" className={getNavLinkClass}>
+                                <img
+                                    className="w-6 h-6 shrink-0"
+                                    src={playImg}
+                                    alt=""
+                                />
+                                <span>Play</span>
+                            </NavLink>
+                            <NavLink to="/browse-all" className={getNavLinkClass}>
+                                <img
+                                    className="w-6 h-6 shrink-0"
+                                    src={bookImg}
+                                    alt=""
+                                />
+                                <span>Browse All</span>
+                            </NavLink>
                             <NavLink to="/profil" className={getNavLinkClass}>
                                 <img
                                     className="w-6 h-6 shrink-0"
@@ -75,38 +96,15 @@ export default function MoreButton(props: MoreButtonProps) {
                                 />
                                 <span>Profil</span>
                             </NavLink>
-                            <NavLink to="/" className={getNavLinkClass}>
+                            <NavLink to="/settings" className={getNavLinkClass}>
                                 <img
                                     className="w-6 h-6 shrink-0"
-                                    src={profilImg}
+                                    src={settingsImg}
                                     alt=""
                                 />
-                                <span>Profil</span>
+                                <span>Settings</span>
                             </NavLink>
-                            <NavLink to="/" className={getNavLinkClass}>
-                                <img
-                                    className="w-6 h-6 shrink-0"
-                                    src={profilImg}
-                                    alt=""
-                                />
-                                <span>Profil</span>
-                            </NavLink>
-                            <NavLink to="/" className={getNavLinkClass}>
-                                <img
-                                    className="w-6 h-6 shrink-0"
-                                    src={profilImg}
-                                    alt=""
-                                />
-                                <span>Profil</span>
-                            </NavLink>
-                            <NavLink to="/" className={getNavLinkClass}>
-                                <img
-                                    className="w-6 h-6 shrink-0"
-                                    src={profilImg}
-                                    alt=""
-                                />
-                                <span>Profil</span>
-                            </NavLink>
+                            {/* <ThemeToggle /> */}
                         </div> 
                     : null
             }
