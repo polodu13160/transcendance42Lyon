@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router";
 
 interface MoreButtonProps {
 
@@ -36,7 +37,11 @@ export default function MoreButton(props: MoreButtonProps) {
                 <span className="min-w-0 block md:hidden">{props.pageName}</span>
             </button>
             {
-                    dropDown ? <h1>Ouvert</h1> : null
+                    dropDown 
+                    ?   <div className="items-start p-4 text-[#A78BFA] text-[14px] dark:bg-[#2D2D32] border-4 border-[#3F3F46] gap-2 rounded-xl w-[40vw] flex flex-col absolute bottom-full right-0">
+                            <NavLink to="/profil" />
+                        </div> 
+                    : null
             }
         </div>
     );
