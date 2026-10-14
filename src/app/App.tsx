@@ -10,7 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router"
 export default function App () {
     return(
         <BrowserRouter>
-            <div className="flex min-h-screen">
+            <div className="flex min-h-dvh bg-[#18181B]">
                 <NavBar />
                 <main className="flex-1 min-w-0">
                     <Routes>
