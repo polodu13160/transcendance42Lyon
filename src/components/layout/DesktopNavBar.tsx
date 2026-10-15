@@ -11,7 +11,7 @@ import arrowImg from "../../assets/icons/arrow-left-right.svg";
 
 export default function DesktopNavBar() {
     return (
-        <div className="flex flex-col items-center p-4 sticky top-0 w-60 h-screen bg-[#E4E4E7] dark:bg-[#232326] shrink-0 z-50">
+        <div className="flex flex-col items-center p-4 sticky top-0 w-60 h-screen bg-[#E4E4E7] dark:bg-[#232326] shrink-0 z-9">
 
             <img
                 src={logo_dark}

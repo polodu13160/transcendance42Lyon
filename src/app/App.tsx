@@ -6,6 +6,7 @@ import TradePage from "../pages/TradePage"
 import SettingsPage from "../pages/SettingsPage"
 import ProfilPage from "../pages/ProfilePage"
 import PlayPage from "../pages/PlayPage"
+import FormModal from "../features/auth/FormModal"
 
 import NavBar from "../components/layout/Navbar"
 import { BrowserRouter, Routes, Route } from "react-router"
@@ -15,6 +16,7 @@ export default function App () {
         <BrowserRouter>
             <div className="flex min-h-dvh bg-[#18181B]">
                 <NavBar />
+                <FormModal />
                 <main className="flex-1 min-w-0">
                     <Routes>
                         <Route path="/" element={<HomePage />} />
