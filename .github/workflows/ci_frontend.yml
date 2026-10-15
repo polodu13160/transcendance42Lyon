@@ -1,0 +1,28 @@
+name: CI Frontend
+
+on:
+  push:
+    branches: [ "front" ]
+  pull_request:
+    branches: [ "front" ]
+
+jobs:
+  nodejs:
+      runs-on: ubuntu-24.04
+      steps:
+        # On recupère le repo avec action/checkout
+      - name: Checkout project
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # On setup up node-js
+      - name: Setup Node-js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+
+      - name: Install Node-js
+        run: npm ci
+      
+      - name: Lint
+        run: npx eslint .
+      
+#      - name: Test
+#        run: npm test

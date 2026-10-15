@@ -1,0 +1,52 @@
+# Nom du workflow
+name: CI Backend
+
+# Avec quelle action le workflow va se déclencher
+on:
+  push:
+    branches: [ "backend" ]
+  pull_request:
+    branches: [ "backend" ]
+
+# On donne les permissions minimales (bonne pratique de sécurité)
+permissions:
+  contents: read
+
+# On setup l'environnement pour les tests.
+jobs:
+  uv-test:
+    runs-on: ubuntu-24.04
+    steps:
+      # On recupère le repo avec action/checkout
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: "backend/pyproject.toml"
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          # Install a specific version of uv.
+          version: "0.12.23"
+      
+      - name: Install the project
+        run: cd backend; uv sync; uv add --dev pytest
+      
+      - name: Setup ruff
+        uses: astral-sh/ruff-action@278981a28ce3188b1e39527901f38254bf3aac89 # v4.1.0
+        with:
+          version-file: "backend/pyproject.toml"
+          args: "format --check --diff"
+
+      - name: Run tests
+        run: cd backend; uv run pytest tests
+      
+  show_repo_info:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          echo "Runned by ${{ github.actor }}"
+          echo "Branch : ${{ github.ref_name }}"
+          echo "Event : ${{ github.event_name }}"
