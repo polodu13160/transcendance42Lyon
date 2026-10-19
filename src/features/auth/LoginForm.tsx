@@ -7,17 +7,17 @@ import { FaGithub } from "react-icons/fa";
 export default function LoginForm() {
 
 
-    const oAuthClasses = "scale-75 flex-row justify-center items-center gap-2 flex border rounded py-2 px-4 cursor-pointer hover:bg-[#C4B5FD]/10 active:bg-[#C4B5FD]/30"
+    const oAuthClasses = "flex-row gap-1 justify-center items-center flex border rounded py-2 px-4 cursor-pointer hover:bg-[#C4B5FD]/10 active:bg-[#C4B5FD]/30 text-[14px]"
 
     return (
 
 
 
         <div className="flex flex-col items-center justify-center"> 
-            <h1 className="text-[#A78BFA] font-medium text-xl mt-10 mb-5">Login to your account</h1>
+            <h1 className="text-[#A78BFA] font-medium text-xl mt-10 mb-5">Log In with</h1>
 
 
-            <div className="flex flex-row justify-center items-center mt-5">
+            <div className="flex flex-row justify-center items-center mt-5 gap-2">
                 <button className={oAuthClasses} ><FcGoogle size={17}></FcGoogle>Google</button>
                 <button className={oAuthClasses}><FaApple size={25}></FaApple>Apple</button>
                 <button className={oAuthClasses}><FaGithub size={25}></FaGithub>GitHub</button>
@@ -29,7 +29,7 @@ export default function LoginForm() {
                  <hr className="w-32 h-px my-8 bg-gray-500  border-0"/>
             </div>
 
-            <form action="#" className="flex flex-col justify-center items-center gap-2">
+            <form action="#" className="flex flex-col justify-center items-center gap-3">
                 <div className="border px-2 py-1">
                     <input type="mail" placeholder="Email address" required  />
                 </div>
@@ -37,6 +37,8 @@ export default function LoginForm() {
                     <input type="password" placeholder="Password" required  />
                 </div>
                 <a href="#" >Forgot your password ?</a>
+
+                <button className="border px-2 py-1" >Login</button>
             </form>
         </div>
     )

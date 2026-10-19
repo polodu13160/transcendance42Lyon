@@ -23,7 +23,7 @@ type ModalType = "login" | "signup" | null;
 
 export default function App() {
 
-    const [activeModal, setActiveModal] = useState<ModalType>(null);
+    const [activeModal, setActiveModal] = useState<ModalType>("login");
 
     function closeModal(): void {
         setActiveModal(null);
