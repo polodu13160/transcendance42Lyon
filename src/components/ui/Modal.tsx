@@ -29,7 +29,6 @@ export default function Modal(props: ModalProps) {
                 <button
                     type="button"
                     onClick={props.onClose}
-                    aria-label="Fermer la modale"
                     className="absolute top-4 right-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border hover:bg-black/30 active:bg-black/50"
                 >
                     <RxCross2 />
