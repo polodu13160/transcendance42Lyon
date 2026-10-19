@@ -5,19 +5,4 @@ export default function SignForm() {
             
         </div>
     )
-
 }
-
-
-
-// mail
-// nom utilisateur 
-// age 
-// nom 
-// prenom 
-
-
-// googe 
-// metamask
-// apple 
-// github

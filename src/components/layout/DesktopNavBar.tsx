@@ -9,9 +9,15 @@ import storeImg from "../../assets/icons/store.svg";
 import profilImg from "../../assets/icons/user-round.svg";
 import arrowImg from "../../assets/icons/arrow-left-right.svg";
 
-export default function DesktopNavBar() {
+interface DesktopNavBarProps {
+    onOpenLogin: () => void;
+    onOpenSignup: () => void;
+}
+
+export default function DesktopNavBar(props: DesktopNavBarProps) {
+
     return (
-        <div className="flex flex-col items-center p-4 sticky top-0 w-60 h-screen bg-[#E4E4E7] dark:bg-[#232326] shrink-0 z-9">
+        <div className="flex flex-col items-center p-4 sticky top-0 w-60 h-dvh bg-[#E4E4E7] dark:bg-[#232326] shrink-0 z-9">
 
             <img
                 src={logo_dark}
@@ -27,8 +33,36 @@ export default function DesktopNavBar() {
                 <NavButton linkTo="/profil" imgSrc={profilImg} pageName="My Profil" />
             </nav>
 
-            <div className="mt-auto scale-150">
-                <ThemeToggle />
+            <div className="flex flex-col w-full gap-4 mt-auto">
+
+                <button
+                    type="button"
+                    onClick={props.onOpenLogin}
+                    className="text-[#71717A] dark:text-[#A1A1AA] hover:text-[#7C3AED]
+                    dark:hover:text-[#C4B5FD] hover:bg-[#F3EEFF] dark:hover:bg-[#352B48]/50 border-transparent cursor-pointer
+                    flex md:flex-row flex-col justify-center md:justify-start items-center text-center md:text-left w-full min-w-0 gap-1
+                    md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-xl rounded-xl border transition-colors duration-200 ease-in-out"
+                >
+                    Login
+                </button>
+
+                <button
+                    type="button"
+                    onClick={props.onOpenSignup}
+                    className="text-[#71717A] dark:text-[#A1A1AA] hover:text-[#7C3AED]
+                    dark:hover:text-[#C4B5FD] hover:bg-[#F3EEFF] dark:hover:bg-[#352B48]/50 border-transparent cursor-pointer
+                    flex md:flex-row flex-col justify-center md:justify-start items-center text-center md:text-left w-full min-w-0 gap-1
+                    md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-xl rounded-xl border transition-colors duration-200 ease-in-out"
+                >
+                    Sign-Up
+                </button>
+
+                <div className="flex justify-center py-4">
+                    <div className="scale-150">
+                        <ThemeToggle />
+                    </div>
+                </div>
+
             </div>
 
         </div>
