@@ -4,9 +4,9 @@ name: CI Backend
 # Avec quelle action le workflow va se déclencher
 on:
   push:
-    branches: [ "backend" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "backend" ]
+    branches: [ "main" ]
 
 # On donne les permissions minimales (bonne pratique de sécurité)
 permissions:
