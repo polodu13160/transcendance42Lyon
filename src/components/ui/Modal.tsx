@@ -23,7 +23,7 @@ export default function Modal(props: ModalProps) {
             <div
                 role="dialog"
                 aria-modal="true"
-                className="relative max-h-full max-w-full overflow-y-auto rounded border-2 border-[#3F3F46] bg-[#2D2D32] px-5 py-8 text-[#F5F5F5]"
+                className="relative max-h-full max-w-full overflow-y-auto rounded-3xl border-2 border-[#3F3F46] bg-[#2D2D32] px-5 py-8 text-[#F5F5F5]"
             >
 
                 <button

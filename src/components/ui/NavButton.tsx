@@ -10,7 +10,7 @@ export default function NavButton(props: NavProps) {
 
     function getNavLinkClass({ isActive }: { isActive: boolean }) {
 
-        const basics = "flex md:flex-row flex-col justify-center md:justify-start items-center text-center md:text-left w-full min-w-0 gap-1 md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-xl rounded-xl border transition-colors duration-200 ease-in-out";
+        const basics = "flex md:flex-row flex-col justify-center md:justify-start items-center text-center md:text-left w-full min-w-0 gap-1 md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-base rounded-xl border transition-colors duration-200 ease-in-out";
 
         return isActive
             ? basics + " text-[#7C3AED] md:dark:text-[#C4B5FD] dark:text-white bg-[#F3EEFF] dark:bg-[#352B48] border-[#A78BFA]"
