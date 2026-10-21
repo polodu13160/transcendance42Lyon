@@ -9,6 +9,7 @@ export default function CollectionPage() {
                 rating={9.2}
                 image="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg"
                 rarity="common"
+                isShiny={false}
             />
 
             <GameCard
@@ -17,6 +18,8 @@ export default function CollectionPage() {
                 rating={9.5}
                 image="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg"
                 rarity="uncommon"
+                isShiny={true}
+
             />
 
             <GameCard
@@ -25,6 +28,8 @@ export default function CollectionPage() {
                 rating={8.8}
                 image="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg"
                 rarity="rare"
+                isShiny={false}
+
             />
 
             <GameCard
@@ -33,6 +38,8 @@ export default function CollectionPage() {
                 rating={9.7}
                 image="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg"
                 rarity="epic"
+                isShiny={true}
+
             />
 
             <GameCard
@@ -41,6 +48,8 @@ export default function CollectionPage() {
                 rating={9.8}
                 image="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg"
                 rarity="legendary"
+                isShiny={true}
+
             />
         </div>
     );
