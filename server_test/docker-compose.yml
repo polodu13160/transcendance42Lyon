@@ -1,0 +1,15 @@
+services:
+  waf:
+    image: owasp/modsecurity-crs:nginx
+    ports:
+      - "8001:8080"
+      - "443:8443"
+    environement:
+      SERVERNAME: waf.local
+      PARANOIA: 1
+      BLOCKING_PARANOIA: 1
+      REPORTING_LEVEL: 2
+      BACKEND: "https://authn.local"
+      MODSEC_RULE_ENGINE: DetectionOnly
+    volumes:
+      # - ./waf/REQUEST-900
