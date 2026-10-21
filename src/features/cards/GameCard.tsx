@@ -13,12 +13,15 @@ export default function GameCard({ name, rating, image , resume}: GameCardProps)
     return (
         <div className="flex flex-col w-75 aspect-2/3 overflow-hidden rounded-2xl border-6 border-[#C3CBD8] bg-[#2D2D32]">
 
-            <div className="flex-1 min-h-0 overflow-hidden m-0.5 rounded-lg border border-[#3F3F46]">
+            <div className="relative flex-1 min-h-0 overflow-hidden m-0.5 rounded-lg border border-[#3F3F46]">
                 <img
                     src={image}
                     alt={name}
                     className="h-full w-full object-cover"
                 />
+                <div className="z-10 absolute top-2 right-2 bg-[#2D2D32] py-1 px-2 rounded-lg border border-[#C3CBD8] text-[#C3CBD8] font-bold text-base">
+                    <span>Common</span> 
+                </div>
             </div>
 
             <div className="flex-1 min-h-0 flex flex-col">
