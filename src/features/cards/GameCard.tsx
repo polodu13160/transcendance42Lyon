@@ -1,4 +1,6 @@
 import { FaStar } from "react-icons/fa";
+import { GiBouncingSword } from "react-icons/gi";
+import { FaShieldAlt } from "react-icons/fa";
 import { cardThemes } from "./cardThemes";
 import { TiltCard } from "./TiltCard";
 import { SparkleParticles } from '@/components/lightswind/sparkle-particles';
@@ -9,11 +11,12 @@ type GameCardProps = {
     name: string,
     rating: number,
     resume: string,
-    image: string   
-    isShiny: boolean
+    image: string,
+    isShiny: boolean,
+    isGame: boolean
 }
 
-export default function GameCard({ rarity, name, rating, image , resume, isShiny}: GameCardProps) {
+export default function GameCard({ rarity, name, rating, image , resume, isShiny, isGame}: GameCardProps) {
 
     const theme = cardThemes[rarity]
     
@@ -45,15 +48,25 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                                 <FaStar className="text-[#FFC637]"/>
                                 <span className="ml-1 font-bold text-white text-xl">{rating}</span>
                                 <span className="mx-4 h-4 w-px bg-gray-500"/>
-                                <span className="font-light text-gray-400">363 248 reviews</span>
+                                {
+                                    isGame
+                                    ? <span className="font-light text-gray-400">Game</span>
+                                    : <span className="font-light text-gray-400">DLC</span>
+                                }
                             </div>
                             <div className="mt-2">
                                 <p className="mx-4 font-normal text-xs text-[#B7C0CD]">{resume}</p>
                             </div>
 
-                            <div className="mx-4 flex-1 flex flex-row justify-between items-center text-base font-bold text-white">
-                                <div className="bg-slate-800 rounded-2xl p-3 border-red-400 border">9000 ATQ</div>
-                                <div className="bg-slate-800 rounded-2xl p-3 border-blue-400 border">8500 DEF</div>
+                            <div className="m-4 flex-1 flex flex-row justify-between items-center text-base font-bold text-white">
+                                <div className="border rounded-3xl p-2 flex flex-row gap-1 justify-center items-center">
+                                    <GiBouncingSword className="text-white" />
+                                    <span>9000</span>
+                                </div>                                
+                                <div className="border rounded-3xl p-2 flex flex-row gap-1 justify-center items-center">
+                                    <FaShieldAlt className="text-white" />
+                                    <span>7432</span>
+                                </div>
                             </div>
                         </div>
 
