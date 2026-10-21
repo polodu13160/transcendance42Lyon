@@ -1,0 +1,11 @@
+.pokemon-card { 
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57); 
+    background-size: 400% 400%; 
+    transform-style: preserve-3d; 
+    transition: transform 0.3s ease; 
+    animation: shimmer 3s ease-in-out infinite; 
+} 
+    
+.pokemon-card:hover { 
+    transform: rotateY(10deg) rotateX(10deg) scale(1.05); 
+}
