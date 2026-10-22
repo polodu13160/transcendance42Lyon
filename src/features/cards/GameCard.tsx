@@ -8,7 +8,7 @@ import { BackgroundBeams } from "@/components/ui/beams";
 import { GiPolarStar } from "react-icons/gi";
 
 
-type GameCardProps = {
+export type GameCardProps = {
     rarity: keyof typeof cardThemes; 
     name: string,
     rating: number,

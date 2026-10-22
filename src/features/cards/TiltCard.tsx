@@ -113,7 +113,7 @@ export function TiltCard({ children, max = 32 }: TiltCardProps) {
   };
 
   return (
-    <div ref={wrapRef} className="t-tilt" onPointerMove={onMove} onPointerLeave={onLeave}>
+    <div ref={wrapRef} className="t-tilt w-fit shrink-0" onPointerMove={onMove} onPointerLeave={onLeave}>
       <div ref={cardRef} className="t-tilt-card">
         {children}
         <div className="t-tilt-glare" aria-hidden="true" />
