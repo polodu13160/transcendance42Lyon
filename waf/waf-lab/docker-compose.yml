@@ -1,0 +1,35 @@
+services:
+  httpbin:
+    image: kennethreitz/httpbin
+    expose:
+      - "80"
+    networks:
+      - app-network
+  waf:
+    image: owasp/modsecurity-crs:nginx
+    ports:
+      - "8080:8080"
+      # - "443:8443"
+    environment:
+      SERVERNAME: waf.local
+      PARANOIA: 1
+      BLOCKING_PARANOIA: 1
+      # ANOMALY_INBOUND: 5
+      # ANOMALY_OUTBOUND: 4
+      REPORTING_LEVEL: 2
+      BACKEND: https://httpbin:80
+      MODSEC_RULE_ENGINE: DetectionOnly
+
+    depends_on:
+      - httpbin
+
+    networks:
+      - app-network
+
+    volumes:
+      - ./REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf:/etc/modsecurity.d/owasp-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+      - ./RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf:/etc/modsecurity.d/owasp-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+
+networks:
+  app-network:
+    driver: bridge
