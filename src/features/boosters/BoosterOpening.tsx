@@ -10,27 +10,22 @@ interface openingProps {
 
 export default function BoosterOpening(props: openingProps) {
 
-    const [visibleIndex, setVisibleIndex] = useState(0);
+    const [visibleIndex, setVisibleIndex] = useState(4);
 
     function dragEnd(event: Event, info: PanInfo): void {
-
+        if (info.offset.x > 40 || info.offset.x < -40) {
+            setVisibleIndex(prevIndex => prevIndex - 1);
+        }
     }
 
     return (    
-        <motion.div drag="x" dragMomentum={false} 
-            dragConstraints={{
-                top: -50,
-                left: -50,
-                right: 50,
-                bottom: 50,}
-            }
-            onDragEnd={(event, info) => dragEnd(event, info)}
-        >
+        <div>
             {props.cardsPack.map((card, index) => (
                     <motion.div
                         className={index === 0 ? "" : "absolute top-0"}
                         key={index}
-                        drag="x" dragMomentum={false} 
+                        drag={index === visibleIndex ? "x" : false }
+                        dragMomentum={false} 
                         dragConstraints={{
                             top: -50,
                             left: -50,
@@ -50,7 +45,7 @@ export default function BoosterOpening(props: openingProps) {
                         />
                     </motion.div>
                 ))}
-        </motion.div>
+        </div>
 
     )
 
