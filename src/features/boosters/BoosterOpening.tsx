@@ -1,11 +1,19 @@
-import GameCard from "../cards/GameCard";
+import GameCard, { type GameCardProps } from "../cards/GameCard";
 import { motion, type PanInfo } from "motion/react"
+import { useState } from "react"
+
+interface openingProps {
+
+    cardsPack: GameCardProps[]
+}
 
 
-export default function BoosterOpening() {
+export default function BoosterOpening(props: openingProps) {
+
+    const [visibleIndex, setVisibleIndex] = useState(0);
 
     function dragEnd(event: Event, info: PanInfo): void {
-        console.log(info.offset.x)
+
     }
 
     return (    
@@ -18,10 +26,30 @@ export default function BoosterOpening() {
             }
             onDragEnd={(event, info) => dragEnd(event, info)}
         >
-            <GameCard key={1} name="Stardew Valley" resume="Transforme une ferme abandonnée en un petit paradis : cultures, pêche, exploration et rencontres au village."
-                rating={9.2} image="https://wallpapers.com/images/featured/stardew-valley-ltuynqpjb7c95ffq.jpg"
-                rarity="common" isShiny={true} isGame={true}
-            />
+            {props.cardsPack.map((card, index) => (
+                    <motion.div
+                        className={index === 0 ? "" : "absolute top-0"}
+                        key={index}
+                        drag="x" dragMomentum={false} 
+                        dragConstraints={{
+                            top: -50,
+                            left: -50,
+                            right: 50,
+                            bottom: 50,}
+                        }
+                        onDragEnd={(event, info) => dragEnd(event, info)}
+                    >
+                        <GameCard
+                            name={card.name}
+                            resume={card.resume}
+                            rating={card.rating}
+                            image={card.image}
+                            rarity={card.rarity}
+                            isShiny={card.isShiny}
+                            isGame={card.isGame}
+                        />
+                    </motion.div>
+                ))}
         </motion.div>
 
     )

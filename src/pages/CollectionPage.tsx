@@ -1,8 +1,8 @@
 
 import { useState } from "react";
-import GameCard from "../features/cards/GameCard";
 import type { GameCardProps } from "../features/cards/GameCard";
 import cardsData from "../../test_data/cardsData.json";
+import BoosterOpening from "@/features/boosters/BoosterOpening";
 
 type CollectionCard = GameCardProps & {
     id: string;
@@ -26,22 +26,7 @@ export default function CollectionPage() {
     return (
         <div className="h-screen bg-slate-500 dark:bg-[#18181B] flex flex-col justify-center items-center">
             <div className="relative">
-                {boosterCards.map((card, index) => (
-                    <div
-                        className={index === 0 ? "" : "absolute top-0"}
-                        key={card.id}
-                    >
-                        <GameCard
-                            name={card.name}
-                            resume={card.resume}
-                            rating={card.rating}
-                            image={card.image}
-                            rarity={card.rarity}
-                            isShiny={card.isShiny}
-                            isGame={card.isGame}
-                        />
-                    </div>
-                ))}
+                <BoosterOpening cardsPack={boosterCards} />
             </div>
 
             <div className="mt-4 flex flex-col">
