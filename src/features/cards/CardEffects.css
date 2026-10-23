@@ -1,0 +1,70 @@
+.shiny-sweep {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    z-index: 3;
+    pointer-events: none;
+
+    background: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgba(255, 80, 150, 0.06) 12%,
+        rgba(255, 200, 80, 0.10) 28%,
+        rgba(80, 255, 180, 0.10) 44%,
+        rgba(80, 180, 255, 0.12) 60%,
+        rgba(180, 100, 255, 0.08) 78%,
+        transparent 100%
+    );
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 20%,
+        black 80%,
+        transparent 100%
+    );
+
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 20%,
+        black 80%,
+        transparent 100%
+    );
+
+    transform: translateX(-150%);
+    animation: shiny-sweep 2.4s ease-in-out infinite;
+}
+
+@keyframes shiny-sweep {
+    0% {
+        transform: translateX(-150%);
+    }
+
+    50%, 100% {
+        transform: translateX(150%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shiny-sweep {
+        animation: none;
+    }
+}
+
+
+
+.shiny-waves {
+    position: absolute;
+    inset: 0;
+    z-index: 5  ;
+    pointer-events: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='100' viewBox='0 0 300 100'%3E%3Cpath d='M0 10 Q37.5 -2 75 10 T150 10 T225 10 T300 10' stroke='%23ff80c8' stroke-width='0.6' fill='none'/%3E%3Cpath d='M0 30 Q37.5 18 75 30 T150 30 T225 30 T300 30' stroke='%2380eaff' stroke-width='0.6' fill='none'/%3E%3Cpath d='M0 50 Q37.5 38 75 50 T150 50 T225 50 T300 50' stroke='%23b996ff' stroke-width='0.6' fill='none'/%3E%3Cpath d='M0 70 Q37.5 58 75 70 T150 70 T225 70 T300 70' stroke='%23ffdd88' stroke-width='0.6' fill='none'/%3E%3Cpath d='M0 90 Q37.5 78 75 90 T150 90 T225 90 T300 90' stroke='%2388ffcc' stroke-width='0.6' fill='none'/%3E%3C/svg%3E");
+
+    background-size: 300px 100px;
+    background-repeat: repeat;
+
+    opacity: 0.25;
+}
+

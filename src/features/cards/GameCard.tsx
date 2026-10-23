@@ -3,9 +3,9 @@ import { GiBouncingSword } from "react-icons/gi";
 import { FaShieldAlt } from "react-icons/fa";
 import { cardThemes } from "./cardThemes";
 import { TiltCard } from "./TiltCard";
-import { SparkleParticles } from '@/components/lightswind/sparkle-particles';
-import { BackgroundBeams } from "@/components/ui/beams";
 import { GiPolarStar } from "react-icons/gi";
+
+import "./CardEffects.css"
 
 
 export type GameCardProps = {
@@ -32,15 +32,19 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                                 }>
                     <div className={ !isShiny ?
                             `relative z-10 flex aspect-2/3 flex-col overflow-hidden rounded-xl ${theme.backGround}`
-                            : `relative z-10 flex aspect-2/3 flex-col overflow-hidden rounded-xl ${theme.shinyBack}`
+                            : `relative z-10 flex aspect-2/3 flex-col overflow-hidden rounded-xl ${theme.shinyBack} `
                         }>
-                    {
-                        isShiny && 
-                        <>
-                           <BackgroundBeams color={theme.beamColor} />
-                            <SparkleParticles className="absolute inset-0"  baseDensity={150} maxParticleSize={1.5} opacityAnimationSpeed={5} enableCollisions={true}   particleShape="star"/>
-                        </>
-                    }
+                        {isShiny && (
+                            <>
+                                <div className="shiny-waves" aria-hidden="true" />
+                                <div className="shiny-sweep" aria-hidden="true" />
+                            </>
+                        )}
+                        {isShiny && (
+                            <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
+                                <div className="shiny-sweep" />
+                            </div>
+                        )}
                         <div className={`relative z-5 flex-1 min-h-0 overflow-hidden m-0.5 rounded-xl border shadow-xl  border-[#3F3F46]`}>
                             <img
                                 src={image}
@@ -49,7 +53,7 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                             />
                             <div className={`z-10 absolute flex flex-row justify-center items-center bottom-2 gap-1 right-2 bg-[#2D2D32] py-1 px-2 rounded-lg border ${theme.badge} font-bold text-base`}>
                                 <span>{theme.rarityName}</span>
-                                {
+                                {   
                                     isShiny &&
                                     <GiPolarStar className="white"/>
                                 }
