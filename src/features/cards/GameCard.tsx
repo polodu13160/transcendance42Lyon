@@ -25,7 +25,7 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
     const theme = cardThemes[rarity]
     
     return (
-        <TiltCard max={16}>
+        <TiltCard max={25}>
                 <div className={ !isShiny ?
                                  `${theme.cardBorder} relative w-75 overflow-hidden rounded-2xl p-1.5`
                                 : shinyBorder

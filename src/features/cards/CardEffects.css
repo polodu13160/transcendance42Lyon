@@ -33,7 +33,7 @@
     );
 
     transform: translateX(-150%);
-    animation: shiny-sweep 2.4s ease-in-out infinite;
+    animation: shiny-sweep 2s ease-in-out infinite;
 }
 
 @keyframes shiny-sweep {
