@@ -17,16 +17,20 @@ function getRandomCards(): CollectionCard[] {
 }
 
 export default function CollectionPage() {
+
+    const [incrementPacks, setIncrementPack] = useState(0)
+
     const [boosterCards, setBoosterCards] = useState<CollectionCard[]>([]);
 
     function openBooster() {
         setBoosterCards(getRandomCards());
+        setIncrementPack(prevpack => prevpack + 1)
     }
 
     return (
         <div className="h-screen bg-slate-500 dark:bg-[#18181B] flex flex-col justify-center items-center">
             <div className="relative">
-                <BoosterOpening cardsPack={boosterCards} />
+                <BoosterOpening cardsPack={boosterCards} key={incrementPacks} />
             </div>
 
             <div className="mt-4 flex flex-col">
