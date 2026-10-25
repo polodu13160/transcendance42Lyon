@@ -6,6 +6,7 @@ import { AnimatePresence } from "motion/react";
 interface openingProps {
 
     cardsPack: GameCardProps[]
+    resetFunction: () => void;
 }
 
 
@@ -17,11 +18,12 @@ export default function BoosterOpening(props: openingProps) {
         if (info.offset.x > 100 || info.offset.x < -100) {
             setVisibleIndex(prevIndex => prevIndex - 1);
         }
+        if (visibleIndex === 0) {
+            props.resetFunction();
+        }
     }
 
     function dragEvent(event: Event, info: PanInfo) : void {
-
-
 
     }
 
