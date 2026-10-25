@@ -18,16 +18,16 @@ export type GameCardProps = {
     isGame: boolean
 }
 
-const shinyBorder = "animate-background bg-linear-to-br from-red-500 via-orange-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 relative w-75 overflow-hidden rounded-2xl p-1.5 bg-size-[300%_200%] [animation-duration:2s]"
+const shinyBorder = "animate-background bg-linear-to-br from-red-500 via-orange-500 select-none via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 relative w-75 overflow-hidden rounded-2xl p-1.5 bg-size-[300%_200%] [animation-duration:2s]"
 
 export default function GameCard({ rarity, name, rating, image , resume, isShiny, isGame}: GameCardProps) {
 
     const theme = cardThemes[rarity]
     
     return (
-        <TiltCard max={25}>
+        <TiltCard max={25} select-none>
                 <div className={ !isShiny ?
-                                 `${theme.cardBorder} relative w-75 overflow-hidden rounded-2xl p-1.5`
+                                 `${theme.cardBorder} relative w-75 overflow-hidden rounded-2xl p-1.5 select-none`
                                 : shinyBorder
                                 }>
                     <div className={ !isShiny ?
@@ -49,6 +49,7 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                             <img
                                 src={image}
                                 alt={name}  
+                                draggable={false}
                                 className="h-full w-full object-cover"
                             />
                             <div className={`z-10 absolute flex flex-row justify-center items-center bottom-2 gap-1 right-2 bg-[#2D2D32] py-1 px-2 rounded-lg border ${theme.badge} font-bold text-base`}>

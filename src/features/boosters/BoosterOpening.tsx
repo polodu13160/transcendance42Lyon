@@ -1,6 +1,7 @@
 import GameCard, { type GameCardProps } from "../cards/GameCard";
 import { motion, type PanInfo } from "motion/react"
 import { useState } from "react"
+import { AnimatePresence } from "motion/react";
 
 interface openingProps {
 
@@ -12,18 +13,20 @@ export default function BoosterOpening(props: openingProps) {
 
     const [visibleIndex, setVisibleIndex] = useState(4);
 
-    if (visibleIndex < 0) {
-        return;
-    }
-
     function dragEnd(event: Event, info: PanInfo): void {
-        if (info.offset.x > 50 || info.offset.x < -50) {
+        if (info.offset.x > 100 || info.offset.x < -100) {
             setVisibleIndex(prevIndex => prevIndex - 1);
         }
     }
 
+    function dragEvent(event: Event, info: PanInfo) : void {
+
+
+
+    }
+
     return (    
-        <div>
+        <AnimatePresence>
             {props.cardsPack.map((card, index) => {
                 if (index <= visibleIndex) {
                     return (
@@ -39,6 +42,10 @@ export default function BoosterOpening(props: openingProps) {
                                 bottom: 50,}
                             }
                             onDragEnd={(event, info) => dragEnd(event, info)}
+                            onDrag={(event, info) => dragEvent(event, info)}
+                            exit={{opacity: 0, x: 100
+                                
+                            }}
                         >
                             <GameCard
                                 name={card.name}
@@ -52,7 +59,7 @@ export default function BoosterOpening(props: openingProps) {
                         </motion.div>
                 )}
             })}
-        </div>
+        </AnimatePresence>
 
     )
 

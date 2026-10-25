@@ -35,9 +35,8 @@ export default function CollectionPage() {
 
             <div className="mt-4 flex flex-col">
                 <span>Remaining boosters : 5</span>
-                <button className="border" onClick={openBooster}>
-                    Open Pack
-                </button>
+                <button onClick={openBooster} className="text-[#F5F5F5] bg-[#A78BFA] hover:bg-[#A78BFA]/80 active:bg-[#352B48] border-sky-800 border p-2 rounded cursor-pointer select-none font-bold w-48 transition-all duration-200 ease-in-out active:scale-95">Ouvrir un booster</button>   
+
             </div>
         </div>
     );
