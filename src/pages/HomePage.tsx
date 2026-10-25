@@ -5,6 +5,8 @@
 import { useState } from "react"
 import type { GameCardProps } from "../features/cards/GameCard";
 
+import "../features/boosters/boosterStyle.css"
+
 import cardsData from "../../test_data/cardsData.json";
 import BoosterOpening from "@/features/boosters/BoosterOpening";
 import boosterImg from "../assets/Booster.svg"
@@ -31,8 +33,8 @@ export type BoosterTiming = "idle" | "opening" | "revealed"
 const enabledButtonClass = "text-[#F5F5F5] bg-[#A78BFA] hover:bg-[#A78BFA]/80 active:bg-[#352B48] border-sky-800 border p-2 rounded cursor-pointer select-none font-bold w-48 transition-all duration-200 ease-in-out active:scale-95"
 const disabledButtonClass = "text-[#71717A] bg-[#352B48]/40 border border-[#352B48] p-2 rounded cursor-not-allowed select-none font-bold w-48 opacity-50"
 
-const boosterClass = "scale-120 m-5"
-const boosterClassAnimated = "scale-120 m-5 animate-bounce"
+
+const boosterClassAnimated = "scale-120 m-5 booster-shake"
 
 
 export default function HomePage() {
