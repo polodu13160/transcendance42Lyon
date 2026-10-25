@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="63mm" height="88mm" viewBox="0 0 630 880">
+  <defs>
+    <linearGradient id="pack" x1="82" y1="12" x2="548" y2="868" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6"/><stop offset=".48" stop-color="#6D28D9"/><stop offset="1" stop-color="#3B117C"/>
+    </linearGradient>
+    <linearGradient id="seal" x1="315" y1="10" x2="315" y2="870" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A78BFA"/><stop offset="1" stop-color="#5B21B6"/>
+    </linearGradient>
+    <path id="top-tooth" d="M0 16 10 4 20 16Z"/>
+    <path id="bottom-tooth" d="M0 864 10 876 20 864Z"/>
+  </defs>
+
+  <!-- Outer pouch -->
+<path d="M76 33C76 22 85 16 96 16H534C545 16 554 22 554 33L554 847C554 857 545 864 534 864H96C85 864 76 857 76 847L76 33Z" fill="url(#pack)" stroke="#16052E" stroke-width="5"/>
+  <path d="M76 33C76 22 85 16 96 16H534C545 16 554 22 554 33L554 847C554 857 545 864 534 864H96C85 864 76 857 76 847L76 33Z" fill="none" stroke="#DDD6FE" stroke-width="1.5"/>
+
+  <!-- Serrated sealed edges: same span, physically extending outside the pouch -->
+  <g fill="url(#seal)">
+    <use href="#top-tooth" x="95"/><use href="#top-tooth" x="115"/><use href="#top-tooth" x="135"/><use href="#top-tooth" x="155"/><use href="#top-tooth" x="175"/><use href="#top-tooth" x="195"/><use href="#top-tooth" x="215"/><use href="#top-tooth" x="235"/><use href="#top-tooth" x="255"/><use href="#top-tooth" x="275"/><use href="#top-tooth" x="295"/><use href="#top-tooth" x="315"/><use href="#top-tooth" x="335"/><use href="#top-tooth" x="355"/><use href="#top-tooth" x="375"/><use href="#top-tooth" x="395"/><use href="#top-tooth" x="415"/><use href="#top-tooth" x="435"/><use href="#top-tooth" x="455"/><use href="#top-tooth" x="475"/><use href="#top-tooth" x="495"/><use href="#top-tooth" x="515"/>
+    <use href="#bottom-tooth" x="95"/><use href="#bottom-tooth" x="115"/><use href="#bottom-tooth" x="135"/><use href="#bottom-tooth" x="155"/><use href="#bottom-tooth" x="175"/><use href="#bottom-tooth" x="195"/><use href="#bottom-tooth" x="215"/><use href="#bottom-tooth" x="235"/><use href="#bottom-tooth" x="255"/><use href="#bottom-tooth" x="275"/><use href="#bottom-tooth" x="295"/><use href="#bottom-tooth" x="315"/><use href="#bottom-tooth" x="335"/><use href="#bottom-tooth" x="355"/><use href="#bottom-tooth" x="375"/><use href="#bottom-tooth" x="395"/><use href="#bottom-tooth" x="415"/><use href="#bottom-tooth" x="435"/><use href="#bottom-tooth" x="455"/><use href="#bottom-tooth" x="475"/><use href="#bottom-tooth" x="495"/><use href="#bottom-tooth" x="515"/>
+  </g>
+  <path d="M95 16H535M95 864H535" stroke="#EDE9FE" stroke-opacity=".55" stroke-width="1.25"/>
+
+  <!-- MyGatchaGames logo, all vector and editable in Figma -->
+  <g transform="translate(116 360)">
+    <path d="M98.686 27.094 44.696 16.599C34.938 14.702 25.489 21.076 23.593 30.834L7.755 112.309C5.859 122.068 12.232 131.516 21.99 133.413l53.99 10.494c9.758 1.897 19.207-4.476 21.104-14.234l15.837-81.475c1.897-9.759-4.476-19.208-14.235-21.104Z" fill="#A78BFA"/>
+    <path d="m72.29 14.505-54.465 7.655C7.98 23.543 1.122 32.645 2.505 42.49l11.551 82.192c1.384 9.844 10.486 16.703 20.33 15.32l54.465-7.655c9.844-1.384 16.703-10.486 15.32-20.33L92.62 29.825c-1.384-9.844-10.486-16.703-20.33-15.32Z" fill="#8B5CF6"/>
+    <rect x="18.838" y="18.753" width="91" height="119" rx="18" fill="#6D28D9"/>
+    <rect x="26.838" y="26.753" width="75" height="103" rx="12" stroke="#DDD6FE" stroke-width="3"/>
+    <path d="m64.338 43.253 7.6 19.5 20.9 1.2-16.2 13.2 5.3 20.5-17.6-11.3-17.6 11.3 5.3-20.5-16.2-13.2 20.9-1.2 7.6-19.5Z" fill="#FDE68A"/>
+    <circle cx="41.838" cy="109.753" r="4" fill="#EDE9FE"/><circle cx="86.838" cy="109.753" r="4" fill="#EDE9FE"/>
+    <text x="132" y="88" fill="white" font-family="Arial, sans-serif" font-size="53" font-weight="800">MyGatcha</text>
+    <text x="132" y="136" fill="#C4B5FD" font-family="Arial, sans-serif" font-size="53" font-weight="800">Games</text>
+  </g>
+</svg>
