@@ -255,7 +255,6 @@ def transform_to_list(list_, name_key:str)->list[str] | None:
     else:
         return None
 def baleysienne_valorisation(value: Wrapper):
-    # print(value.id_igdb)
     v = float(value.total_rating_count)
     r = float(value.total_rating)
     m = float(median_total_rating_count)
@@ -288,27 +287,28 @@ def awarding_colors_cards():
 
     for wrapper in wrappers:
         card = session.get(Cards,wrapper.id_igdb)
-        if card is None:
+        if card is None or wrapper.bayesian is None:
             print(wrapper.id_igdb)
-            return
-        match wrapper.bayesian:
-            case Colors.GOLD.value as v if wrapper.bayesian >= v['min_bayesian']:
-                card.colors = v['id']
-                card.value_exchange = v['value']
-            case Colors.PURPLE.value as v if wrapper.bayesian >= v['min_bayesian']:
-                card.colors = v['id']
-                card.value_exchange = v['value']
-            case Colors.BLUE.value as v if wrapper.bayesian >= v['min_bayesian']:
-                card.colors = v['id']
-                card.value_exchange = v['value']
-            case Colors.GREEN.value as v if wrapper.bayesian >= v['min_bayesian']:
-                card.colors = v['id']
-                card.value_exchange = v['value']
-            case _:
-                v = Colors.GREY.value
-                card.colors = v['id']
-                card.value_exchange = v['value']
-        session.add(card)
+        if wrapper.bayesian >= Colors.GOLD.value['min_bayesian']:
+            v = Colors.GOLD.value
+            card.colors = v['id']
+            card.value_exchange = v['value']
+        elif wrapper.bayesian >= Colors.PURPLE.value['min_bayesian']:
+            v = Colors.PURPLE.value
+            card.colors = v['id']
+            card.value_exchange = v['value']
+        elif wrapper.bayesian >= Colors.BLUE.value['min_bayesian']:
+            v = Colors.BLUE.value
+            card.colors = v['id']
+            card.value_exchange = v['value']
+        elif wrapper.bayesian >= Colors.GREEN.value['min_bayesian']:
+            v = Colors.GREEN.value
+            card.colors = v['id']
+            card.value_exchange = v['value']
+        else:
+            v = Colors.GREY.value
+            card.colors = v['id']
+            card.value_exchange = v['value']
     session.commit()
     session.execute(delete(Wrapper))
     session.commit()
@@ -353,6 +353,7 @@ if __name__ == "__main__":
                 raise ValueError("OLLAMA_IA is not configured INTO .env")
             if lastid is None:
                 lastid = 0
+            session.expunge_all()
             allValue = session.scalars(select(Wrapper).order_by(Wrapper.id_igdb)).all()
             if (len(allValue) >= 20):
                 median_total_rating_count = statistics.median([wrapper.total_rating_count for wrapper in allValue if wrapper.game_type != 1])
@@ -363,11 +364,10 @@ if __name__ == "__main__":
                         
                 averrage_total_rating = statistics.mean([wrapper.total_rating for wrapper in allValue if wrapper.game_type != 1])
                 value: Wrapper
-                session.expunge_all()
                 for value in allValue:
                     if (session.get(Cards, value.id_igdb) is None):
                         if (value.cover_id is not None or value.artworks_url is not None):
-                            value.bayesian = (baleysienne_valorisation(value) if value.game_type != 1  else 0), 
+                            value.bayesian = (baleysienne_valorisation(value) if value.game_type != 1  else 0)
                             card = Cards(
                                 id_card = value.id_igdb,
                                 attq = (1.5 if  value.game_type == 1 else int((value.rating or 50) * 100)),
