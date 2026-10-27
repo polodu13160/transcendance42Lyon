@@ -190,10 +190,10 @@ def description_by_ollama(value:Wrapper) -> str:
                     "role": "system",
                     "content": f"""You are a game copywriter. Write a powerful English.
                     STRICT RULES:
-                    - ABSOLUTELY PROHIBITED: NEVER use or mention the game title "{value.name}".
+                    - ABSOLUTELY PROHIBITED: NEVER use or mention the game title '{value.name}'.
                     - Describe the hero's traits, do not just use their name.
                     - Jump straight into the action or emotion.
-                    - Prohibited phrases: "This game is...", "Discover", "you", or any formal address.
+                    - Prohibited phrases: 'This game is...', 'Discover', 'you', or any formal address.
                     -First sentence describe the game.
                     -Second sentence describe the game'style""" 
                 },
@@ -244,9 +244,9 @@ def create_urls_images(value: Wrapper)->list[str]:
     tab = [] 
     if value.artworks_url != None:
         id = value.artworks_url[0].get("image_id")
-        tab.append(f"https://images.igdb.com/igdb/image/upload/t_720p/{id}.jpg")
+        tab.append(f"https://images.igdb.com/igdb/image/upload/t_screenshot_huge/{id}.jpg")
     if value.cover_id is not None:
-        tab.insert(0,f"https://images.igdb.com/igdb/image/upload/t_720p/{value.cover_id}.jpg")
+        tab.insert(0,f"https://images.igdb.com/igdb/image/upload/t_screenshot_huge/{value.cover_id}.jpg")
     return tab
 
 def transform_to_list(list_, name_key:str)->list[str] | None:
@@ -257,7 +257,7 @@ def transform_to_list(list_, name_key:str)->list[str] | None:
 def baleysienne_valorisation(value: Wrapper):
     v = float(value.total_rating_count)
     r = float(value.total_rating)
-    m = float(median_total_rating_count)
+    m = float(averrage_rating_count)
     c = float(averrage_total_rating)
     # print((v / (v + m)) * r + (m / (v + m)) * c)
     return (v / (v + m)) * r + (m / (v + m)) * c
@@ -276,11 +276,11 @@ def select_min_name_by_id(value: Wrapper):
     
 
 class Colors(enum.Enum):
-    GREEN = {"id": 1, "min_bayesian": 75, "value": 800} 
-    BLUE = {"id": 2, "min_bayesian": 80, "value": 800} 
-    PURPLE = {"id" : 3, "min_bayesian": 85, "value": 1300}
-    GOLD = {"id" : 4, "min_bayesian": 90, "value": 2300} 
-    GREY = {"id" : 0, "min_bayesian": None, "value": 200} #no use
+    GREEN = {"id": 1, "min_bayesian": 70, "value": 400} 
+    BLUE = {"id": 2, "min_bayesian": 73, "value": 800} 
+    PURPLE = {"id" : 3, "min_bayesian": 76, "value": 1300}
+    GOLD = {"id" : 4, "min_bayesian": 81 , "value": 2300} 
+    GREY = {"id" : 0, "min_bayesian": None, "value": 200} 
 
 def awarding_colors_cards():
     wrappers = session.scalars(select(Wrapper).where(Wrapper.game_type != 1).order_by(Wrapper.bayesian.desc())).all()
@@ -289,19 +289,19 @@ def awarding_colors_cards():
         card = session.get(Cards,wrapper.id_igdb)
         if card is None or wrapper.bayesian is None:
             print(wrapper.id_igdb)
-        if wrapper.bayesian >= Colors.GOLD.value['min_bayesian']:
+        if wrapper.bayesian > Colors.GOLD.value['min_bayesian']:
             v = Colors.GOLD.value
             card.colors = v['id']
             card.value_exchange = v['value']
-        elif wrapper.bayesian >= Colors.PURPLE.value['min_bayesian']:
+        elif wrapper.bayesian > Colors.PURPLE.value['min_bayesian']:
             v = Colors.PURPLE.value
             card.colors = v['id']
             card.value_exchange = v['value']
-        elif wrapper.bayesian >= Colors.BLUE.value['min_bayesian']:
+        elif wrapper.bayesian > Colors.BLUE.value['min_bayesian']:
             v = Colors.BLUE.value
             card.colors = v['id']
             card.value_exchange = v['value']
-        elif wrapper.bayesian >= Colors.GREEN.value['min_bayesian']:
+        elif wrapper.bayesian > Colors.GREEN.value['min_bayesian']:
             v = Colors.GREEN.value
             card.colors = v['id']
             card.value_exchange = v['value']
@@ -310,8 +310,8 @@ def awarding_colors_cards():
             card.colors = v['id']
             card.value_exchange = v['value']
     session.commit()
-    session.execute(delete(Wrapper))
-    session.commit()
+    # session.execute(delete(Wrapper))
+    # session.commit()
 
 
         
@@ -356,7 +356,7 @@ if __name__ == "__main__":
             session.expunge_all()
             allValue = session.scalars(select(Wrapper).order_by(Wrapper.id_igdb)).all()
             if (len(allValue) >= 20):
-                median_total_rating_count = statistics.median([wrapper.total_rating_count for wrapper in allValue if wrapper.game_type != 1])
+                averrage_rating_count = statistics.mean([wrapper.total_rating_count for wrapper in allValue if wrapper.game_type != 1])
                 # for wrapper in allValue:
                 #     if wrapper.game_type != 1:
                 #         if wrapper.total_rating is None:
