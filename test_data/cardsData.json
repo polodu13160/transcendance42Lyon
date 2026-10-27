@@ -98,5 +98,205 @@
         "rarity": "legendary",
         "isShiny": false,
         "isGame": true
-    }
+    },
+  {
+    "id": "terraria-shiny",
+    "name": "Terraria",
+    "resume": "Explore un monde en 2D, construis des bases, découvre des trésors et affronte des boss redoutables.",
+    "rating": 9.1,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+    "rarity": "common",
+    "isShiny": true,
+    "isGame": false
+  },
+  {
+    "id": "terraria-normal",
+    "name": "Terraria",
+    "resume": "Explore un monde en 2D, construis des bases, découvre des trésors et affronte des boss redoutables.",
+    "rating": 9.1,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+    "rarity": "common",
+    "isShiny": false,
+    "isGame": false
+  },
+  {
+    "id": "portal-2-shiny",
+    "name": "Portal 2",
+    "resume": "Résous des énigmes ingénieuses grâce à un générateur de portails dans les laboratoires d'Aperture Science.",
+    "rating": 9.5,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg",
+    "rarity": "common",
+    "isShiny": true,
+    "isGame": false
+  },
+  {
+    "id": "portal-2-normal",
+    "name": "Portal 2",
+    "resume": "Résous des énigmes ingénieuses grâce à un générateur de portails dans les laboratoires d'Aperture Science.",
+    "rating": 9.5,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg",
+    "rarity": "common",
+    "isShiny": false,
+    "isGame": false
+  },
+  {
+    "id": "celeste-shiny",
+    "name": "Celeste",
+    "resume": "Aide Madeline à gravir une montagne mystérieuse dans un jeu de plateforme exigeant et émouvant.",
+    "rating": 9.2,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
+    "rarity": "uncommon",
+    "isShiny": true,
+    "isGame": false
+  },
+  {
+    "id": "celeste-normal",
+    "name": "Celeste",
+    "resume": "Aide Madeline à gravir une montagne mystérieuse dans un jeu de plateforme exigeant et émouvant.",
+    "rating": 9.2,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
+    "rarity": "uncommon",
+    "isShiny": false,
+    "isGame": false
+  },
+  {
+    "id": "hades-shiny",
+    "name": "Hades",
+    "resume": "Incarne Zagreus et tente de t'échapper des Enfers en affrontant les créatures de la mythologie grecque.",
+    "rating": 9.3,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+    "rarity": "uncommon",
+    "isShiny": true,
+    "isGame": false
+  },
+  {
+    "id": "hades-normal",
+    "name": "Hades",
+    "resume": "Incarne Zagreus et tente de t'échapper des Enfers en affrontant les créatures de la mythologie grecque.",
+    "rating": 9.3,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+    "rarity": "uncommon",
+    "isShiny": false,
+    "isGame": false
+  },
+  {
+    "id": "balatro-shiny",
+    "name": "Balatro",
+    "resume": "Combine des mains de poker et des jokers aux pouvoirs uniques pour créer des combinaisons dévastatrices.",
+    "rating": 9.4,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/2379780/header.jpg",
+    "rarity": "rare",
+    "isShiny": true,
+    "isGame": false
+  },
+  {
+    "id": "balatro-normal",
+    "name": "Balatro",
+    "resume": "Combine des mains de poker et des jokers aux pouvoirs uniques pour créer des combinaisons dévastatrices.",
+    "rating": 9.4,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/2379780/header.jpg",
+    "rarity": "rare",
+    "isShiny": false,
+    "isGame": false
+  },
+  {
+    "id": "doom-eternal-shiny",
+    "name": "DOOM Eternal",
+    "resume": "Incarne le Doom Slayer et massacre des hordes de démons dans des combats frénétiques.",
+    "rating": 9.0,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
+    "rarity": "rare",
+    "isShiny": true,
+    "isGame": false
+  },
+  {
+    "id": "doom-eternal-normal",
+    "name": "DOOM Eternal",
+    "resume": "Incarne le Doom Slayer et massacre des hordes de démons dans des combats frénétiques.",
+    "rating": 9.0,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
+    "rarity": "rare",
+    "isShiny": false,
+    "isGame": false
+  },
+  {
+    "id": "outer-wilds-shiny",
+    "name": "Outer Wilds",
+    "resume": "Explore un système solaire mystérieux piégé dans une boucle temporelle et perce ses secrets.",
+    "rating": 9.6,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/753640/header.jpg",
+    "rarity": "epic",
+    "isShiny": true,
+    "isGame": false
+  },
+  {
+    "id": "outer-wilds-normal",
+    "name": "Outer Wilds",
+    "resume": "Explore un système solaire mystérieux piégé dans une boucle temporelle et perce ses secrets.",
+    "rating": 9.6,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/753640/header.jpg",
+    "rarity": "epic",
+    "isShiny": false,
+    "isGame": false
+  },
+  {
+    "id": "resident-evil-4-shiny",
+    "name": "Resident Evil 4",
+    "resume": "Accompagne Leon Kennedy dans une mission de sauvetage au cœur d'un village infesté de créatures terrifiantes.",
+    "rating": 9.3,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/2050650/header.jpg",
+    "rarity": "epic",
+    "isShiny": true,
+    "isGame": true
+  },
+  {
+    "id": "resident-evil-4-normal",
+    "name": "Resident Evil 4",
+    "resume": "Accompagne Leon Kennedy dans une mission de sauvetage au cœur d'un village infesté de créatures terrifiantes.",
+    "rating": 9.3,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/2050650/header.jpg",
+    "rarity": "epic",
+    "isShiny": false,
+    "isGame": true
+  },
+  {
+    "id": "red-dead-redemption-2-shiny",
+    "name": "Red Dead Redemption 2",
+    "resume": "Vis l'épopée d'Arthur Morgan et de sa bande de hors-la-loi dans les derniers jours du Far West.",
+    "rating": 9.8,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
+    "rarity": "legendary",
+    "isShiny": true,
+    "isGame": true
+  },
+  {
+    "id": "red-dead-redemption-2-normal",
+    "name": "Red Dead Redemption 2",
+    "resume": "Vis l'épopée d'Arthur Morgan et de sa bande de hors-la-loi dans les derniers jours du Far West.",
+    "rating": 9.8,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
+    "rarity": "legendary",
+    "isShiny": false,
+    "isGame": true
+  },
+  {
+    "id": "god-of-war-shiny",
+    "name": "God of War",
+    "resume": "Accompagne Kratos et son fils Atreus dans un voyage épique à travers les royaumes de la mythologie nordique.",
+    "rating": 9.7,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/1593500/header.jpg",
+    "rarity": "legendary",
+    "isShiny": true,
+    "isGame": true
+  },
+  {
+    "id": "god-of-war-normal",
+    "name": "God of War",
+    "resume": "Accompagne Kratos et son fils Atreus dans un voyage épique à travers les royaumes de la mythologie nordique.",
+    "rating": 9.7,
+    "image": "https://cdn.akamai.steamstatic.com/steam/apps/1593500/header.jpg",
+    "rarity": "legendary",
+    "isShiny": false,
+    "isGame": true
+  }
 ]

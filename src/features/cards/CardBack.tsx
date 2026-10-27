@@ -1,24 +1,11 @@
-import { cardThemes } from "./cardThemes";
+import logoImg from "../../assets/logo/logo_dark_back.svg"
 
-type GameCardProps = {
-    rarity: keyof typeof cardThemes; 
-    name: string,
-    rating: number,
-    resume: string,
-    image: string,
-    isShiny: boolean,
-    isGame: boolean
-}
-
-export default function CardBack({ rarity, name, rating, image , resume, isShiny, isGame}: GameCardProps) {
-
-    <div className="relative w-75 overflow-hidden rounded-2xl p-1.5">
-
-        <div className="relative z-10 flex aspect-2/3 flex-col overflow-hidden rounded-xl bg-purple-400">
-        
+export default function CardBack() {
+    return (
+        <div className="relative w-75 overflow-hidden rounded-2xl p-1.5 bg-[#F3EEFF] select-none">
+            <div className="aspect-2/3 rounded-xl bg-[#6D28D9] flex justify-center select-non ">
+                <img src={logoImg} className="scale-80" draggable={false}/>
+            </div>
         </div>
-
-    </div>
-
-
+    );
 }

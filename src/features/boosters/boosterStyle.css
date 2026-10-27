@@ -1,6 +1,22 @@
+.booster-stage {
+  min-height: 560px;
+}
+
 .booster-shake {
-  animation: shake 1s;
+  animation: shake 0.7s;
   animation-iteration-count: infinite;
+}
+
+@media (max-height: 760px) {
+  .booster-stage {
+    min-height: 500px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booster-shake {
+    animation: none;
+  }
 }
 
 @keyframes shake {

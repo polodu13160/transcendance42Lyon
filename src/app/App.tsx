@@ -31,40 +31,41 @@ export default function App() {
 
     return (
         <BrowserRouter>
-            <div className="flex min-h-dvh bg-[#18181B]">
+            <div className="app-shell min-h-dvh">
+                <div className="app-particles" aria-hidden="true" />
+                <div className="relative z-10 flex min-h-dvh">
+                    <NavBar
+                        onOpenLogin={() => setActiveModal("login")}
+                        onOpenSignup={() => setActiveModal("signup")}
+                    />
 
-                <NavBar
-                    onOpenLogin={() => setActiveModal("login")}
-                    onOpenSignup={() => setActiveModal("signup")}
-                />
+                    {activeModal !== null && (
+                        <Modal onClose={closeModal}>
 
-                {activeModal !== null && (
-                    <Modal onClose={closeModal}>
+                            {activeModal === "login" && (
+                                <LoginForm />
+                            )}
 
-                        {activeModal === "login" && (
-                            <LoginForm />
-                        )}
+                            {activeModal === "signup" && (
+                                <h2>Signup à créer</h2>
+                            )}
 
-                        {activeModal === "signup" && (
-                            <h2>Signup à créer</h2>
-                        )}
+                        </Modal>
+                    )}
 
-                    </Modal>
-                )}
-
-                <main className="flex-1 min-w-0">
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/collection" element={<CollectionPage />} />
-                        <Route path="/market" element={<MarketPage />} />
-                        <Route path="/browse-all" element={<Browse />} />
-                        <Route path="/profil" element={<ProfilPage />} />
-                        <Route path="/settings" element={<SettingsPage />} />
-                        <Route path="/trade" element={<TradePage />} />
-                        <Route path="/play" element={<PlayPage />} />
-                    </Routes>
-                </main>
-
+                    <main className="min-w-0 flex-1">
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/collection" element={<CollectionPage />} />
+                            <Route path="/market" element={<MarketPage />} />
+                            <Route path="/browse-all" element={<Browse />} />
+                            <Route path="/profil" element={<ProfilPage />} />
+                            <Route path="/settings" element={<SettingsPage />} />
+                            <Route path="/trade" element={<TradePage />} />
+                            <Route path="/play" element={<PlayPage />} />
+                        </Routes>
+                    </main>
+                </div>
             </div>
         </BrowserRouter>
     );

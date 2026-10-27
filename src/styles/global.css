@@ -9,6 +9,71 @@ html {
      font-family: "Ubuntu", sans-serif;
 }
 
+.app-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #14131a;
+}
+
+.app-particles,
+.app-particles::before,
+.app-particles::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.app-particles {
+  z-index: 0;
+  opacity: 0.58;
+  background-image:
+    radial-gradient(circle at 8% 18%, #c4b5fd 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 12%, #a78bfa 0 1px, transparent 1.5px),
+    radial-gradient(circle at 91% 64%, #7dd3fc 0 1px, transparent 1.5px),
+    radial-gradient(circle at 22% 82%, #a78bfa 0 1px, transparent 1.5px),
+    radial-gradient(circle at 58% 71%, #ddd6fe 0 1px, transparent 1.5px);
+  background-size: 230px 260px, 310px 290px, 270px 250px, 350px 330px, 190px 220px;
+  animation: particle-drift 22s linear infinite;
+}
+
+.app-particles::before,
+.app-particles::after {
+  content: "";
+  background-image:
+    radial-gradient(circle, rgb(196 181 253 / 70%) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgb(125 211 252 / 60%) 0 1px, transparent 1.5px);
+  background-size: 160px 180px, 280px 250px;
+}
+
+.app-particles::before {
+  animation: particle-drift 30s linear infinite reverse;
+}
+
+.app-particles::after {
+  opacity: 0.45;
+  transform: scale(1.35);
+  animation: particle-pulse 6s ease-in-out infinite;
+}
+
+@keyframes particle-drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: 80px -180px, -110px 140px, 160px 100px, -140px -100px, 100px 160px; }
+}
+
+@keyframes particle-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-particles,
+  .app-particles::before,
+  .app-particles::after {
+    animation: none;
+  }
+}
+
 @theme {
   --animate-background: background-move ease infinite;
 

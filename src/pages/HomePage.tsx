@@ -34,7 +34,8 @@ const enabledButtonClass = "text-[#F5F5F5] bg-[#A78BFA] hover:bg-[#A78BFA]/80 ac
 const disabledButtonClass = "text-[#71717A] bg-[#352B48]/40 border border-[#352B48] p-2 rounded cursor-not-allowed select-none font-bold w-48 opacity-50"
 
 
-const boosterClassAnimated = "scale-120 m-5 booster-shake"
+const boosterAnimated = "scale-120 m-5 booster-shake opacity-50"
+const boosterWait = "scale-120 m-5"
 
 
 export default function HomePage() {
@@ -47,10 +48,13 @@ export default function HomePage() {
     function handleBoosterState() {
 
         if (boosterState === "idle") {
-            setButtonState((prevState) => !prevState)
             setBoosterState("opening")
-            setBoosterCards(getRandomCards());
-            setIncrementPack(prevpack => prevpack + 1)
+            setButtonState((prevState) => !prevState)
+            setTimeout(() => {
+                setBoosterState("revealed")
+                setBoosterCards(getRandomCards());
+                setIncrementPack(prevpack => prevpack + 1)
+            }, 1000)
         }
         return;
     }
@@ -60,23 +64,35 @@ export default function HomePage() {
         setBoosterState("idle")
     }
 
+    function boosterClass() {
+
+        if (boosterState === "idle")
+            return boosterWait
+        else if (boosterState === "opening")
+            return boosterAnimated
+    }
+
 
 
     return (
-        <div className="flex flex-col justify-center items-center w-auto h-dvh gap-6 bg-neutral-100 dark:bg-[#18181B]">
+        <div className="relative flex min-h-dvh flex-col items-center justify-center gap-6 px-4 py-8">
             {/* <img src={logo_dark} className="md:block w-full h-auto pb-10 pt-5 scale-90"/> */}
 
-            {
-                boosterState !== "idle"
-                ?           <div className="relative">
+            <div className="booster-stage relative z-10 flex w-full items-center justify-center">
+                {
+                    boosterState === "revealed"
+                    ?           <div className="relative">
                                 <BoosterOpening cardsPack={boosterCards} resetFunction={showNewPack} key={incrementPacks} />
                             </div>
-                :           <img src={boosterImg} className={ boosterState === "idle" ? boosterClassAnimated : boosterClassAnimated} />
-            }
+                    :           <img src={boosterImg} className={boosterClass()} />
+                }
+            </div>
 
-            <h1 className="text-xl font-bold text-[#A78BFA]" >Bienvenue sur GatchaGames : {boosterState} {incrementPacks}</h1>
-            <p className="text-[#F5F5F5]">GatchaGames est une plateforme en ligne de jeu et collection de carte sur l'univers du jeu-vidéo</p>
-            <button disabled={buttonState} onClick={handleBoosterState} className={buttonState ? disabledButtonClass : enabledButtonClass} >Ouvrir un booster</button>
+            <div className="relative z-10 flex flex-col items-center gap-3 text-center">
+                <h1 className="text-xl font-bold text-[#C4B5FD]" >Bienvenue sur GatchaGames</h1>
+                <p className="max-w-xl text-[#D4D4D8]">GatchaGames est une plateforme en ligne de jeu et collection de carte sur l'univers du jeu-vidéo</p>
+                <button disabled={buttonState} onClick={handleBoosterState} className={buttonState ? disabledButtonClass : enabledButtonClass} >Ouvrir un booster</button>
+            </div>
         </div>
     )
-}  
+}
