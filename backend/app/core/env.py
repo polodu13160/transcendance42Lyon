@@ -16,3 +16,7 @@ if not CLIENT_SECRET:
 GRANT_TYPE = os.environ.get("GRANT_TYPE")
 if not GRANT_TYPE:
     raise ValueError(".env is not good : GRANT_TYPE is required")
+
+OLLAMA_EMBEDDING = os.environ.get("OLLAMA_EMBEDDING")
+OLLAMA_IA = os.environ.get("OLLAMA_IA")
+OLLAMA = os.environ.get("OLLAMA")
