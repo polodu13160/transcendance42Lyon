@@ -54,3 +54,5 @@ Once the backend is running (via the `uv run dev` command), the interactive API 
 * [Alembic Migration Guide (FR)](https://blog.stephane-robert.info/docs/developper/programmation/python/sqlachemy-2/)
 
 * uv run sqlacodegen "postgresql://root:dd@localhost:5432/principal_db" > models.py
+
+* https://www.zhihu.com/en/answer/12830991 - comment calculer la valeur de la carte  

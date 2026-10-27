@@ -1,16 +1,10 @@
 from fastapi import FastAPI, dependencies
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session
-from .models.base import SessionLocal
 
 load_dotenv()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 
 
