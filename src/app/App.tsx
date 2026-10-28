@@ -31,7 +31,7 @@ export default function App() {
 
     return (
         <BrowserRouter>
-            <div className="app-shell min-h-dvh">
+            <div className="app-shell min-h-svh min-h-dvh">
                 <div className="app-particles" aria-hidden="true" />
                 <div className="relative z-10 flex min-h-dvh">
                     <NavBar
