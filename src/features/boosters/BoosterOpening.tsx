@@ -16,6 +16,7 @@ export default function BoosterOpening(props: openingProps) {
     const [visibleIndex, setVisibleIndex] = useState(4);
     const [dragOn, setDragOn] = useState(false);
     const [swapDirection, setSwapDirection] = useState(true);
+    const [isClosing, setIsClosing] = useState(false);
 
 
 
@@ -29,13 +30,13 @@ export default function BoosterOpening(props: openingProps) {
         
         if (info.offset.x > 100 || info.offset.x < -100) {
 
-            setVisibleIndex(prevIndex => prevIndex - 1);
             setDragOn(false)
 
-
             if (visibleIndex === 0) {
-                props.resetFunction();
+                setIsClosing(true);
             }
+
+            setVisibleIndex(prevIndex => prevIndex - 1);
         }
     }
 
@@ -51,7 +52,12 @@ export default function BoosterOpening(props: openingProps) {
     }
 
     return (    
-        <AnimatePresence custom={swapDirection}>
+        <AnimatePresence
+            custom={swapDirection}
+            onExitComplete={() => {
+                if (isClosing) props.resetFunction();
+            }}
+        >
             {props.cardsPack.map((card, index) => {
                 if (index <= visibleIndex) {
                     return (

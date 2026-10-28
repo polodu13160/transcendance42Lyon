@@ -1,6 +1,6 @@
 import GameCard from "../cards/GameCard";
 import type { GameCardProps } from "../../types/card";
-import { motion, useMotionValue, useTransform, type PanInfo } from "motion/react"
+import { motion, useMotionValue, useTransform, type PanInfo, type Variants } from "motion/react"
 import RevealCard from "../cards/RevealCard";
 import CardBack from "../cards/CardBack";
 
@@ -16,11 +16,22 @@ interface SwipeCardProps {
 
 export default function SwipeCard({card, index, drag, dragEnd, swapFunction, isActive}: SwipeCardProps) {
 
-    const variants = {
-        exit: 
-            function exit(direction: boolean) {
-                return (direction ? {opacity: 0, x: -100} : {opacity:0, x: 100})
+    const variants: Variants = {
+        initial: { opacity: 0, scale: 0.96, y: 18 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            transition: { duration: 0.32, ease: "easeOut" },
+        },
+        exit: function exit(direction: boolean) {
+            return {
+                opacity: 0,
+                x: direction ? -340 : 340,
+                scale: 0.96,
+                transition: { duration: 0.28, ease: "easeIn" },
             }
+        }
     }
 
     const motionValue = useMotionValue(0);
@@ -40,6 +51,8 @@ export default function SwipeCard({card, index, drag, dragEnd, swapFunction, isA
             }
             onDragEnd={(event, info) => dragEnd(event, info)}
             variants={variants}
+            initial={isActive ? "initial" : false}
+            animate="visible"
             exit="exit"
             style={{x: motionValue, rotate: rotate}}
             dragSnapToOrigin
