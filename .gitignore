@@ -25,3 +25,6 @@ dist-ssr
 
 # Personal design notes: kept locally, never committed
 .notes/
+
+# Local documentation
+docs/**/*.md

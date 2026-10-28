@@ -13,18 +13,21 @@ interface RevealProps {
     swapFunction?: () => void;
 }
 
+
+
 export default function RevealCard({
     front,
     back,
     rarity,
     isActive,
     swapFunction,
-    isShiny
+    isShiny,
 }: RevealProps) {
 
     const [flip, setFlip] = React.useState(false)
 
     const themeShadow = cardThemes[rarity].shadow
+    const flipDuration = cardThemes[rarity].flipDuration
 
     function flipCard() {
         if (flip === false) {
@@ -47,8 +50,8 @@ export default function RevealCard({
                         ${themeShadow}
                     `}
                     style={{
-                        opacity: flip ? 0 : undefined,
-                        transition: "opacity 500ms ease-out"
+                        opacity: flip ? 0.4 : 1,
+                        transition: `opacity 500ms ease-out`
                     }}
                 />
             )}
@@ -63,7 +66,7 @@ export default function RevealCard({
             <motion.div
                 className="relative transform-3d w-75 h-111"
                 animate={{ rotateY: flip ? 180 : 0 }}
-                transition={{ type: "tween" }}
+                transition={{ type: "tween", duration: flipDuration }}
             >
                 <div className="absolute backface-hidden rotate-y-180">
                     {front}

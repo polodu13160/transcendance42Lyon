@@ -25,7 +25,7 @@ export default function CardBack(props: CardBackProps) {
             />
 
             <div className="relative aspect-2/3 rounded-xl bg-[#6D28D9] flex justify-center">
-                <img src={logoImg} draggable={false} className="scale-80" />
+                <img src={logoImg} draggable={false} className="scale-80 select-none" />
             </div>
 
         </div>

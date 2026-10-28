@@ -30,7 +30,7 @@ const enabledButtonClass = "text-[#F5F5F5] bg-[#A78BFA] hover:bg-[#A78BFA]/80 ac
 const disabledButtonClass = "text-[#71717A] bg-[#352B48]/40 border border-[#352B48] p-2 rounded cursor-not-allowed select-none font-bold w-48 opacity-50"
 
 
-const boosterAnimated = "scale-120 m-5 booster-shake opacity-50"
+const boosterAnimated = "scale-120 m-5 booster-shake brightness-50"
 const boosterWait = "scale-120 m-5"
 
 
