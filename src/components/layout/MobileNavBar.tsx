@@ -13,7 +13,7 @@ import arrowImg from "../../assets/icons/arrow-left-right.svg";
 
 export default function MobileNavBar() {
     return (
-        <div className="flex flex-row items-center border-t-2 border-t-[#3F3F46] p-2 fixed bottom-0 w-screen bg-[#E4E4E7] dark:bg-[#232326] shrink-0 z-9">
+        <div className="fixed inset-x-0 bottom-0 z-50 flex shrink-0 flex-row items-center border-t-2 border-t-[#3F3F46] bg-[#E4E4E7] p-2 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] dark:bg-[#232326]">
             <nav className="flex w-full gap-2">
                 <div className="flex-1 min-w-0">
                     <NavButton linkTo="/collection" imgSrc={collectionImg} pageName="Collection" />
