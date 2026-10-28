@@ -71,7 +71,7 @@ export default function HomePage() {
 
 
     return (
-        <div className="relative flex h-svh h-dvh min-h-0 scale-70 flex-col items-center justify-center gap-6 overflow-hidden overscroll-none px-4 pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:h-auto md:min-h-dvh md:scale-100 md:overflow-visible md:p-8">
+        <div className="home-page relative flex h-svh h-dvh min-h-0 scale-70 flex-col items-center justify-center gap-6 overflow-hidden overscroll-none px-4 pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:h-auto md:min-h-dvh md:scale-100 md:overflow-visible md:p-8">
             {/* <img src={logo_dark} className="md:block w-full h-auto pb-10 pt-5 scale-90"/> */}
 
             <div className="booster-stage relative z-10 flex w-full items-center justify-center">

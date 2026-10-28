@@ -9,6 +9,17 @@ html {
      font-family: "Ubuntu", sans-serif;
 }
 
+/* The booster opening is a full-screen mobile scene, not a scrollable page. */
+@media (max-width: 767px) {
+  html:has(.home-page),
+  body:has(.home-page),
+  #root:has(.home-page) {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+}
+
 .app-shell {
   position: relative;
   isolation: isolate;
