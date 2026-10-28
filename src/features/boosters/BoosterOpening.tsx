@@ -1,5 +1,5 @@
 import GameCard, { type GameCardProps } from "../cards/GameCard";
-import { motion, type PanInfo } from "motion/react"
+import { motion, useMotionValue, type PanInfo } from "motion/react"
 import { useState } from "react"
 import { AnimatePresence } from "motion/react";
 import RevealCard from "../cards/RevealCard";
@@ -54,10 +54,11 @@ export default function BoosterOpening(props: openingProps) {
     const variants = {
         exit: 
             function exit(direction: boolean) {
-                return (direction ? {opacity: 0, x: -100} : {opacity:0, x: 100})
+                return (direction ? {opacity: 0, x: -100, rotate:"-20deg"} : {opacity:0, x: 100, rotate:"20deg"})
             }
     }
 
+    const motionValue = useMotionValue(0);
 
 
 
@@ -80,6 +81,7 @@ export default function BoosterOpening(props: openingProps) {
                             onDragEnd={(event, info) => dragEnd(event, info)}
                             variants={variants}
                             exit="exit"
+                            style={{x: motionValue}}
                         >
                             <RevealCard
                                 front={<GameCard

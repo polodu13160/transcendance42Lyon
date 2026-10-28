@@ -22,7 +22,7 @@ export default function RevealCard({front, back, swapFunction} : RevealProps) {
     }
     
     return (
-        <div className="flex flex-row relative w-75 aspect-2/3 p-1.5 perspective-normal" onClick={flipCard}>
+        <div className="flex flex-row relative w-75 aspect-2/3 perspective-normal" onClick={flipCard}>
             <motion.div 
                 className="transform-3d w-75 aspect-2/3"
                 animate={{rotateY : flip ? 180 : 0}}
