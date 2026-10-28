@@ -3,7 +3,7 @@
 // import BoosterOpening from "@/features/boosters/BoosterOpening"
 // import logo_dark from "../assets/logo/logo_dark.svg"
 import { useState } from "react"
-import type { GameCardProps } from "../features/cards/GameCard";
+import type { CollectionCard } from "../types/card";
 
 import "../features/boosters/boosterStyle.css"
 
@@ -12,10 +12,6 @@ import BoosterOpening from "@/features/boosters/BoosterOpening";
 import boosterImg from "../assets/Booster.svg"
 
 
-
-type CollectionCard = GameCardProps & {
-    id: string;
-};
 
 const cards = cardsData as CollectionCard[];
 

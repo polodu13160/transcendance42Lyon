@@ -4,19 +4,9 @@ import { FaShieldAlt } from "react-icons/fa";
 import { cardThemes } from "./cardThemes";
 import { TiltCard } from "./TiltCard";
 import { GiPolarStar } from "react-icons/gi";
+import type { GameCardProps } from "../../types/card";
 
 import "./CardEffects.css"
-
-
-export type GameCardProps = {
-    rarity: keyof typeof cardThemes; 
-    name: string,
-    rating: number,
-    resume: string,
-    image: string,
-    isShiny: boolean,
-    isGame: boolean
-}
 
 const shinyBorder = "animate-background bg-linear-to-br from-red-500 via-orange-500 select-none via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 relative w-75 overflow-hidden rounded-2xl p-1.5 bg-size-[300%_200%] [animation-duration:2s]"
 

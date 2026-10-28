@@ -1,11 +1,33 @@
 import logoImg from "../../assets/logo/logo_dark_back.svg"
 
-export default function CardBack() {
+import type { CardRarity } from "@/types/card";
+import { cardThemes } from "./cardThemes";
+
+interface CardBackProps {
+    rarity: CardRarity
+    isActive: boolean
+}
+
+
+
+export default function CardBack(props: CardBackProps) {
+
+    const themeShadow = cardThemes[props.rarity].shadow 
+
     return (
-        <div className="relative w-75 overflow-hidden rounded-2xl p-1.5 bg-[#F3EEFF] select-none">
-            <div className="aspect-2/3 rounded-xl bg-[#6D28D9] flex justify-center select-non ">
-                <img src={logoImg} className="scale-80" draggable={false}/>
+        <div className="relative w-75 rounded-2xl bg-[#F3EEFF] select-none p-1.5">
+
+            <div
+                className={`
+                    absolute inset-0 rounded-2xl pointer-events-none
+                    ${props.isActive ? ` ${themeShadow}` : ""}
+                `}
+            />
+
+            <div className="relative aspect-2/3 rounded-xl bg-[#6D28D9] flex justify-center">
+                <img src={logoImg} draggable={false} className="scale-80" />
             </div>
+
         </div>
     );
 }

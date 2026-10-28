@@ -1,9 +1,4 @@
-export type Rarity =
-    | "common"
-    | "uncommon"
-    | "rare"
-    | "ultra-rare"
-    | "legendary";
+import type { CardRarity } from "./card";
 
 export interface GameProps {
     id: number;
@@ -14,6 +9,6 @@ export interface GameProps {
 
     rating: number;
     reviewCount: number;
-    rarity: Rarity;
+    rarity: CardRarity;
     isShiny: boolean;
 };

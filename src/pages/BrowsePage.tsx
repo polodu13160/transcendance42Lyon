@@ -1,8 +1,8 @@
 import GameCard from "../features/cards/GameCard";
-import type { GameCardProps } from "../features/cards/GameCard";
+import type { CollectionCard } from "../types/card";
 import cardsData from "../../test_data/cardsData.json";
 
-const cards = cardsData as (GameCardProps & { id: string })[];
+const cards = cardsData as CollectionCard[];
 const browseCards = Array.from({ length: 50 }, (_, index) => ({
     ...cards[index % cards.length],
     instanceId: index,

@@ -68,3 +68,79 @@
     opacity: 0.25;
 }
 
+
+
+@keyframes halo-pulse {
+    0%, 100% {
+        filter: brightness(0.7);
+    }
+
+    50% {
+        filter: brightness(1.3);
+    }
+}
+
+.halo-pulse {
+    animation: halo-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .halo-pulse {
+        animation: none;
+    }
+}
+
+
+
+
+.shiny-halo {
+    position: absolute;
+    inset: -4px;
+    border-radius: 18px;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 500ms ease-out;
+}
+
+.shiny-halo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+
+    background: conic-gradient(
+        from var(--shiny-angle),
+        #ff4da6,
+        #a855f7,
+        #38bdf8,
+        #34d399,
+        #facc15,
+        #ff4da6
+    );
+
+    filter: blur(12px);
+    opacity: 0.85;
+    animation: shiny-colors 5s linear infinite;
+}
+
+@property --shiny-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes shiny-colors {
+    to {
+        --shiny-angle: 360deg;
+    }
+}
+
+.shiny-halo-hidden {
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shiny-halo::before {
+        animation: none;
+    }
+}

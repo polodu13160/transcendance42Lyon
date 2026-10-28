@@ -1,9 +1,8 @@
-import GameCard, { type GameCardProps } from "../cards/GameCard";
-import { motion, useMotionValue, type PanInfo } from "motion/react"
+import type { GameCardProps } from "../../types/card";
+import { type PanInfo } from "motion/react"
 import { useState } from "react"
 import { AnimatePresence } from "motion/react";
-import RevealCard from "../cards/RevealCard";
-import CardBack from "../cards/CardBack";
+import SwipeCard from "./SwipeCard";
 
 interface openingProps {
 
@@ -21,7 +20,7 @@ export default function BoosterOpening(props: openingProps) {
 
 
 
-    function dragEnd(event: Event, info: PanInfo): void {
+    function dragEnd(_event: Event, info: PanInfo): void {
         if (info.offset.x < 0) {
             setSwapDirection(true);
         } else {
@@ -51,52 +50,20 @@ export default function BoosterOpening(props: openingProps) {
         return false;
     }
 
-    const variants = {
-        exit: 
-            function exit(direction: boolean) {
-                return (direction ? {opacity: 0, x: -100, rotate:"-20deg"} : {opacity:0, x: 100, rotate:"20deg"})
-            }
-    }
-
-    const motionValue = useMotionValue(0);
-
-
-
     return (    
         <AnimatePresence custom={swapDirection}>
             {props.cardsPack.map((card, index) => {
                 if (index <= visibleIndex) {
                     return (
-                        <motion.div
-                            className={index === 0 ? "" : "absolute top-0"}
+                        <SwipeCard
                             key={index}
+                            card={card}
+                            index={index}
                             drag={dragIsActive(index)}
-                            dragMomentum={false} 
-                            dragConstraints={{
-                                top: -50,
-                                left: -50,
-                                right: 50,
-                                bottom: 50,}
-                            }
-                            onDragEnd={(event, info) => dragEnd(event, info)}
-                            variants={variants}
-                            exit="exit"
-                            style={{x: motionValue}}
-                        >
-                            <RevealCard
-                                front={<GameCard
-                                    name={card.name}
-                                    resume={card.resume}
-                                    rating={card.rating}
-                                    image={card.image}
-                                    rarity={card.rarity}
-                                    isShiny={card.isShiny}
-                                    isGame={card.isGame}
-                                    />}
-                                back={<CardBack />}
-                                swapFunction={changeDragActive}
-                            />
-                        </motion.div>
+                            dragEnd={dragEnd}
+                            swapFunction={changeDragActive}
+                            isActive={index === visibleIndex ? true : false}
+                        />
                 )}
             })}
         </AnimatePresence>
