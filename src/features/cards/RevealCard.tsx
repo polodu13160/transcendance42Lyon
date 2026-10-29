@@ -72,7 +72,7 @@ export default function RevealCard({
                     {front}
                 </div>
 
-                <div className="absolute backface-hidden">
+                <div className="absolute backface-hidden transform-[rotateY(0deg)]">
                     {back}
                 </div>
             </motion.div>
