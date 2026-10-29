@@ -1,15 +1,11 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
-.active {
-    color: green
-}
 
 html {
-     font-family: "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
-/* The booster opening is a full-screen mobile scene, not a scrollable page. */
 @media (max-width: 767px) {
   html:has(.home-page:not(.home-results)),
   body:has(.home-page:not(.home-results)),
@@ -27,17 +23,29 @@ html {
   background-color: #14131a;
 }
 
+html:not(.dark) .app-shell {
+  background-color: #f5f0eb;
+  background-image:
+    linear-gradient(to bottom, rgb(124 58 237 / 7%) 1px, transparent 1px),
+    linear-gradient(to right, rgb(124 58 237 / 7%) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+html:not(.dark) .app-particles {
+  display: none;
+}
+
 .app-particles,
 .app-particles::before,
 .app-particles::after {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  overflow: hidden;
 }
 
 .app-particles {
   z-index: 0;
+  overflow: hidden;
   opacity: 0.58;
   background-image:
     radial-gradient(circle at 8% 18%, #c4b5fd 0 1px, transparent 1.5px),
