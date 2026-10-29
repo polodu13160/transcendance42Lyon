@@ -16,7 +16,7 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
     
     return (
         <TiltCard max={25} select-none>
-                <div className={ !isShiny ?
+                <div style={{ fontFamily: '"Ubuntu", sans-serif' }} className={ !isShiny ?
                                  `${theme.cardBorder} relative w-75 overflow-hidden rounded-2xl p-1.5 select-none`
                                 : shinyBorder
                                 }>
@@ -52,7 +52,15 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                         </div>
 
                         <div className="flex-1 min-h-0 flex flex-col">
-                            <h2 className="text-2xl text-white font-bold ml-4 mt-2" >{name}</h2>
+                            <h2
+                                className={`mx-4 mt-2 flex h-7 shrink-0 items-center justify-start whitespace-nowrap text-center font-bold text-white ${
+                                    name.length > 30
+                                    ? "text-sm"
+                                    : name.length > 20
+                                        ? "text-base"
+                                        : "text-lg"
+                                }`}
+                            >{name}</h2>
                             <div className="flex flex-row justify-left items-center ml-4">
                                 <FaStar className="text-[#FFC637]"/>
                                 <span className="ml-1 font-bold text-white text-xl">{rating}</span>
@@ -63,8 +71,8 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                                     : <span className="font-light text-gray-400">DLC</span>
                                 }
                             </div>
-                            <div className="mt-2">
-                                <p className="mx-4 font-normal text-xs text-white">{resume}</p>
+                            <div className="mt-2 h-12 shrink-0">
+                                <p className="mx-4 font-normal text-xs leading-4 italic text-white line-clamp-3">{resume}</p>
                             </div>
 
                             <div className="m-4 flex-1 flex flex-row justify-between items-center text-base font-bold text-white">

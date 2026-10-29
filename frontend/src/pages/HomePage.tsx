@@ -4,6 +4,7 @@
 // import logo_dark from "../assets/logo/logo_dark.svg"
 import { useState } from "react"
 import type { CollectionCard } from "../types/card";
+import { motion } from "motion/react"
 
 import "../features/boosters/boosterStyle.css"
 
@@ -90,7 +91,13 @@ export default function HomePage() {
             )
         } else {
             return (
-                <img src={boosterImg} className={boosterClass()} />
+                <motion.div 
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{ease: "easeOut", duration: 0.5}}
+                >
+                    <img src={boosterImg} className={boosterClass()} />
+                </motion.div>
             )
         }
     }
