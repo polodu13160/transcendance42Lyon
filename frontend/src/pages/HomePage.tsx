@@ -4,6 +4,7 @@
 // import logo_dark from "../assets/logo/logo_dark.svg"
 import { useState } from "react"
 import type { CollectionCard } from "../types/card";
+import { motion } from "motion/react"
 
 import "../features/boosters/boosterStyle.css"
 
@@ -90,14 +91,20 @@ export default function HomePage() {
             )
         } else {
             return (
-                <img src={boosterImg} className={boosterClass()} />
+                <motion.div 
+                    initial={{opacity: 0, y: 20}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{ease: "easeOut", duration: 0.5}}
+                >
+                    <img src={boosterImg} className={boosterClass()} />
+                </motion.div>
             )
         }
     }
 
 
     return (
-        <div className={`home-page relative flex min-h-svh min-h-dvh flex-col items-center gap-6 overflow-visible px-4 pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:p-8 ${boosterState === "resume" ? "home-results justify-start" : "justify-center overscroll-none"}`}>
+        <div className={`home-page relative flex min-h-svh min-h-dvh flex-col items-center gap-6 overflow-visible px-4 pt-[calc(env(safe-area-inset-top)+2rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)] md:p-8 ${boosterState === "resume" ? "home-results justify-center" : "justify-center overscroll-none"}`}>
             {/* <img src={logo_dark} className="md:block w-full h-auto pb-10 pt-5 scale-90"/> */}
 
             <div className="booster-stage relative z-10 flex w-full items-center justify-center">
