@@ -1,0 +1,22 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "polodu13160", email = "paul.depetrini@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.20.0",
+    "cookiecutter>=2.7.1",
+    "fastapi[standard]>=0.141.1",
+    "ollama>=0.6.3",
+    "psycopg2-binary>=2.9.13",
+    "requests>=2.34.2",
+    "sqlacodegen>=4.0.4",
+    "sqlalchemy>=2.0.54",
+]
+
+[tool.fastapi]
+    entrypoint = "app.main:app"

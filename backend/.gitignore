@@ -1,0 +1,6 @@
+.venv
+uv.lock
+.env
+**/__pycache__/
+__pycache__
+../apiDb.odt
