@@ -6,7 +6,7 @@ Application de cartes à collectionner autour du jeu vidéo.
 
 Le frontend React, TypeScript, Vite, Tailwind CSS et Motion se trouve dans `frontend/`.
 
-Utiliser Node.js 22.12 ou plus récent.
+Utiliser Node.js 24, comme la CI du frontend.
 
 ```sh
 cd frontend
