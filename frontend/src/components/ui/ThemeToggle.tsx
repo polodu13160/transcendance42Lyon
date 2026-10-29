@@ -1,0 +1,38 @@
+import React from "react"
+
+import sunIcon from "../../assets/icons/sun.svg"
+import moonIcon from "../../assets/icons/moon-star.svg"
+
+export default function ThemeToggle() {
+
+    const [toggleButton, setToggleButton] = React.useState(true)
+
+    function toggleAction(): void {
+        setToggleButton(prevToggleButton => !prevToggleButton);
+    }
+
+    React.useEffect(() => {
+        document.documentElement.classList.toggle('dark', toggleButton === true);
+    }, [toggleButton])
+
+    return (
+        <>
+            <label className="inline-flex w-fit self-start cursor-pointer select-none">
+                <input
+                    type="checkbox"
+                    onChange={toggleAction}
+                    className="sr-only peer"
+                />
+
+                <span className="border border-[#7C3AED] h-6 w-12 bg-[#F3EEFF] peer-checked:border-[#A78BFA] peer-checked:bg-[#352B48] peer-checked:[&>span]:bg-[#A78BFA] transition-colors duration-300 ease-in-out rounded-full flex items-center p-0.5 peer-checked:[&>span]:translate-x-6">
+                    <span className="h-5 w-5 rounded-full bg-[#7C3AED] flex transition-transform duration-400 ease-in-out items-center justify-center">
+                        <img
+                            src={toggleButton ? moonIcon : sunIcon}
+                            className="w-3.5 h-3.5"
+                        />
+                    </span>
+                </span>
+            </label>
+        </>
+    )
+}
