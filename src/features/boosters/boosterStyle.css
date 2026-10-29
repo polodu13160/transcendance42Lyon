@@ -13,6 +13,10 @@
   }
 }
 
+.home-results .booster-stage {
+  min-height: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .booster-shake {
     animation: none;

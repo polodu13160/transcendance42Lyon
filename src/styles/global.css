@@ -11,9 +11,9 @@ html {
 
 /* The booster opening is a full-screen mobile scene, not a scrollable page. */
 @media (max-width: 767px) {
-  html:has(.home-page),
-  body:has(.home-page),
-  #root:has(.home-page) {
+  html:has(.home-page:not(.home-results)),
+  body:has(.home-page:not(.home-results)),
+  #root:has(.home-page:not(.home-results)) {
     height: 100%;
     overflow: hidden;
     overscroll-behavior: none;
