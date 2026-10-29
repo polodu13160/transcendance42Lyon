@@ -26,5 +26,9 @@ dist-ssr
 # Personal design notes: kept locally, never committed
 .notes/
 
-# Local documentation
-docs/**/*.md
+# Frontend documentation: kept locally, never committed
+front/**/*.md
+frontend/**/*.md
+
+# Local Vite cache
+.vite/
