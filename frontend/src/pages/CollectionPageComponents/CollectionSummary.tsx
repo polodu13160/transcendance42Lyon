@@ -3,7 +3,7 @@ export default function CollectionSummary() {
         <div>
             <header className="mt-4">
                 <h1 className="text-4xl text-[#F5F5F5] font-bold">My collection</h1>
-                <p className="text-[#F5F5F5] text-base mt-2">Your game album. Each card tells an adventure.</p>
+                <p className="text-[#F5F5F5] text-base mt-2">Your games album. Each card tells an adventure.</p>
             </header>
 
             <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6 mt-4">

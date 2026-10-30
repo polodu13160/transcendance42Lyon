@@ -23,7 +23,6 @@ html {
 .app-shell {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   background-color: var(--app-background);
 }
 
@@ -44,6 +43,7 @@ html:not(.dark) .app-shell {
 }
 
 .app-particles {
+  overflow: hidden;
   z-index: 0;
   opacity: 0.58;
   background-image:
