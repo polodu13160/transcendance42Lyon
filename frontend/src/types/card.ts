@@ -22,4 +22,5 @@ export type CollectionCard = GameCardProps & {
 export interface CollectionEntry {
     card: CollectionCard;
     quantity: number;
+    isFavorite: boolean;
 }
