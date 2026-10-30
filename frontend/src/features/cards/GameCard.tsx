@@ -21,7 +21,7 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
     const theme = cardThemes[rarity]
     
     return (
-        <TiltCard max={16} className={responsive ? "w-full @container touch-pan-y!" : "w-fit"}>
+        <TiltCard max={8} className={responsive ? "w-full @container touch-pan-y!" : "w-fit"}>
                 <div style={{ fontFamily: '"Ubuntu", sans-serif' }} className={`${className} ${responsive ? "game-card-responsive" : ""} ${!isShiny ?
                                  `${theme.cardBorder} relative overflow-hidden rounded-2xl p-1.5 select-none`
                                 : shinyBorder

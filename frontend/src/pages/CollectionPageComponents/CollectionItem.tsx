@@ -15,7 +15,7 @@ export default function CollectionItem({ cardInfo }: CollectionItemProps) {
 
                 {
                     cardInfo.quantity > 1
-                        ?   <div className="absolute top-3 right-3 h-8 font-bold w-8 z-30 rounded-full bg-red-400 flex  justify-center items-center text-[#F5F5F5]">
+                        ?   <div className="absolute top-3 right-3 h-8 font-bold w-8 z-30 rounded-full bg-red-400 flex  justify-center items-center text-[#F5F5F5] select-none">
                                <span>x{cardInfo.quantity}</span>
                             </div>
                         : null
