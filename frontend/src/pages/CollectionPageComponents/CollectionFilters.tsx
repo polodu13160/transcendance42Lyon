@@ -1,4 +1,6 @@
 import { FiChevronDown } from "react-icons/fi";
+import { FaArrowDownShortWide } from "react-icons/fa6";
+
 
 const buttonClass = "border-2 bg-zinc-800 border-zinc-500 px-3 py-2 rounded-lg text-zinc-500"
 
@@ -26,7 +28,7 @@ export default function CollectionFilters() {
                         <option>A - Z</option>
                         <option>Z - A</option>
                     </select>
-                    <FiChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+                    <FaArrowDownShortWide className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                 </div>
             </div>
         </div>
