@@ -18,7 +18,7 @@ export default function CollectionPage() {
         isFavorite: true
     }));
 
-    const [actualPage, setActualPage] = useState(1);
+    const [actualPage, setActualPage] = useState(3);
 
     function setPagination(index : number) {
         setActualPage(index);
@@ -29,7 +29,7 @@ export default function CollectionPage() {
             <CollectionSummary />
             <CollectionFilters />
             <CollectionGrid cardPage={testCollection}/>
-            <CollectionPagination actualPage={actualPage} totalPages={5} onPageChange={setPagination} />
+            <CollectionPagination actualPage={actualPage} totalPages={10} onPageChange={setPagination} />
         </main>
     )
 }
