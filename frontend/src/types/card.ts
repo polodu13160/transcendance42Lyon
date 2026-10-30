@@ -18,3 +18,8 @@ export interface GameCardProps {
 export type CollectionCard = GameCardProps & {
     id: string;
 };
+
+export interface CollectionEntry {
+    card: CollectionCard;
+    quantity: number;
+}

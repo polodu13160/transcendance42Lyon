@@ -1,4 +1,3 @@
-import { FiChevronDown } from "react-icons/fi";
 import { FaArrowDownShortWide } from "react-icons/fa6";
 
 
