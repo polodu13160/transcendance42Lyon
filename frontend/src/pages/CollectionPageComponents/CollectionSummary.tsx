@@ -18,15 +18,15 @@ export default function CollectionSummary() {
             </div>
 
             <div className="grid grid-cols-3 gap-2 md:gap-4 sm:grid-cols-3 w-full">
-                <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6 mt-2 md:mt-4">
+                <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6 mt-2 md:mt-6">
                     <h2 className="text-violet-300 text-4xl font-bold">128</h2>
                     <p className="text-zinc-500 text-base">Unique cards</p>
                 </div>
-                <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6 mt-2 md:mt-4">
+                <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6 mt-2 md:mt-6">
                     <h2 className="text-violet-300 text-4xl font-bold">24</h2>
                     <p className="text-zinc-500 text-base">Duplicates</p>
                 </div>
-                <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6 mt-2 md:mt-4">
+                <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6 mt-2 md:mt-6">
                     <h2 className="text-violet-300 text-4xl font-bold">3</h2>
                     <p className="text-zinc-500 text-base">Shiny</p>
                 </div>
