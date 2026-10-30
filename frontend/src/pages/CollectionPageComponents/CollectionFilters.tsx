@@ -10,7 +10,7 @@ export default function CollectionFilters() {
             <div className="w-full">
                 <label> </label>
                 <input 
-                    className="w-full border-2 bg-zinc-800 border-zinc-500 rounded-xl placeholder:text-zinc-500 p-4"
+                    className="text-violet-100 font-medium  w-full border-2 bg-zinc-800 border-zinc-500 rounded-xl placeholder:text-zinc-500 p-4 focus:border-violet-300 focus:outline-none focus:ring-none focus:border-0.5"
                     type="search" 
                     name="search"
                     id="collection-search"
