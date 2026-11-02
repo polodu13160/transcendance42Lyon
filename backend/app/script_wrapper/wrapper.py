@@ -310,19 +310,8 @@ def awarding_colors_cards():
             card.colors = v['id']
             card.value_exchange = v['value']
     session.commit()
-    # session.execute(delete(Wrapper))
-    # session.commit()
-
-
-        
-        
-            
-
-
-    
-
-
-
+    session.execute(delete(Wrapper))
+    session.commit()
 
 
 if __name__ == "__main__":
