@@ -5,19 +5,19 @@ services:
       - "80"
     networks:
       - app-network
-  waf:
+  meow:
     image: owasp/modsecurity-crs:nginx
     ports:
       - "8080:8080"
-      # - "443:8443"
+      - "8443:8443"
     environment:
-      SERVERNAME: waf.local
+      SERVERNAME: meow.local
       PARANOIA: 1
       BLOCKING_PARANOIA: 1
       # ANOMALY_INBOUND: 5
       # ANOMALY_OUTBOUND: 4
       REPORTING_LEVEL: 2
-      BACKEND: https://httpbin:80
+      BACKEND: http://httpbin:80
       MODSEC_RULE_ENGINE: DetectionOnly
 
     depends_on:
