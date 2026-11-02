@@ -1,11 +1,12 @@
 services:
-  httpbin:
+  httpbin: # backend test
     image: kennethreitz/httpbin
     expose:
       - "80"
     networks:
       - app-network
-  meow:
+  
+  meow: # nginx server with modsecurity installed
     image: owasp/modsecurity-crs:nginx
     ports:
       - "8080:8080"
@@ -17,8 +18,8 @@ services:
       # ANOMALY_INBOUND: 5
       # ANOMALY_OUTBOUND: 4
       REPORTING_LEVEL: 2
-      BACKEND: http://httpbin:80
-      MODSEC_RULE_ENGINE: DetectionOnly
+      BACKEND: http://httpbin:80 # backend to change
+      MODSEC_RULE_ENGINE: DetectionOnly # detect bad requests but don't bloc them
 
     depends_on:
       - httpbin
