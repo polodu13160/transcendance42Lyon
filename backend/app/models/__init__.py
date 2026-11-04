@@ -1,2 +1,8 @@
 from .base import Base
-from .classes.Users import Buy, History_cards, Get_Exchanges, Cards, Purchases, Users, Wrapper
+from .classes.Purchases import Purchases
+from .classes.History_cards import History_cards
+from .classes.Users import Users
+from .classes.Cards import Cards
+from .classes.Buy import Buy
+from .classes.Get_exchanges import Get_Exchanges
+from .classes.Wrapper import Wrapper
