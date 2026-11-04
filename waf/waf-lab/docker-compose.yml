@@ -19,7 +19,9 @@ services:
       # ANOMALY_OUTBOUND: 4
       REPORTING_LEVEL: 2
       BACKEND: http://httpbin:80 # backend to change
+      # MODSEC_RULE_ENGINE: On # detect bad requests and bloc them
       MODSEC_RULE_ENGINE: DetectionOnly # detect bad requests but don't bloc them
+      # MODSEC_RULE_ENGINE: Off
 
     depends_on:
       - httpbin

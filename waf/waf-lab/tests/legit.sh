@@ -19,6 +19,7 @@ expect 200 "Multi headers" \
     -H "Authorization: Bearer abc123"\
     -H "X-Request-Id: 42" \
     -H "Accept-Language: fr-FR" \
+    -H "select" \
     "$BASE_URL/headers"
 
 expect 200 "Put" -X PUT "$BASE_URL/put"
