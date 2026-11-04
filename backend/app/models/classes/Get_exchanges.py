@@ -1,7 +1,7 @@
 from app.models.base import Base
 from sqlalchemy.orm import Mapped, mapped_column
 import datetime
-from sqlalchemy import Integer, DateTime, ForeignKey, Boolean, String
+from sqlalchemy import Integer, DateTime, ForeignKey, Boolean, String, BigInteger
 from sqlalchemy.orm import relationship
 
 
@@ -13,8 +13,8 @@ class Get_Exchanges(Base):
     card: Mapped["Cards"] = relationship(back_populates="ass_get_exchange")
 
     #column
-
-    id_card: Mapped[int] = mapped_column(ForeignKey("cards.id_card"), primary_key = True)
+    id_getexchanges: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id_card: Mapped[int] = mapped_column(ForeignKey("cards.id_card"))
     id_user: Mapped[int] = mapped_column(ForeignKey("users.id_user"), nullable = False)
     collection_name: Mapped[str | None] = mapped_column(String((200)), nullable = True)
     is_auction: Mapped[bool] = mapped_column(Boolean, default=False)

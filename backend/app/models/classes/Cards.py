@@ -2,7 +2,7 @@ from app.models.base import Base
 from sqlalchemy.orm import Mapped, mapped_column
 import datetime
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy import String, Integer, Numeric, DateTime, Text
+from sqlalchemy import String, Integer, Numeric, DateTime, Text, BigInteger
 from sqlalchemy import func
 from sqlalchemy.orm import relationship
 
@@ -14,7 +14,7 @@ class Cards(Base):
     ass_get_exchange: Mapped[list["Get_Exchanges"]] = relationship(back_populates="card")
 
     #column
-    id_card: Mapped[int] = mapped_column(type_= Integer  ,primary_key=True)
+    id_card: Mapped[int] = mapped_column(type_=BigInteger, primary_key=True)
     date_created: Mapped[datetime.datetime] = mapped_column(type_= DateTime(True), default=func.now())
     attq: Mapped[float] = mapped_column(Numeric(10, 2))
     def_: Mapped[float] = mapped_column(Numeric(10, 2))
