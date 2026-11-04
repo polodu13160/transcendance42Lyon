@@ -38,7 +38,9 @@ And run :
 
 ```bash
 uv run alembic upgrade head
+python -m app.script_wrapper.wrapper
 uv run dev
+
 ```
 
 
