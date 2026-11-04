@@ -244,9 +244,9 @@ def create_urls_images(value: Wrapper)->list[str]:
     tab = [] 
     if value.artworks_url != None:
         id = value.artworks_url[0].get("image_id")
-        tab.append(f"https://images.igdb.com/igdb/image/upload/t_screenshot_huge/{id}.jpg")
+        tab.append(f"https://images.igdb.com/igdb/image/upload/t_720p/{id}.jpg")
     if value.cover_id is not None:
-        tab.insert(0,f"https://images.igdb.com/igdb/image/upload/t_screenshot_huge/{value.cover_id}.jpg")
+        tab.insert(0,f"https://images.igdb.com/igdb/image/upload/t_720p/{value.cover_id}.jpg")
     return tab
 
 def transform_to_list(list_, name_key:str)->list[str] | None:
