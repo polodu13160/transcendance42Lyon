@@ -1,0 +1,21 @@
+[project]
+name = "demo-app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "amerzone-exe", email = "jocelyn.piquet1998@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.162.0",
+    "prometheus-client>=0.26.0",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+demo-app = "demo_app:main"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"

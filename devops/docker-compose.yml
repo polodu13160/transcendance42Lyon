@@ -1,0 +1,50 @@
+name: "Prometheus"
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    user: "${UID}:${GID}"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - prom-node
+
+  node_exporter:
+    image: prom/node-exporter:v1
+    container_name: node_exporter
+    user: "${UID}:${GID}"
+    networks:
+      - prom-node
+
+  grafana:
+    image: grafana/grafana:13.2-slim@sha256:51b67c3d350a27fc7a05ed958984522e367fe4764582ecdd5706a20e369fdac8
+    container_name: grafana
+    user: "${UID}:${GID}"
+    # user: 0:0
+    volumes:
+      - ./graf_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    networks:
+      - prom-node
+
+  demo-app:
+    image: demo-app:v1
+    container_name: demo-app
+    build: ./demo-app/
+    networks:
+      - prom-node
+    ports:
+      - 8000:8000
+
+networks:
+  prom-node:
