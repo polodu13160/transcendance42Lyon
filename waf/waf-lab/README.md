@@ -132,3 +132,20 @@ Objectif : rendre la suite réutilisable sur ton vrai projet.
 Refais l’exercice 0 avec la solution B (ton propre Dockerfile Debian), puis avec coraza-crs:nginx. Si run-all.sh donne les mêmes résultats, tes tests mesurent bien le comportement du WAF et pas les détails d’un montage particulier.
 
 Quand tu auras écrit tes premiers scripts (lib.sh et legit.sh), envoie-les-moi et je les relirai avec toi avant que tu passes aux attaques.
+# Réglages à faire en priorité
+Les réglages prioritaires
+
+#### 1 - Paranoïa : 
+niveau 1, avec un seuil de blocage à 5. C’est le défaut de l’image, garde-le. Un niveau plus élevé bloque plus, mais génère beaucoup de faux positifs qu’il faudrait ensuite régler un par un ; pas le bon calcul pour le temps que tu as.
+
+#### 2 - Mode détection avant mode blocage, toujours.
+Déploie en DetectionOnly, observe les logs une journée (ou au moins fais passer tous tes propres parcours : connexion, ouverture de booster, consultation de collection), règle les faux positifs évidents, puis passe à On. Basculer directement en blocage sans être passé par cette étape est la cause la plus fréquente de sites cassés par un WAF.
+
+#### 3 - Les limites de taille de body, à ajuster.
+Par défaut, CRS limite le corps des requêtes à une taille pensée pour des formulaires classiques. Si l’ouverture de booster ou l’upload d’avatar envoie un payload JSON volumineux ou une image, augmente SecRequestBodyLimit / SecRequestBodyNoFilesLimit, sinon tes propres requêtes légitimes seront bloquées par du blocage de taille, pas par une règle d’attaque. C’est un cas typique de faux positif spécifique à ton app.
+
+#### 4- Protéger particulièrement les routes sensibles d’un jeu de collection :
+authentification, et surtout tout ce qui touche à la logique d’ouverture de booster et d’attribution de cartes. C’est là qu’un check côté client contourné, une requête rejouée ou un paramètre trafiqué (ID de carte, quantité, rareté) a le plus de valeur pour un attaquant. ModSecurity filtre les injections et XSS, mais ne valide pas ta logique métier : la vraie protection ici, c’est de revalider ces règles côté serveur, indépendamment du WAF.
+
+#### 5 - Rate limiting, hors de ModSecurity.
+Une faille fréquente sur ce genre de projet est de pouvoir ouvrir des boosters en boucle via un script. CRS ne limite pas la fréquence des requêtes ; ça se fait avec limit_req_zone / limit_req dans nginx, en plus du WAF.
