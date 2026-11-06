@@ -149,3 +149,5 @@ authentification, et surtout tout ce qui touche à la logique d’ouverture de b
 
 #### 5 - Rate limiting, hors de ModSecurity.
 Une faille fréquente sur ce genre de projet est de pouvoir ouvrir des boosters en boucle via un script. CRS ne limite pas la fréquence des requêtes ; ça se fait avec limit_req_zone / limit_req dans nginx, en plus du WAF.
+
+**Si PARANOIA < BLOCKING_PARANOIA => error 500**

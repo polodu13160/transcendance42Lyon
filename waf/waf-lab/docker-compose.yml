@@ -13,8 +13,8 @@ services:
       - "8443:8443"
     environment:
       SERVERNAME: meow.local
-      PARANOIA: 1
-      BLOCKING_PARANOIA: 1
+      PARANOIA: 5
+      BLOCKING_PARANOIA: 5
       # ANOMALY_INBOUND: 5
       # ANOMALY_OUTBOUND: 4
       REPORTING_LEVEL: 2
