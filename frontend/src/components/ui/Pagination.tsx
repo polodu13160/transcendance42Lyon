@@ -1,10 +1,8 @@
-import React from "react"
-
 import { FiArrowLeft } from "react-icons/fi";
 import { FiArrowRight } from "react-icons/fi";
 
 
-interface paginationProps {
+interface PaginationProps {
 
     actualPage: number;
     totalPages: number;
@@ -13,7 +11,7 @@ interface paginationProps {
 }
 
 
-export default function CollectionPagination({actualPage, totalPages, onPageChange}: paginationProps ){
+export default function Pagination({actualPage, totalPages, onPageChange}: PaginationProps ){
     
 
     return (

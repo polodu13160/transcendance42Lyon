@@ -5,7 +5,7 @@ import CollectionSummary from "./CollectionPageComponents/CollectionSummary"
 import cardsData from "../../test_data/cardsData.json";
 import type { CollectionCard, CollectionEntry } from "@/types/card";
 import { useState } from "react"
-import CollectionPagination from "./CollectionPageComponents/CollectionPagination";
+import Pagination from "@/components/ui/Pagination";
 
 
 export default function CollectionPage() {
@@ -29,7 +29,7 @@ export default function CollectionPage() {
             <CollectionSummary />
             <CollectionFilters />
             <CollectionGrid cardPage={testCollection}/>
-            <CollectionPagination actualPage={actualPage} totalPages={10} onPageChange={setPagination} />
+            <Pagination actualPage={actualPage} totalPages={10} onPageChange={setPagination} />
         </main>
     )
 }
