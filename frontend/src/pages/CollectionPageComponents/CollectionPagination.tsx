@@ -20,6 +20,7 @@ export default function CollectionPagination({actualPage, totalPages, onPageChan
         <nav className="flex flex-row justify-center items-align gap-3">
             <button className="hover:bg-zinc-700 p-3 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed"
                 disabled={actualPage <= 1}
+                onClick={() => onPageChange(actualPage - 1 )}
             >
                 <FiArrowLeft className="text-white text-2xl " />
             </button>
@@ -30,6 +31,7 @@ export default function CollectionPagination({actualPage, totalPages, onPageChan
 
             <button className="hover:bg-zinc-700 p-3 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed"
                 disabled={actualPage >= totalPages}
+                onClick={() => onPageChange(actualPage + 1)}
             >
                 <FiArrowRight className="text-white text-2xl  " />
             </button>
