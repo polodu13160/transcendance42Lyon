@@ -1,3 +1,10 @@
+import MarketItem from "./MarketItem"
+
+
 export default function MarketGrid() {
-    return null;
+    return (
+        <div>
+
+        </div>
+    )
 }
