@@ -24,17 +24,23 @@ export default function DesktopNavBar(props: DesktopNavBarProps) {
 
             <img
                 src={logo_dark}
-                className="w-full h-auto pb-10 pt-5"
+                className="w-full h-auto pb-10 pt-5 scale-90"
                 alt="GatchaGames"
             />
 
-            <nav className="flex flex-col w-full gap-2">
+            <nav className="flex flex-col w-full gap-2 p-2">
+
+                <p></p>
+
                 <NavButton linkTo="/" imgSrc={packImg} pageName="Open Pack" />
                 <NavButton linkTo="/collection" imgSrc={collectionImg} pageName="Collection" />
                 <NavButton linkTo="/market" imgSrc={storeImg} pageName="Market" />
                 <NavButton linkTo="/trade" imgSrc={arrowImg} pageName="Trade" />
                 {/* <NavButton linkTo="/browse-all" imgSrc={bookImg} pageName="Browse Cards" /> */}
                 <NavButton linkTo="/play" imgSrc={playImg} pageName="Play" />
+
+                <hr className="border-t border-[#C4B5FD] my-2 scale-90" />
+
                 <NavButton linkTo="/profil" imgSrc={profilImg} pageName="My Profil" />
                 <NavButton linkTo="/settings" imgSrc={settingsImg} pageName="Settings" />
             </nav>
