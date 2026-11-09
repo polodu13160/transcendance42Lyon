@@ -114,7 +114,7 @@ export default function HomePage() {
             <div className="relative z-10 flex flex-col items-center gap-3 text-center">
                 {/* <h1 className="text-xl font-bold text-[#C4B5FD]" >Bienvenue sur GatchaGames</h1>
                 <p className="max-w-xl text-[#D4D4D8]">GatchaGames est une plateforme en ligne de jeu et collection de carte sur l'univers du jeu-vidéo</p> */}
-                <button disabled={buttonState} onClick={boosterState === "resume" ? showNewPack : handleBoosterState} className={buttonState ? disabledButtonClass : enabledButtonClass} >{boosterState === "resume" ? "Ouvrir un autre booster" : "Ouvrir un booster"}</button>
+                <button disabled={buttonState} onClick={boosterState === "resume" ? showNewPack : handleBoosterState} className={buttonState ? disabledButtonClass : enabledButtonClass} >{boosterState === "resume" ? "Open another booster" : "Open a booster"}</button>
             </div>
         </div>
     )

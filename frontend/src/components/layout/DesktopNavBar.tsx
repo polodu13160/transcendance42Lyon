@@ -8,7 +8,7 @@ import collectionImg from "../../assets/icons/collection_night.svg";
 import storeImg from "../../assets/icons/store.svg";
 import profilImg from "../../assets/icons/user-round.svg";
 import arrowImg from "../../assets/icons/arrow-left-right.svg";
-import bookImg from "../../assets/icons/book-open.svg"
+// import bookImg from "../../assets/icons/book-open.svg"
 import settingsImg from "../../assets/icons/settings.svg"
 import playImg from "../../assets/icons/swords.svg"
 
@@ -33,7 +33,7 @@ export default function DesktopNavBar(props: DesktopNavBarProps) {
                 <NavButton linkTo="/collection" imgSrc={collectionImg} pageName="Collection" />
                 <NavButton linkTo="/market" imgSrc={storeImg} pageName="Market" />
                 <NavButton linkTo="/trade" imgSrc={arrowImg} pageName="Trade" />
-                <NavButton linkTo="/browse-all" imgSrc={bookImg} pageName="Browse Cards" />
+                {/* <NavButton linkTo="/browse-all" imgSrc={bookImg} pageName="Browse Cards" /> */}
                 <NavButton linkTo="/play" imgSrc={playImg} pageName="Play" />
                 <NavButton linkTo="/profil" imgSrc={profilImg} pageName="My Profil" />
                 <NavButton linkTo="/settings" imgSrc={settingsImg} pageName="Settings" />
