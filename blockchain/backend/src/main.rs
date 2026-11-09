@@ -1,4 +1,5 @@
 mod config;
+mod types;
 use config::Config;
 
 fn main() -> anyhow::Result<()> {
