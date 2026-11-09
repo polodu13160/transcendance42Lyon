@@ -4,7 +4,7 @@ import CollectionSummary from "./CollectionPageComponents/CollectionSummary"
 
 import cardsData from "../../test_data/cardsData.json";
 import type { CollectionCard, CollectionEntry } from "@/types/card";
-import { act, useState } from "react"
+import { useState } from "react"
 import CollectionPagination from "./CollectionPageComponents/CollectionPagination";
 
 
@@ -18,7 +18,7 @@ export default function CollectionPage() {
         isFavorite: true
     }));
 
-    const [actualPage, setActualPage] = useState(3);
+    const [actualPage, setActualPage] = useState(6);
 
     function setPagination(index : number) {
         setActualPage(index);
