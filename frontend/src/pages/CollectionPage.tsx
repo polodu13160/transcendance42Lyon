@@ -18,7 +18,7 @@ export default function CollectionPage() {
         isFavorite: true
     }));
 
-    const [actualPage, setActualPage] = useState(6);
+    const [actualPage, setActualPage] = useState(1);
 
     function setPagination(index : number) {
         setActualPage(index);
