@@ -3,7 +3,7 @@ import type { CollectionEntry} from "@/types/card"
 
 
 interface gridProps {
-    cardPage: CollcaectionEntry[]
+    cardPage: CollectionEntry[]
 }
 
 export default function CollectionGrid(props: gridProps) {
