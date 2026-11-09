@@ -12,7 +12,7 @@ export default function CollectionPage() {
 
     const cards = cardsData as CollectionCard[];
 
-    const testCollection: CollectionEntry[] = cards.slice(0, 12).map((card) => ({
+    const testCollection: CollectionEntry[] = cards.slice(0, 20).map((card) => ({
         card,
         quantity: 4,
         isFavorite: true
