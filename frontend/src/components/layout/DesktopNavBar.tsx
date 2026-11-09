@@ -31,8 +31,8 @@ export default function DesktopNavBar(props: DesktopNavBarProps) {
             <nav className="flex flex-col w-full gap-2">
                 <NavButton linkTo="/" imgSrc={packImg} pageName="Open Pack" />
                 <NavButton linkTo="/collection" imgSrc={collectionImg} pageName="Collection" />
-                <NavButton linkTo="/trade" imgSrc={arrowImg} pageName="Trade" />
                 <NavButton linkTo="/market" imgSrc={storeImg} pageName="Market" />
+                <NavButton linkTo="/trade" imgSrc={arrowImg} pageName="Trade" />
                 <NavButton linkTo="/browse-all" imgSrc={bookImg} pageName="Browse Cards" />
                 <NavButton linkTo="/play" imgSrc={playImg} pageName="Play" />
                 <NavButton linkTo="/profil" imgSrc={profilImg} pageName="My Profil" />

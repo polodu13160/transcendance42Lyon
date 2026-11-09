@@ -26,6 +26,7 @@ export default function MarketFilters() {
                         <option>Rare</option>
                         <option>Epic</option>
                         <option>Legendary</option>
+                        <option>Shiny</option>
                     </select>
                     <FaArrowDownShortWide className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                 </div>
