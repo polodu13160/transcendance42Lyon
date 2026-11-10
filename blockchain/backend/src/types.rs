@@ -3,10 +3,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TournamentScore {
-	tournament_id : u64,
-	player : Address,
-	card_count : u64,
-	timestamp : u64,
+	pub tournament_id : u64,
+	pub player : Address,
+	pub card_count : u64,
+	pub timestamp : u64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
