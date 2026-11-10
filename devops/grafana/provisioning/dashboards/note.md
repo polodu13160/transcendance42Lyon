@@ -1,0 +1,1 @@
+Le but du fichier `dashboard.yml` permet d'indiquer a Grafana ou se situe le fichier de configuration des dashboard (en l'occurence `infra.json`) pour pouvoir le lancer automatiquement lorsqu'on va lancer Grafana.
