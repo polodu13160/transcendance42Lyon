@@ -52,8 +52,8 @@ export default function DesktopNavBar(props: DesktopNavBarProps) {
                     onClick={props.onOpenLogin}
                     className="text-[#71717A] dark:bg-[#C4B5FD] dark:text-white hover:text-[#7C3AED]
                     dark:hover:text-[#C4B5FD] hover:bg-[#F3EEFF] dark:hover:bg-[#352B48]/50 border cursor-pointer
-                    flex md:flex-row flex-col justify-center md:justify-start items-center text-center md:text-left w-full min-w-0 gap-1
-                    md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-base rounded-xl transition-colors duration-200 ease-in-out"
+                    flex md:flex-row flex-col justify-center md:justify-center items-center text-center md:text-left w-full min-w-0 gap-1
+                    md:gap-2 p-1 scale-0 md:scale-100 md:p-3 text-[12px] md:text-sm rounded-xl transition-colors duration-200 ease-in-ou"
                 >
                     Login
                 </button>
@@ -63,17 +63,17 @@ export default function DesktopNavBar(props: DesktopNavBarProps) {
                     onClick={props.onOpenSignup}
                     className="text-[#71717A] dark:text-[#A1A1AA] hover:text-[#7C3AED]
                     dark:hover:text-[#C4B5FD] hover:bg-[#F3EEFF] dark:hover:bg-[#352B48]/50 border cursor-pointer
-                    flex md:flex-row flex-col justify-center md:justify-start items-center text-center md:text-left w-full min-w-0 gap-1
-                    md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-base rounded-xl transition-colors duration-200 ease-in-out"
+                    flex md:flex-row flex-col justify-center md:justify-center items-center text-center md:text-left w-full min-w-0 gap-1
+                    md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-sm rounded-xl transition-colors duration-200 ease-in-out"
                 >
                     Sign-Up
                 </button>
 
-                <div className="flex justify-center py-4">
+                {/* <div className="flex justify-center py-4">
                     <div className="scale-150">
                         <ThemeToggle />
                     </div>
-                </div>
+                </div> */}
 
             </div>
 
