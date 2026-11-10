@@ -1,6 +1,11 @@
 name: "Prometheus"
 
 services:
+  backend:
+    container_name:
+    build: ./backend/.
+    
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -36,15 +41,6 @@ services:
       - .env
     networks:
       - prom-node
-
-  demo-app:
-    image: demo-app:v1
-    container_name: demo-app
-    build: ./demo-app/
-    networks:
-      - prom-node
-    ports:
-      - 8000:8000
 
 networks:
   prom-node:

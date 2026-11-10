@@ -7,6 +7,7 @@ all:
 	if [ "$$response" = "y" ] || [ "$$response" = "Y" ]; then \
 		uv run alembic upgrade head; \
 	fi
+	uv add prometheus-fastapi-instrumentator
 	uv run fastapi dev
 ##uv sync installe les dependances locales
 #uv pip freeze > requirements.txt
