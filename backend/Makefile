@@ -8,6 +8,13 @@ all:
 		uv run alembic upgrade head; \
 	fi
 	uv run fastapi dev
+
+
+
+
+
+
+
 ##uv sync installe les dependances locales
 #uv pip freeze > requirements.txt
 
