@@ -563,9 +563,74 @@ SI LA COLLECTION N'EXISTE PAS, CA LA CRéé AUTOMATIQUEMENT
 > [!NOTE] Title
 > Se renseigner avec le k sur la mise en place
 
+
+### US-17 : Consultation des cartes personnelles en vente sur le marché
+> **En tant qu'** utilisateur connecté  
+> **Je veux** consulter la liste de mes propres cartes actuellement en vente sur le marché  
+> **Afin de** suivre mes offres en cours et vérifier si elles sont toujours disponibles.
+
+- **Endpoint :** `GET /api/v1/market/my-listings`
+- **Headers :** `Authorization: Bearer <token>`
+- **Query Parameters :**
+  - `page` *(int, default: 0)* : Numéro de page (par tranches de 10)
+  - `limit`
+
+#### Request Body
+```json
+{
+  "pseudo": "Gamer123",
+  "email": "gamer123@example.com",
+  "password": "PasswordSecure99!"
+}
+```
+
+#### Responses
+* **`200 `** : Compte modifié
+  ```json
+  {
+    "token": "jwt_token_string",
+    "user": USER
+  }
+  ```
+* **`409 Conflict`** : Pseudo ou adresse email déjà utilisé
+  ```json
+  {User or Email all ready use}
+  ```
+* **`406 Not acceptable`** : mot de passe non correct
+  ```json
+  {Error mdp}
+  ```
+
+### US-18 : Modifier le password ou le pseudo 
+> **En tant qu'** utilisateur connecté  
+> **Je veux** modifier mon mdp ou mon pseudo 
+> **Afin de** modifier si jén ai envie 
+
+- **Endpoint :** `POST /api/v1/param/`
+- **Headers :** `Authorization: Bearer <token>`
+
+#### Responses
+- **`200 OK`** : 
+  ```json
+  {
+    "page": 0,
+    "total_results": 3,
+    "items": [
+      {
+        "card": CARD,
+        "card_user": CARD_USER
+      }
+    ]
+  }
+
+- **`401 Unauthorized`** : pas connecté
+  ```json
+    {Error Unauthorized}
+  ```
+
 ---
 ## SYSTEME
-### US-17 [Tâche de fond / Cron] : Scraping et génération continue de cartes via IGDB
+### US-19 [Tâche de fond / Cron] : Scraping et génération continue de cartes via IGDB
 > **En tant que** système  
 > **Je veux** exécuter un script automatique en tâche de fond pour importer un certains nombre de cartes depuis l'API IGDB qui puisse etre réutilisable dans le temps. 
 > **Afin d'** enrichir le catalogue continuellement sans le faire manuellement *(je fais des rimte, jespere vous avez la ref)*.
@@ -577,7 +642,7 @@ SI LA COLLECTION N'EXISTE PAS, CA LA CRéé AUTOMATIQUEMENT
 
 ---
 ## ADMIN (FAIS PAR IA, OPTIONNEL)
-### US-18 : Back-Office Admin — Métriques financières et Top Investisseurs
+### US-20 : Back-Office Admin — Métriques financières et Top Investisseurs
 > **En tant qu'** administrateur unique  
 > **Je veux** consulter le volume global de crypto dépensé et la liste décroissante des utilisateurs ayant le plus investi  
 > **Afin de** piloter la santé financière et identifier les plus gros clients (*whales*).
