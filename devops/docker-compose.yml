@@ -1,32 +1,32 @@
 name: "Prometheus"
 
 services:
-  backend:
-    container_name: backend
-    build: ../backend/.
-    ports:
-      - "8000:8000"
-    networks:
-      - prom-node
+  # backend:
+  #   container_name: backend
+  #   build: ../backend/.
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - prom-node
 
+# Observability
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v3@sha256:e04987641b57704f408e31f6373ba4138ecf27cb4a165d24aabb6c38fddd0f06
     container_name: prometheus
     user: "${UID}:${GID}"
     volumes:
-      #- ./prometheus/alerts.yml:/etc/prometheus/alerts.yml
       - ./prometheus:/etc/prometheus
       - ./prometheus_data:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
     ports:
-      - "9090:9090"
+      - 127.0.0.1:9090:9090
     networks:
       - prom-node
 
   node_exporter:
-    image: prom/node-exporter:v1
+    image: prom/node-exporter:v1@sha256:1b4e4438faca4dd7e001dd445d161a4a2091b0fededa84093b3a8dfeae1f1be0
     container_name: node_exporter
     user: "${UID}:${GID}"
     networks:
@@ -36,15 +36,27 @@ services:
     image: grafana/grafana:13.2-slim@sha256:51b67c3d350a27fc7a05ed958984522e367fe4764582ecdd5706a20e369fdac8
     container_name: grafana
     user: "${UID}:${GID}"
-    # user: 0:0
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
       - ./graf_data:/var/lib/grafana
     ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000
     env_file:
       - .env
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - prom-node
+
+  alertmanager:
+    image: prom/alertmanager:v0.35.0@sha256:e638797febd034838eca8b98cdbd46f951e9bf7f178777aa8669167406a9946c
+    container_name: alertmanager
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+    ports:
+      - 127.0.0.1:9093:9093
     networks:
       - prom-node
 
