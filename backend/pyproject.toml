@@ -10,13 +10,15 @@ requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.20.0",
     "cookiecutter>=2.7.1",
+    "faker>=40.54.0",
     "fastapi[standard]>=0.141.1",
     "ollama>=0.6.3",
     "psycopg2-binary>=2.9.13",
     "requests>=2.34.2",
     "sqlacodegen>=4.0.4",
     "sqlalchemy>=2.0.54",
+    "sqlalchemy-utils>=0.43.0",
 ]
 
 [tool.fastapi]
-    entrypoint = "app.main:app"
+    entrypoint = "main:app"
