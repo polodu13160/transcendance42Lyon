@@ -27,7 +27,10 @@ after create .env with the root of directory backend :
 
 ````
 /src/.env
-DATABASE_URL=postgresql://userRoot:PasswordRoot@ip:Port/NameBD 
+DATABASE_URL=postgresql://userRoot:PasswordRoot@ip:Port/NameBD
+CLIENT_ID=dummy
+CLIENT_SECRET=dummy
+GRANT_TYPE=client_credentials
 ````
 
 >[!WARNING]

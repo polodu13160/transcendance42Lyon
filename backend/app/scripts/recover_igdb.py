@@ -1,4 +1,3 @@
-
 from app.core.env import CLIENT_ID, CLIENT_SECRET, GRANT_TYPE, OLLAMA, \
     OLLAMA_EMBEDDING, OLLAMA_IA
 import requests, statistics
