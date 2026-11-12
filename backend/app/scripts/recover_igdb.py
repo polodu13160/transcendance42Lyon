@@ -1,12 +1,14 @@
 
-from app.core.env import CLIENT_ID, CLIENT_SECRET, GRANT_TYPE, OLLAMA, \
-    OLLAMA_EMBEDDING, OLLAMA_IA
-import requests, statistics
+from app.core.env import CLIENT_ID, CLIENT_SECRET, GRANT_TYPE
+import requests
+import statistics
 from app.models import Wrapper, Cards
 from app.models.base import SessionLocal
 from sqlalchemy import select, delete
 from pydantic import BaseModel
 import enum
+from rich.progress import Progress
+from rich.console import Console
 
 
 def get_token() -> tuple[int, int] | requests.exceptions.HTTPError:
@@ -14,8 +16,7 @@ def get_token() -> tuple[int, int] | requests.exceptions.HTTPError:
                               f"https://id.twitch.tv/oauth2/token?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&grant_type={GRANT_TYPE}")
     connexion.raise_for_status()
     bearer = connexion.json()["access_token"]
-    expiration = connexion.json()["expires_in"]
-    return (bearer)       #je devrai utiliser un yield ?
+    return (bearer)      
 
 
 def get_cards(limit: int, lastid: int):
@@ -80,7 +81,7 @@ def get_cards(limit: int, lastid: int):
     return post.json()
 
 
-def fetch_and_add_in_wrapper(lastid: int):
+def fetch_and_add_in_wrapper(lastid: int, session):
     jsonCards = get_cards(limit=500, lastid=lastid)
     if jsonCards == {}:
         return None
@@ -167,78 +168,6 @@ def fetch_and_add_in_wrapper(lastid: int):
     session.commit()
     return jsonCards or None
 
-class FormatReturnOllama(BaseModel):
-    """ce que retourne Ollama"""
-    response:str
-
-
-
-def description_by_ollama(value:Wrapper) -> str:
-    from ollama import Client
-    client = Client(host=OLLAMA)
-    text_resume: str = ''
-    if (value.game_type != 1):
-
-        if (value.summary is not None):
-            text_resume += value.summary
-        if (value.storyline is not None):
-            text_resume +=  value.storyline
-        response = client.chat(
-            model=OLLAMA_IA,
-            messages=[
-                {
-                    "role": "system",
-                    "content": f"""You are a game copywriter. Write a powerful English.
-                    STRICT RULES:
-                    - ABSOLUTELY PROHIBITED: NEVER use or mention the game title '{value.name}'.
-                    - Describe the hero's traits, do not just use their name.
-                    - Jump straight into the action or emotion.
-                    - Prohibited phrases: 'This game is...', 'Discover', 'you', or any formal address.
-                    -First sentence describe the game.
-                    -Second sentence describe the game'style""" 
-                },
-                {
-                    "role": "user",
-                    "content": f"Summarize the following text strictly applying the system rules in summary in 20 words or less:\n\n{text_resume}" 
-                }
-
-            ],
-            format= FormatReturnOllama.model_json_schema(),
-            options={
-                'temperature': 0.5,
-            }
-        )
-    else:
-        if (value.summary is not None):
-            text_resume += value.summary
-        if (value.storyline is not None):
-            text_resume += value.storyline
-        name_game = session.get(Cards, value.dlcs_parent_game_id).name
-        response = client.chat(
-            model=OLLAMA_IA,
-            messages=[
-                {
-                    "role": "system",
-                    "content": f"""You are a game dlc copywriter. Write a powerful English.
-                    STRICT RULES:
-                    - Start in mention the game title {name_game} like this way  : the game's DLC of {name_game}..."".
-                    - Describe the extension of the game""" 
-                },
-                {
-                    "role": "user",
-                    "content": f"Summarize the following text strictly applying the system rules in summary in 20 words or less:\n\n{text_resume}" 
-                }
-
-            ],
-            format= FormatReturnOllama.model_json_schema(),
-            options={
-                'temperature': 0.5,
-            }
-        )
-    result = FormatReturnOllama.model_validate_json(response.message.content)
-    return result.response
-
-# https://images.igdb.com/igdb/image/upload/t_720p/co698n.jpg
     
 def create_urls_images(value: Wrapper)->list[str]:
     tab = [] 
@@ -254,7 +183,8 @@ def transform_to_list(list_, name_key:str)->list[str] | None:
         return [d[name_key] for d in list_ if name_key in d]
     else:
         return None
-def baleysienne_valorisation(value: Wrapper):
+def baleysienne_valorisation(value: Wrapper, averrage_rating_count, 
+                             averrage_total_rating):
     v = float(value.total_rating_count)
     r = float(value.total_rating)
     m = float(averrage_rating_count)
@@ -279,87 +209,83 @@ class Colors(enum.Enum):
     GREEN = {"id": 1, "min_bayesian": 70, "value": 400} 
     BLUE = {"id": 2, "min_bayesian": 73, "value": 800} 
     PURPLE = {"id" : 3, "min_bayesian": 76, "value": 1300}
-    GOLD = {"id" : 4, "min_bayesian": 81 , "value": 2300} 
+    GOLD = {"id" : 4, "min_bayesian": 81, "value": 2300} 
     GREY = {"id" : 0, "min_bayesian": None, "value": 200} 
 
-def awarding_colors_cards():
-    wrappers = session.scalars(select(Wrapper).where(Wrapper.game_type != 1).order_by(Wrapper.bayesian.desc())).all()
+def awarding_color_card(wrapper, card):
 
-    for wrapper in wrappers:
-        card = session.get(Cards,wrapper.id_igdb)
-        if card is None or wrapper.bayesian is None:
-            print(wrapper.id_igdb)
-        if wrapper.bayesian > Colors.GOLD.value['min_bayesian']:
-            v = Colors.GOLD.value
-            card.colors = v['id']
-            card.value_exchange = v['value']
-        elif wrapper.bayesian > Colors.PURPLE.value['min_bayesian']:
-            v = Colors.PURPLE.value
-            card.colors = v['id']
-            card.value_exchange = v['value']
-        elif wrapper.bayesian > Colors.BLUE.value['min_bayesian']:
-            v = Colors.BLUE.value
-            card.colors = v['id']
-            card.value_exchange = v['value']
-        elif wrapper.bayesian > Colors.GREEN.value['min_bayesian']:
-            v = Colors.GREEN.value
-            card.colors = v['id']
-            card.value_exchange = v['value']
-        else:
-            v = Colors.GREY.value
-            card.colors = v['id']
-            card.value_exchange = v['value']
-    session.commit()
-    session.execute(delete(Wrapper))
-    session.commit()
+    if wrapper.bayesian > Colors.GOLD.value['min_bayesian']:
+        v = Colors.GOLD.value
+        card.colors = v['id']
+        card.value_exchange = v['value']
+    elif wrapper.bayesian > Colors.PURPLE.value['min_bayesian']:
+        v = Colors.PURPLE.value
+        card.colors = v['id']
+        card.value_exchange = v['value']
+    elif wrapper.bayesian > Colors.BLUE.value['min_bayesian']:
+        v = Colors.BLUE.value
+        card.colors = v['id']
+        card.value_exchange = v['value']
+    elif wrapper.bayesian > Colors.GREEN.value['min_bayesian']:
+        v = Colors.GREEN.value
+        card.colors = v['id']
+        card.value_exchange = v['value']
+    else:
+        v = Colors.GREY.value
+        card.colors = v['id']
+        card.value_exchange = v['value']
+    
 
 
-if __name__ == "__main__":
-    try:
-        value_range = 30
-        with SessionLocal() as session:
-            lastid = session.scalar(select(Cards.id_card).where(Cards.game_type != 1)
+def run():
+        progressBar: Progress
+        with Progress() as progressBar:
+            progressBar.console.log("[bold green]Start Request to IGDB")
+            value_range = 30
+            
+            with SessionLocal() as session:
+                lastid = session.scalar(select(Cards.id_card).where(Cards.game_type != 1)
                                             .order_by(Cards.id_card
                                                       .desc())
                                                       .limit(1))
-            if (lastid is not None):
-                value_range -= 1
-                fetch_and_add_in_wrapper(lastid)
-            for i in range(value_range):
-                lastid_for_loop = session.scalar(select(Wrapper.id_igdb).where(Wrapper.game_type != 1)
+                if (lastid is not None):
+                    value_range -= 1
+                    fetch_and_add_in_wrapper(lastid, session)
+                task = progressBar.add_task("[red]Request IGDB:", total=value_range)
+                for i in range(value_range):
+                    progressBar.update(task, advance=1)
+                    lastid_for_loop = session.scalar(select(Wrapper.id_igdb).where(Wrapper.game_type != 1)
                                                 .order_by(Wrapper.id_igdb
                                                 .desc()).limit(1))
-                if lastid_for_loop is None:
-                    lastid = 0
-                jsoncards = fetch_and_add_in_wrapper(lastid=lastid_for_loop)
-                if (jsoncards is None):
-                    break
-            if not OLLAMA:
-                raise ValueError("OLLAMA is not configured INTO .env")
-            if not OLLAMA_EMBEDDING:
-                raise ValueError("OLLAMA_EMBEDDING is not configured INTO .env")
-            if not OLLAMA_IA:
-                raise ValueError("OLLAMA_IA is not configured INTO .env")
-            if lastid is None:
-                lastid = 0
+                    if lastid_for_loop is None:
+                        lastid = 0
+                    jsoncards = fetch_and_add_in_wrapper(lastid_for_loop, session)
+                    if (jsoncards is None):
+                        break
+            progressBar.update(task, completed=value_range)
             session.expunge_all()
             allValue = session.scalars(select(Wrapper).order_by(Wrapper.id_igdb)).all()
+            progressBar.console.log("[bold green]✔Loaded Wrapper IGDB Data Finish.")
+        
             if (len(allValue) >= 20):
+               
                 averrage_rating_count = statistics.mean([wrapper.total_rating_count for wrapper in allValue if wrapper.game_type != 1])
                 # for wrapper in allValue:
                 #     if wrapper.game_type != 1:
                 #         if wrapper.total_rating is None:
                 #             print(wrapper.id_igdb)
-                        
                 averrage_total_rating = statistics.mean([wrapper.total_rating for wrapper in allValue if wrapper.game_type != 1])
                 value: Wrapper
+                progressBar.console.log("Created Cards with wrappers table.")
+                task1 = progressBar.add_task("[red]Cards created:", total=len(allValue))
                 for value in allValue:
                     if (session.get(Cards, value.id_igdb) is None):
+                        progressBar.update(task1, advance=1)
                         if (value.cover_id is not None or value.artworks_url is not None):
-                            value.bayesian = (baleysienne_valorisation(value) if value.game_type != 1  else 0)
+                            value.bayesian = (baleysienne_valorisation(value, averrage_rating_count, averrage_total_rating) if value.game_type != 1  else 0)
                             card = Cards(
                                 id_card = value.id_igdb,
-                                attq = (1.5 if  value.game_type == 1 else int((value.rating or 50) * 100)),
+                                atk = (1.5 if  value.game_type == 1 else int((value.rating or 50) * 100)),
                                 def_ = (1.5 if  value.game_type == 1 else int((value.aggregated_rating or 50) * 100)),
                                 company_game = ([d['company']['name'] for d in value.involved_companies_company_name ] if value.game_type != 1 and value.involved_companies_company_name is not None else None),
                                 covers_urls = create_urls_images(value),
@@ -372,19 +298,22 @@ if __name__ == "__main__":
                                 name_franchise = (value.franchise_name or select_min_name_by_id(value)) if value.game_type != 1 else None,
                                 game_type = value.game_type,
                                 value_exchange = (Colors.GREY.value['value'] if value.game_type == 1 else 0),
-                                colors = Colors.GREY.value['id'] if value.game_type == 1 else None                                
+                                colors = (Colors.GREY.value['id'] if value.game_type == 1 else 0)                              
                             )
+                            if (value.game_type != 1):
+                                awarding_color_card(value ,card)
                             session.add(card)
-                            session.commit()
-                        elif (value.game_type != 1):
-                            print(value.id_igdb) 
-                           
+                            session.delete(value)
+                            
+                session.commit()
+                progressBar.console.log("[bold green]✔Finish")
                 session.expunge_all()
-                awarding_colors_cards()
-    except requests.exceptions.HTTPError as e:
-        print(f"ERREUR HTTP : {e}")
-    except ValueError as d:
-        print(f"ERREUR : {d}")
+            else:
+                progressBar.console.print("[bold green]✔ Run finished, data stocked in Wrapper because number of elements are so enough or null, wait a few months before trying again")
+            progressBar.stop()
+            
 
 
-# color = gris(basique), blue(rare), violet(epique), gold(ultra epique)
+
+if __name__ == "__main__":
+    run()
