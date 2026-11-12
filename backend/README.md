@@ -51,8 +51,8 @@ cd backend
 pyenv install 3.12
 python -m venv .venv
 source /home/login/../transcendance42Lyon/backend/.venv/bin/activate
+alembic upgrade head
 ```
-
 
 ## API Documentation - see the good URL fonctionnal
 

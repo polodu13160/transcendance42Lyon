@@ -7,6 +7,12 @@
 >-->TOUTES LES PAGINATIONS SONT PAR TRANCHE DE 10**
 >-->**LE PRIX LE PLUS HAUT EST DE 10000 tokens (c ok comme ca on peut pas etre en overfloooooooooooooooooooooooooooooooooooooooooow)**
 
+# Get Started
+```bash
+cd bdd
+mkdir srcs/secrets
+echo "password" > srcs/secrets/secretsPostGres_Password
+```
 
 ## 1. Modèles Génériques (Schemas)
 
