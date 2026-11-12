@@ -26,6 +26,17 @@ class Users(Base):
     password_hash: Mapped[str | None]
     is_email_verified: Mapped[bool] = mapped_column(default=False)
 
+    # A new user need to specify :
+    # - firstname
+    # - lastname
+    # - nickname
+    # - email
+    # - password
+
+    def add_new_user(firstname, lastname, nickname,email, password):
+        
+        return
+
 
 
 
