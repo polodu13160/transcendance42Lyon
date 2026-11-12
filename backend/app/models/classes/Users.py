@@ -2,7 +2,7 @@ from app.models.base import Base
 from sqlalchemy.orm import Mapped, mapped_column
 import datetime
 from sqlalchemy import String, Integer, DateTime
-from sqlalchemy import func
+from sqlalchemy import func, BigInteger
 from sqlalchemy.orm import relationship
 
 class Users(Base):
@@ -13,7 +13,7 @@ class Users(Base):
     purchases: Mapped[list["Purchases"]]= relationship(secondary= "buy",back_populates="users")
 
     #column
-    id_user: Mapped[int] = mapped_column(primary_key=True, type_= Integer)
+    id_user: Mapped[int] = mapped_column(primary_key=True, type_= BigInteger)
     last_name: Mapped[str] = mapped_column(type_= String(100), nullable=False)
     first_name: Mapped[str] = mapped_column(type_= String(100), nullable=False)
     nick_name: Mapped[str] = mapped_column(type_=String(100), nullable= False)

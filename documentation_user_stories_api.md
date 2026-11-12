@@ -23,7 +23,7 @@ Ces structures de données sont réutilisées à travers l'ensemble des endpoint
   "name_franchise": string,
   "image_url": [string(noshiny), string(shiny)],
   "value_exchange_min": float | int,
-  "attq": int,
+  "atk": int,
   "def" : int,
   "url_IGBD": string,
   "game_type": int [1: dlc, Other: main_game]
