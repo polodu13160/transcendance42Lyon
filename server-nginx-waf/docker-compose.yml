@@ -1,0 +1,38 @@
+services:
+  httpbin: # backend test
+    image: kennethreitz/httpbin
+    expose:
+      - "80"
+    networks:
+      - app-network
+  
+  meow: # nginx server with modsecurity installed
+    image: owasp/modsecurity-crs:nginx
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      SERVERNAME: meow.local
+      PARANOIA: 5
+      BLOCKING_PARANOIA: 5
+      # ANOMALY_INBOUND: 5
+      # ANOMALY_OUTBOUND: 4
+      REPORTING_LEVEL: 2
+      BACKEND: http://httpbin:80 # backend to change
+      MODSEC_RULE_ENGINE: On # detect bad requests and bloc them
+      # MODSEC_RULE_ENGINE: DetectionOnly # detect bad requests but don't bloc them
+      # MODSEC_RULE_ENGINE: Off
+
+    depends_on:
+      - httpbin
+
+    networks:
+      - app-network
+
+    volumes:
+      - ./REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf:/etc/modsecurity.d/owasp-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+      - ./RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf:/etc/modsecurity.d/owasp-crs/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+
+networks:
+  app-network:
+    driver: bridge
