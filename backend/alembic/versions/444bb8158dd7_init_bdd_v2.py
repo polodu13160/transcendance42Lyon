@@ -24,7 +24,7 @@ def upgrade() -> None:
     op.create_table('cards',
     sa.Column('id_card', sa.BigInteger(), nullable=False),
     sa.Column('date_created', sa.DateTime(timezone=True), nullable=False),
-    sa.Column('attq', sa.Numeric(precision=10, scale=2), nullable=False),
+    sa.Column('atk', sa.Numeric(precision=10, scale=2), nullable=False),
     sa.Column('def_', sa.Numeric(precision=10, scale=2), nullable=False),
     sa.Column('value_exchange', sa.Integer(), nullable=False),
     sa.Column('covers_urls', postgresql.JSONB(astext_type=sa.Text()), nullable=False),
