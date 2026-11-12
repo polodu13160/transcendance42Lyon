@@ -1,6 +1,6 @@
-from fastapi import FastAPI, dependencies
+from fastapi import FastAPI
 from dotenv import load_dotenv
-from sqlalchemy.orm import Session
+# from sqlalchemy.orm import Session
 
 load_dotenv()
 

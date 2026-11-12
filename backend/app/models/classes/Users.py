@@ -21,7 +21,10 @@ class Users(Base):
     id_wallet: Mapped[int | None] = mapped_column(type_= Integer, nullable= True, unique=True)
     date_free_pack: Mapped[datetime.datetime] = mapped_column(type_= DateTime(True), default=func.now())
 
-
+    # For authentification
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=False)
+    password_hash: Mapped[str | None]
+    is_email_verified: Mapped[bool] = mapped_column(default=False)
 
 
 
