@@ -16,7 +16,7 @@ class Cards(Base):
     #column
     id_card: Mapped[int] = mapped_column(type_=BigInteger, primary_key=True)
     date_created: Mapped[datetime.datetime] = mapped_column(type_= DateTime(True), default=func.now())
-    attq: Mapped[float] = mapped_column(Numeric(10, 2))
+    atk: Mapped[float] = mapped_column(Numeric(10, 2))
     def_: Mapped[float] = mapped_column(Numeric(10, 2))
     value_exchange: Mapped[int] = mapped_column(type_= Integer)
     covers_urls: Mapped[list[str]] = mapped_column(JSONB)
