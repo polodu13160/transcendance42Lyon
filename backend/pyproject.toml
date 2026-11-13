@@ -16,6 +16,7 @@ dependencies = [
     "requests>=2.34.2",
     "sqlacodegen>=4.0.4",
     "sqlalchemy>=2.0.54",
+    "argon2-cffi"
 ]
 
 [tool.fastapi]

@@ -22,22 +22,6 @@ class Users(Base):
     date_free_pack: Mapped[datetime.datetime] = mapped_column(type_= DateTime(True), default=func.now())
 
     # For authentification
-    email: Mapped[str] = mapped_column(String(255), unique=True, index=False)
+    user_email: Mapped[str] = mapped_column(String(255), unique=True, index=False)
     password_hash: Mapped[str | None]
     is_email_verified: Mapped[bool] = mapped_column(default=False)
-
-    # A new user need to specify :
-    # - firstname
-    # - lastname
-    # - nickname
-    # - email
-    # - password
-
-    def add_new_user(firstname, lastname, nickname,email, password):
-        
-        return
-
-
-
-
-
