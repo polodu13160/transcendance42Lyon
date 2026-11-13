@@ -1,7 +1,9 @@
 from app.models.base import SessionLocal
 from app.models import Users
 from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import select
 
 def create_user(firstname, lastname, nickname, email: str, password: str)-> Users | None:
     email = email.strip().lower() #normalization
@@ -13,6 +15,8 @@ def create_user(firstname, lastname, nickname, email: str, password: str)-> User
         user_email = email,
         password_hash = ph.hash(password),
     )
+    if verify_email():
+        is_verify_email = True
     with SessionLocal() as db:
         db.add(new_user)
         try:
@@ -23,21 +27,22 @@ def create_user(firstname, lastname, nickname, email: str, password: str)-> User
         db.refresh(new_user)
         return new_user
 
-# def verify_email()-> bool:
-#     return True
+def verify_email()-> bool:
+    return True
 
-def auth(email: str, password: str)-> bool:
-    email = email.strip().lower()
+def auth(email: str, password: str) -> bool:
     ph = PasswordHasher()
-    password = ph.hash(password)
     with SessionLocal() as db:
+        user = db.scalars(
+            select(Users).where(Users.user_email == email)
+        ).first()
+        if user is None or user.password_hash is None:
+            print(f"Error: Wrong email or password")
+            return False
         try:
-            target = db.query(Users).filter(Users.user_email)
-        except IntegrityError:
+            ph.verify(user.password_hash, password)
+            print(f"Authentification succes")
+        except VerifyMismatchError:
             print(f"Error: Wrong email or password")
             return False
-        if ph.verify(target.password_hash, password) :
-            return True
-        else:
-            print(f"Error: Wrong email or password")
-            return False
+        return True
