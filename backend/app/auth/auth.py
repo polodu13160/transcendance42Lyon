@@ -30,19 +30,23 @@ def create_user(firstname, lastname, nickname, email: str, password: str)-> User
 def verify_email()-> bool:
     return True
 
-def auth(email: str, password: str) -> bool:
+def auth(id: str, password: str) -> bool:
     ph = PasswordHasher()
     with SessionLocal() as db:
         user = db.scalars(
-            select(Users).where(Users.user_email == email)
+            select(Users).where(Users.user_email == id)
         ).first()
         if user is None or user.password_hash is None:
-            print(f"Error: Wrong email or password")
+            user = db.scalars(
+                        select(Users).where(Users.nick_name == id)
+                    ).first()
+        if user is None or user.password_hash is None:
+            print(f"Error: Wrong email/identifier or password")
             return False
         try:
             ph.verify(user.password_hash, password)
             print(f"Authentification succes")
         except VerifyMismatchError:
-            print(f"Error: Wrong email or password")
+            print(f"Error: Wrong email/identifier or password")
             return False
         return True

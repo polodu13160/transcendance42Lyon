@@ -7,6 +7,7 @@ create_user("Thais", "Ramirez", "karamire", "karamire@student.42lyon.fr", "passw
 create_user("Lucas", "Paysant", "lpaysant", "lpaysant@student.42lyon.fr", "password")
 
 auth("gaducurt@student.42lyon.fr", "password") # Right email and right password
+auth("pde-petr", "password") # Right nickname and right password
 auth("pde-petr@student.42lyon.fr", "poule") # Right email and wrong password
 auth("Gaducurt@student.42lyon.fr", "password") # Wrong email and right password
 auth("paul-scam-350@arnaque.ru", "password") # Wrong email and right password
