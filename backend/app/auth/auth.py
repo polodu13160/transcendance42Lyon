@@ -4,9 +4,15 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import select
+import zon
+from zon.error import ZonError
 
 def create_user(firstname, lastname, nickname, email: str, password: str)-> Users | None:
-    email = email.strip().lower() #normalization
+    validator = zon.string().email()
+    try:
+        validator.validate(email)
+    except ZonError:
+        return None
     ph = PasswordHasher()
     new_user = Users(
         last_name = lastname,
@@ -15,8 +21,6 @@ def create_user(firstname, lastname, nickname, email: str, password: str)-> User
         user_email = email,
         password_hash = ph.hash(password),
     )
-    if verify_email():
-        is_verify_email = True
     with SessionLocal() as db:
         db.add(new_user)
         try:
@@ -25,10 +29,11 @@ def create_user(firstname, lastname, nickname, email: str, password: str)-> User
             db.rollback()
             return None
         db.refresh(new_user)
+        print(f"An new user has been created !")
         return new_user
 
-def verify_email()-> bool:
-    return True
+# def verify_email()-> bool:
+#     return True
 
 def auth(id: str, password: str) -> bool:
     ph = PasswordHasher()
@@ -36,11 +41,11 @@ def auth(id: str, password: str) -> bool:
         user = db.scalars(
             select(Users).where(Users.user_email == id)
         ).first()
-        if user is None or user.password_hash is None:
+        if user is None or user.password_hash is None:# or user.is_email_verified == False:
             user = db.scalars(
                         select(Users).where(Users.nick_name == id)
                     ).first()
-        if user is None or user.password_hash is None:
+        if user is None or user.password_hash is None:# or user.is_email_verified == False:
             print(f"Error: Wrong email/identifier or password")
             return False
         try:
