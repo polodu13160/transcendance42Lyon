@@ -3,6 +3,7 @@ use dotenvy::dotenv;
 use alloy::primitives::Address;
 use anyhow::{Context, Result};
 
+#[derive(Clone)]
 pub struct Config {
 	pub rpc_ws_url : String,
 	pub rpc_http_url : String,
