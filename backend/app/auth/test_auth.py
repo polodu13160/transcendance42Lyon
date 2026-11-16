@@ -6,9 +6,17 @@ create_user("Jocelyn", "Piquet", "jpiquet", "jpiquet@student.42lyon.fr", "passwo
 create_user("Thais", "Ramirez", "karamire", "karamire@student.42lyon.fr", "password")
 create_user("Lucas", "Paysant", "lpaysant", "lpaysant@student.42lyon.fr", "password")
 
-auth("gaducurt@student.42lyon.fr", "password") # Right email and right password
-auth("pde-petr", "password") # Right nickname and right password
-auth("pde-petr@student.42lyon.fr", "poule") # Right email and wrong password
-auth("Gaducurt@student.42lyon.fr", "password") # Wrong email and right password
-auth("paul-scam-350@arnaque.ru", "password") # Wrong email and right password
-auth("alcool-faible@neuneu.be", "yellow_zal") # Wrong email and wrong password
+tab = {
+    "gaducurt@student.42lyon.fr":"password",
+    "pde-petr": "password",
+    "pde-petr@student.42lyon.fr": "poule",
+    "Gaducurt@student.42lyon.fr": "password",
+    "paul-scam-350@arnaque.ru": "password",
+    "alcool-faible@neuneu.be": "yellow_zal"
+}
+
+for k, v in tab.items():
+    try:
+        auth(k, v)
+    except:
+        print(f"Error")
