@@ -1,0 +1,1 @@
+Le but de ce fichier `prometheus.yml` est de pouvoir lancer grafana sur n'importe quel système qui n'as pas les data enregistrés de pouvoir ajouter en Datasources directement Prometheus.

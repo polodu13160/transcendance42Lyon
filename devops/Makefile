@@ -12,9 +12,6 @@ start:
 stop:
 	$(COMPOSE) stop
 
-build:
-	$(COMPOSE) up --build -d
-
 down:
 	$(COMPOSE) down
 

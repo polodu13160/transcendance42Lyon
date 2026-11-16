@@ -7,6 +7,7 @@ all:
 	if [ "$$response" = "y" ] || [ "$$response" = "Y" ]; then \
 		uv run alembic upgrade head; \
 	fi
+	uv add prometheus-fastapi-instrumentator
 	uv run fastapi dev
 
 

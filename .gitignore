@@ -33,3 +33,10 @@ frontend/**/*.md
 # Local Vite cache
 .vite/
 apiDb.odt
+
+# Observability
+
+devops/.env
+devops/graf_data/
+devops/prom_data/
+devops/demo-app/
