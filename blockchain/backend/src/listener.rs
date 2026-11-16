@@ -10,6 +10,8 @@ use tokio::sync::broadcast;
 use alloy::rpc::types::eth::Filter;
 use anyhow::Result;
 use alloy::sol;
+use std::sync::Arc;
+use tokio::sync::RwLock;
 
 sol! {
 	#[derive(Debug)]
@@ -21,7 +23,7 @@ sol! {
 	);
 }
 
-pub async fn listener(config: Config, transmitter: broadcast::Sender<BlockchainEvent>) -> Result<()> {
+pub async fn listener(config: Config, transmitter: broadcast::Sender<BlockchainEvent>, scores: Arc<RwLock<Vec<TournamentScore>>>) -> Result<()> {
 	let mut delay = Duration::from_secs(1);
 	let filter = Filter::new().address(config.contract_address);
 	loop {
@@ -40,6 +42,7 @@ pub async fn listener(config: Config, transmitter: broadcast::Sender<BlockchainE
 								card_count: event.card_count.to::<u64>(),
 								timestamp: event.timestamp.to::<u64>(),
 							};
+							scores.write().await.push(score.clone());
 							let _ = transmitter.send(BlockchainEvent::ScoreRecorded(score));
 						}
 					}
