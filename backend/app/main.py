@@ -11,12 +11,7 @@ load_dotenv()
     
 app = FastAPI(title="Bdd")
 
-# from .routers import bet, events
-# Added for prometheus scraping
 from prometheus_fastapi_instrumentator import Instrumentator
-
-#app.include_router(bet.router)
-#app.include_router(events.router)
 
 Instrumentator().instrument(app).expose(app)
 
