@@ -14,4 +14,3 @@ J'ai aussi rajouté une ligne dans le backend pour installer les dépendences de
 J'ai aussi commenté les lignes du main.py qui n'étaient plus necessaire car on a plus besoin de bet() entre autres.
 
 Vérifié que les metrics ne soit pas exposé via le reverse proxy.
-

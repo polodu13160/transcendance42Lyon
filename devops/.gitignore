@@ -2,3 +2,5 @@
 graf_data/
 prometheus_data/
 alertmanager/discord_webhook
+test-app-request.sh
+test-app-request2.sh
