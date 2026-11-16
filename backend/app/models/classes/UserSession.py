@@ -1,4 +1,4 @@
-from backend.app.models.base import Base
+from app.models.base import Base
 from sqlalchemy.orm import Mapped, mapped_column
 import datetime
 from sqlalchemy import ForeignKey
