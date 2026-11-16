@@ -18,5 +18,6 @@ tab = {
 for k, v in tab.items():
     try:
         auth(k, v)
+        print(f"Authentification succes")
     except:
         print(f"Error")

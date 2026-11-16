@@ -50,7 +50,5 @@ def auth(id: str, password: str) -> Users | None: # id may be the email or the n
                     ).first()
         if user is None or user.password_hash is None:# or user.is_email_verified == False: # Uncomment if the email verification is implemented
             raise(VerifyMismatchError())
-        ph.verify(user.password_hash, password): # Matching the password with the hash stocked
-        # if ph.verify(user.password_hash, password): # Matching the password with the hash stocked
-        #     print(f"Authentification succes")
+        ph.verify(user.password_hash, password) # Matching the password with the hash stocked
         return user
