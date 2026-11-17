@@ -13,8 +13,8 @@ export default function NavButton(props: NavProps) {
         const basics = "flex md:flex-row flex-col justify-center md:justify-start items-center text-center md:text-left w-full min-w-0 gap-1 md:gap-2 p-1 scale-90 md:scale-100 md:p-3 text-[12px] md:text-sm rounded-xl transition-colors duration-200 ease-in-out";
 
         return isActive
-            ? basics + " text-[#7C3AED] dark:text-[#C4B5FD] dark:text-white bg-[#F3EEFF] dark:bg-[#352B48] shadow-[inset_4px_0_0_0_#A78BFA]"
-            : basics + " text-[#71717A] dark:text-[#A1A1AA] hover:text-[#7C3AED] dark:hover:text-[#C4B5FD] hover:bg-[#F3EEFF] dark:hover:bg-[#352B48]/50 border-transparent";
+            ? basics + " text-action bg-accent-surface shadow-[inset_4px_0_0_0_var(--color-accent)]"
+            : basics + " text-muted hover:text-accent hover:bg-accent-surface/50";
     }
 
     return (
@@ -24,8 +24,7 @@ export default function NavButton(props: NavProps) {
                 src={props.imgSrc}
                 alt=""
             />
-            <span className="min-w-0 hidden md:block">{props.pageName}</span>
-            <span className="min-w-0 block md:hidden">{props.pageName}</span>
+            <span className="min-w-0">{props.pageName}</span>
         </NavLink>
     );
 }

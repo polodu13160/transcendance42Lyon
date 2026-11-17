@@ -1,12 +1,42 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-.active {
-    color: green
+
+@theme {
+  --color-background: #111A35;
+  --color-surface: #1C2B50;
+  --color-panel: #21345C;
+  --color-input-border: #617DB0;
+  --color-action: #FFCF56;
+  --color-action-hover: #FFE082;
+  --color-action-pressed: #F5B936;
+  --color-action-shadow: #A76529;
+  --color-card-back-border: #E4EEF0;
+  --color-surface-raised: #293E69;
+  --color-border: #466292;
+  --color-foreground: #FFF8E8;
+  --color-muted: #B5C5E4;
+  --color-accent: #62DBF5;
+  --color-accent-soft: #B9EDFF;
+  --color-accent-surface: #304D7A;
 }
 
 html {
-     font-family: "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif;
+  color-scheme: dark;
+  color: var(--color-foreground);
+  background: var(--color-background);
+}
+
+body { margin: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--color-background);
+  background: var(--color-accent);
 }
 
 /* The booster opening is a full-screen mobile scene, not a scrollable page. */
@@ -23,7 +53,8 @@ html {
 .app-shell {
   position: relative;
   isolation: isolate;
-  background-color: var(--app-background);
+  background-color: var(--color-background);
+  background-image: radial-gradient(ellipse at 85% 5%, #284A7D55, transparent 55%);
 }
 
 .app-particles,
@@ -34,24 +65,17 @@ html {
   pointer-events: none;
 }
 
-html:not(.dark) .app-shell {
-  background-color: #f5f0eb;
-  background-image:
-    linear-gradient(to bottom, rgb(124 58 237 / 7%) 1px, transparent 1px),
-    linear-gradient(to right, rgb(124 58 237 / 7%) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
 
 .app-particles {
   overflow: hidden;
   z-index: 0;
   opacity: 0.58;
   background-image:
-    radial-gradient(circle at 8% 18%, #c4b5fd 0 1px, transparent 1.5px),
-    radial-gradient(circle at 76% 12%, #a78bfa 0 1px, transparent 1.5px),
-    radial-gradient(circle at 91% 64%, #7dd3fc 0 1px, transparent 1.5px),
-    radial-gradient(circle at 22% 82%, #a78bfa 0 1px, transparent 1.5px),
-    radial-gradient(circle at 58% 71%, #ddd6fe 0 1px, transparent 1.5px);
+    radial-gradient(circle at 8% 18%, var(--color-accent) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 12%, var(--color-accent) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 91% 64%, var(--color-accent) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 22% 82%, var(--color-accent) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 58% 71%, var(--color-accent-soft) 0 1px, transparent 1.5px);
   background-size: 230px 260px, 310px 290px, 270px 250px, 350px 330px, 190px 220px;
   animation: particle-drift 22s linear infinite;
 }
@@ -60,8 +84,8 @@ html:not(.dark) .app-shell {
 .app-particles::after {
   content: "";
   background-image:
-    radial-gradient(circle, rgb(196 181 253 / 70%) 0 1px, transparent 1.5px),
-    radial-gradient(circle, rgb(125 211 252 / 60%) 0 1px, transparent 1.5px);
+    radial-gradient(circle, rgb(98 219 245 / 70%) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgb(98 219 245 / 60%) 0 1px, transparent 1.5px);
   background-size: 160px 180px, 280px 250px;
 }
 
@@ -105,5 +129,22 @@ html:not(.dark) .app-shell {
     50% {
       background-position: 100% 50%;
     }
+  }
+}
+
+@layer components {
+  .button-primary {
+    background: var(--color-action);
+    color: var(--color-background);
+    box-shadow: 0 4px 0 var(--color-action-shadow);
+  }
+
+  .button-primary:hover:not(:disabled) {
+    background: var(--color-action-hover);
+    box-shadow: 0 3px 0 var(--color-action-shadow), 0 0 18px #FFCF5620;
+  }
+
+  .button-primary:active:not(:disabled) {
+    background: var(--color-action-pressed);
   }
 }

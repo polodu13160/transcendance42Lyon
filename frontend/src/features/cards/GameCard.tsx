@@ -19,7 +19,7 @@ type CardDisplayProps = GameCardProps & {
 export default function GameCard({ rarity, name, rating, image , resume, isShiny, isGame, className = "w-75", responsive = false }: CardDisplayProps) {
 
     const theme = cardThemes[rarity]
-    
+
     return (
         <TiltCard max={8} className={responsive ? "w-full @container touch-pan-y!" : "w-fit"}>
                 <div style={{ fontFamily: '"Ubuntu", sans-serif' }} className={`${className} ${responsive ? "game-card-responsive" : ""} ${!isShiny ?
@@ -41,18 +41,18 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                                 <div className="shiny-sweep" />
                             </div>
                         )}
-                        <div className={`relative z-5 flex-1 min-h-0 overflow-hidden m-0.5 rounded-xl border shadow-xl  border-[#3F3F46]`}>
+                        <div className={`relative z-5 flex-1 min-h-0 overflow-hidden m-0.5 rounded-xl border shadow-xl  border-border`}>
                             <img
                                 src={image}
                                 alt={name}  
                                 draggable={false}
                                 className="h-full w-full object-cover"
                             />
-                            <div className={`card-rarity z-10 absolute flex flex-row justify-center items-center bottom-2 gap-1 right-2 bg-[#2D2D32] py-1 px-2 rounded-lg border ${theme.badge} font-bold text-base`}>
+                            <div className={`card-rarity z-10 absolute flex flex-row justify-center items-center bottom-2 gap-1 right-2 bg-surface-raised py-1 px-2 rounded-lg border ${theme.badge} font-bold text-base`}>
                                 <span>{theme.rarityName}</span>
                                 {   
                                     isShiny &&
-                                    <GiPolarStar className="white"/>
+                                    <GiPolarStar className="text-white"/>
                                 }
                             </div>
                         </div>
@@ -67,14 +67,14 @@ export default function GameCard({ rarity, name, rating, image , resume, isShiny
                                         : "text-lg"
                                 }`}
                             >{name}</h2>
-                            <div className="card-rating flex flex-row justify-left items-center ml-4">
+                            <div className="card-rating flex flex-row justify-start items-center ml-4">
                                 <FaStar className="text-[#FFC637]"/>
                                 <span className="ml-1 font-bold text-white text-xl">{rating}</span>
-                                <span className="mx-4 h-4 w-px bg-gray-500"/>
+                                <span className="mx-4 h-4 w-px bg-border"/>
                                 {
                                     isGame
-                                    ? <span className="font-light text-gray-400">Game</span>
-                                    : <span className="font-light text-gray-400">DLC</span>
+                                    ? <span className="font-light text-muted">Game</span>
+                                    : <span className="font-light text-muted">DLC</span>
                                 }
                             </div>
                             <div className="card-description mt-2 h-12 shrink-0">

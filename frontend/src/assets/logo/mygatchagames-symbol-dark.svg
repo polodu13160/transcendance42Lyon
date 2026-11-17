@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" role="img" aria-labelledby="title desc">
   <title id="title">Symbole MyGatchaGames</title><desc id="desc">Trois cartes à collectionner et une étoile de rareté, pour fond sombre.</desc>
   <g id="mark" transform="translate(8 8)">
-    <rect id="back-card" x="15" y="7" width="91" height="119" rx="18" fill="#A78BFA" transform="rotate(11 60.5 66.5)"/>
-    <rect id="middle-card" x="8" y="4" width="91" height="119" rx="18" fill="#8B5CF6" transform="rotate(-8 53.5 63.5)"/>
-    <rect id="front-card" x="19" y="5" width="91" height="119" rx="18" fill="#6D28D9"/>
-    <rect id="front-card-inset" x="27" y="13" width="75" height="103" rx="12" fill="none" stroke="#DDD6FE" stroke-width="3"/>
-    <path id="rarity-star" d="M64.5 29.5 72.1 49l20.9 1.2-16.2 13.2 5.3 20.5-17.6-11.3-17.6 11.3 5.3-20.5L36 50.2 56.9 49Z" fill="#FDE68A"/>
-    <circle id="sparkle-one" cx="42" cy="96" r="4" fill="#EDE9FE"/><circle id="sparkle-two" cx="87" cy="96" r="4" fill="#EDE9FE"/>
+    <rect id="back-card" x="15" y="7" width="91" height="119" rx="18" fill="#62DBF5" transform="rotate(11 60.5 66.5)"/>
+    <rect id="middle-card" x="8" y="4" width="91" height="119" rx="18" fill="#3D78A5" transform="rotate(-8 53.5 63.5)"/>
+    <rect id="front-card" x="19" y="5" width="91" height="119" rx="18" fill="#304D7A"/>
+    <rect id="front-card-inset" x="27" y="13" width="75" height="103" rx="12" fill="none" stroke="#D9F5FF" stroke-width="3"/>
+    <path id="rarity-star" d="M64.5 29.5 72.1 49l20.9 1.2-16.2 13.2 5.3 20.5-17.6-11.3-17.6 11.3 5.3-20.5L36 50.2 56.9 49Z" fill="#FFCF56"/>
+    <circle id="sparkle-one" cx="42" cy="96" r="4" fill="#FFF8E8"/><circle id="sparkle-two" cx="87" cy="96" r="4" fill="#FFF8E8"/>
   </g>
 </svg>
