@@ -9,8 +9,6 @@ from app.scripts.recover_igdb import run
 from app.models.base import engine
 
 
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
 
@@ -33,7 +31,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Bdd", lifespan=lifespan)
 
+from prometheus_fastapi_instrumentator import Instrumentator
 
+Instrumentator().instrument(app).expose(app)
 
 
 
