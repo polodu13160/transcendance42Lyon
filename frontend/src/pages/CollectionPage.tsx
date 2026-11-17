@@ -1,20 +1,35 @@
+import CollectionFilters from "./CollectionPageComponents/CollectionFilters"
+import CollectionGrid from "./CollectionPageComponents/CollectionGrid"
+import CollectionSummary from "./CollectionPageComponents/CollectionSummary"
+
+import cardsData from "../../test_data/cardsData.json";
+import type { CollectionCard, CollectionEntry } from "@/types/card";
+import { useState } from "react"
+import Pagination from "@/components/ui/Pagination";
+
+
 export default function CollectionPage() {
+
+    const cards = cardsData as CollectionCard[];
+
+    const testCollection: CollectionEntry[] = cards.slice(0, 20).map((card) => ({
+        card,
+        quantity: 4,
+        isFavorite: true
+    }));
+
+    const [actualPage, setActualPage] = useState(1);
+
+    function setPagination(index : number) {
+        setActualPage(index);
+    }
+
     return (
-        <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-8">
-            <header>
-                <h1 className="text-4xl text-[#F5F5F5] ">My collection</h1>
-            </header>
-
-            <div className="w-full rounded-2xl border border-zinc-700 bg-zinc-800 p-4 md:p-6">
-                <p className="text-xl text-violet-300">Statistics</p>
-                <h2 className="text-3xl text-[#F5F5F5] mt-3">100 / 14809 cards discovered.</h2>
-
-                <div className="mt-4 h-2 overflow-hidden rounded-full bg-zinc-700">
-                    <div className="h-full rounded-full bg-violet-400" style={{ width: `${(100 / 14809) * 100}%`}}></div>
-                </div>
-
-                <p className="text-xs italic text-zinc-500 mt-4">X% of cards discovered | XXXXX cards left to complete the collection.</p>
-            </div>
+        <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 pb-[calc(env(safe-area-inset-bottom)+6rem)] md:p-8">
+            <CollectionSummary />
+            <CollectionFilters />
+            <CollectionGrid cardPage={testCollection}/>
+            <Pagination actualPage={actualPage} totalPages={10} onPageChange={setPagination} />
         </main>
     )
 }

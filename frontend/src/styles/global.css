@@ -6,7 +6,7 @@
 }
 
 html {
-     font-family: "Hammersmith One", sans-serif;
+     font-family: "Ubuntu", sans-serif;
 }
 
 /* The booster opening is a full-screen mobile scene, not a scrollable page. */
@@ -23,7 +23,6 @@ html {
 .app-shell {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   background-color: var(--app-background);
 }
 
@@ -44,6 +43,7 @@ html:not(.dark) .app-shell {
 }
 
 .app-particles {
+  overflow: hidden;
   z-index: 0;
   opacity: 0.58;
   background-image:

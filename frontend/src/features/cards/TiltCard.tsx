@@ -8,6 +8,7 @@ import "./CardEffects.css";
 type TiltCardProps = {
     children: ReactNode;
     max?: number;
+    className?: string;
 };
 
 // ── Styles ──────────────────────────────────────────────
@@ -82,7 +83,7 @@ if (typeof document !== "undefined" && !document.getElementById("transitions-p19
 // The pointer is tracked on the OUTER wrapper (which never transforms)
 // so the tilting card can't pull its own edges out from under the
 // cursor. rotateX/Y + glare position are written into CSS vars.
-export function TiltCard({ children, max = 32 }: TiltCardProps) {
+export function TiltCard({ children, max = 32, className = "w-fit" }: TiltCardProps) {
     const wrapRef = useRef<HTMLDivElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
 
@@ -113,7 +114,7 @@ export function TiltCard({ children, max = 32 }: TiltCardProps) {
   };
 
   return (
-    <div ref={wrapRef} className="t-tilt w-fit shrink-0" onPointerMove={onMove} onPointerLeave={onLeave}>
+    <div ref={wrapRef} className={`t-tilt shrink-0 ${className}`} onPointerMove={onMove} onPointerLeave={onLeave}>
       <div ref={cardRef} className="t-tilt-card">
         {children}
         <div className="t-tilt-glare" aria-hidden="true" />
