@@ -31,13 +31,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Bdd", lifespan=lifespan)
 
-from prometheus_fastapi_instrumentator import Instrumentator
-
-Instrumentator().instrument(app).expose(app)
-
-
-
-
 @app.get("/")
 def read_root():
     return {"Bravo tu t'es connecté a l'api"}
