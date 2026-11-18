@@ -2,6 +2,7 @@ from .base import Base
 from .classes.Purchases import Purchases
 from .classes.History_cards import History_cards
 from .classes.Users import Users
+from .classes.UserSession import UserSession
 from .classes.Cards import Cards
 from .classes.Buy import Buy
 from .classes.Get_exchanges import Get_Exchanges

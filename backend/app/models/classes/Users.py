@@ -1,7 +1,7 @@
 from app.models.base import Base
 from sqlalchemy.orm import Mapped, mapped_column
 import datetime
-from sqlalchemy import String, Integer, DateTime
+from sqlalchemy import String, Integer, DateTime, ForeignKey
 from sqlalchemy import func, BigInteger
 from sqlalchemy.orm import relationship
 
@@ -21,9 +21,7 @@ class Users(Base):
     id_wallet: Mapped[int | None] = mapped_column(type_= Integer, nullable= True, unique=True)
     date_free_pack: Mapped[datetime.datetime] = mapped_column(type_= DateTime(True), default=func.now())
 
-
-
-
-
-
-
+    # For authentification
+    user_email: Mapped[str] = mapped_column(String(255), unique=True, index=False)
+    password_hash: Mapped[str | None]
+    is_email_verified: Mapped[bool] = mapped_column(default=False)

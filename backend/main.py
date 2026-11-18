@@ -7,6 +7,8 @@ import subprocess
 from sqlalchemy_utils import create_database, database_exists
 from app.scripts.recover_igdb import run
 from app.models.base import engine
+from prometheus_fastapi_instrumentator import Instrumentator
+from app.routes.auth import routerAuth
 
 
 @asynccontextmanager
@@ -30,13 +32,22 @@ async def lifespan(app: FastAPI):
         pass
 
 app = FastAPI(title="Bdd", lifespan=lifespan)
+Instrumentator().instrument(app).expose(app)
 
-@app.get("/")
-def read_root():
-    return {"Bravo tu t'es connecté a l'api"}
+prefix = '/api/v1'
+
+app.include_router(router=routerAuth, prefix=prefix, tags=["auth"])
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    q = "kdfsjkdfjkdfjkjdf"
-    return {"item_id": item_id, "q": q}
+
+
+
+# @app.get("/")
+# def read_root():
+#     return {"Bravo tu t'es connecté a l'api"}
+
+
+# @app.get("/items/{item_id}")
+# def read_item(item_id: int, q: str | None = None):
+#     q = "kdfsjkdfjkdfjkjdf"
+#     return {"item_id": item_id, "q": q}
