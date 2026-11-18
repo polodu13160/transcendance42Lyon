@@ -3,17 +3,17 @@ COMPOSE = docker compose -f docker-compose.yml
 all:
 	$(COMPOSE) up -d --build
 
-up:
+monitoring-up:
 	$(COMPOSE) up -d
 
-start:
+monitoring-start:
 	$(COMPOSE) start
 
-stop:
+monitoring-stop:
 	$(COMPOSE) stop
 
-down:
+monitoring-down:
 	$(COMPOSE) down
 
-logs:
+monitoring-logs:
 	$(COMPOSE) logs

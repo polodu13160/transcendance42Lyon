@@ -9,8 +9,6 @@ from app.scripts.recover_igdb import run
 from app.models.base import engine
 
 
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
 
@@ -32,11 +30,6 @@ async def lifespan(app: FastAPI):
         pass
 
 app = FastAPI(title="Bdd", lifespan=lifespan)
-
-
-
-
-
 
 @app.get("/")
 def read_root():
