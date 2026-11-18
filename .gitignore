@@ -34,9 +34,24 @@ frontend/**/*.md
 .vite/
 apiDb.odt
 
+.env
+
 # Observability
 
 devops/.env
 devops/graf_data/
 devops/prom_data/
 devops/demo-app/
+
+# Backend
+
+backend/.venv
+backend/.env
+backend/**/__pycache__/
+backend/__pycache__
+backend/../apiDb.odt
+
+# BDD
+
+bdd/srcs/secrets/
+bdd/server/srcs/data

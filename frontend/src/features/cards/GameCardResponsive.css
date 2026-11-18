@@ -1,0 +1,66 @@
+.game-card-responsive {
+  padding: 2cqw;
+  border-radius: 5.333cqw;
+}
+
+.game-card-responsive .card-rarity {
+  right: 2.667cqw;
+  bottom: 2.667cqw;
+  gap: 1.333cqw;
+  padding: 1.333cqw 2.667cqw;
+  border-radius: 2.667cqw;
+  font-size: 5.333cqw;
+  line-height: 1.5;
+}
+
+.game-card-responsive .card-content h2 {
+  margin: 2.667cqw 5.333cqw 0;
+  height: 9.333cqw;
+  font-size: 6cqw;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+  overflow: hidden;
+}
+
+.game-card-responsive .card-content h2.text-base { font-size: 5.333cqw; }
+.game-card-responsive .card-content h2.text-sm { font-size: 4.667cqw; }
+
+.game-card-responsive .card-rating {
+  margin-left: 5.333cqw;
+  font-size: 5.333cqw;
+  line-height: 1.5;
+}
+
+.game-card-responsive .card-rating > span:first-of-type {
+  margin-left: 1.333cqw;
+  font-size: 6.667cqw;
+}
+
+.game-card-responsive .card-rating > span:nth-of-type(2) {
+  margin-inline: 5.333cqw;
+  height: 5.333cqw;
+}
+
+.game-card-responsive .card-description {
+  margin-top: 2.667cqw;
+  height: 16cqw;
+}
+
+.game-card-responsive .card-description p {
+  margin-inline: 5.333cqw;
+  font-size: 4cqw;
+  line-height: 5.333cqw;
+}
+
+.game-card-responsive .card-stats {
+  margin: 5.333cqw;
+  font-size: 5.333cqw;
+  line-height: 1.5;
+}
+
+.game-card-responsive .card-stats > div {
+  gap: 1.333cqw;
+  padding: 2.667cqw;
+}
