@@ -29,6 +29,7 @@ routerAuth = APIRouter(
 Email_validator = TypeAdapter(EmailStr)
 Identifier= Annotated[str, Field(min_length=3, description="Email or nickname")]
 Password= Annotated[str ,Field(min_length=3, description="password")]
+no = Annotated[str, Field(pattern=r"^[^@]*$")]
 
 
 
@@ -61,7 +62,7 @@ class UserPost(BaseModel):
 class UserRegister(BaseModel):
     last_name:str
     first_name:str
-    nick_name: str
+    nick_name: Annotated[str, Field(min_length=3,pattern=, description="Email or nickname")]
     id_wallet: int | None = None  
     user_email: EmailStr
     password: Password
@@ -78,6 +79,7 @@ async def login(body: UserAuth):
         if body._is_email == True:
             user, token = mailAuth(body.identifier, body.password)
         else:
+            
             user, token = nicknameAuth(body.identifier, body.password)
     except:
         raise HTTPException(status_code=401, detail="nickname/mail or password error")
@@ -102,7 +104,12 @@ async def register(body: UserRegister ):
                 status_code=409,
                 detail=msg)
         return {"user": UserPost.model_validate(user), "token": token}
+
+
         
+# @routerAuth.get('/token-api', description="for use api public, not access change password or sensibility data")
+# async def create_token(user_nickname: str, password: str):
+#     var = login()
 
 
 
