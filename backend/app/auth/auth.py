@@ -7,16 +7,12 @@ from sqlalchemy import select
 import zon
 from zon.error import ZonError
 from argon2 import PasswordHasher
+from sqlalchemy.orm import Session
 
 # zon for checking enail format
 # argon2 for hash password and verify the hash 
 
-def create_user(firstname, lastname, nickname, email: str, password: str)-> tuple [Users, str] | None:
-    validator = zon.string().email()
-    try:
-        validator.validate(email)
-    except ZonError:
-        return None
+def create_user(db: Session, firstname : str, lastname : str, nickname : str, email: str, password: str, id_wallet: int | None = None)-> tuple [Users, str] | None:
     ph = PasswordHasher()
     new_user = Users(
         last_name = lastname,
@@ -24,18 +20,15 @@ def create_user(firstname, lastname, nickname, email: str, password: str)-> tupl
         nick_name = nickname,
         user_email = email,
         password_hash = ph.hash(password),
+        id_wallet = id_wallet
     )
-    with SessionLocal() as db:
-        db.add(new_user)
-        try:
-            db.commit()
-        except IntegrityError: # Check double emails
-            db.rollback()
-            return None
-        db.refresh(new_user)
-        print(f"An new user has been created !")
-        token = create_session(new_user.id_user)
-        return new_user, token
+    db.add(new_user)
+    db.commit()
+    # Check double emails
+    db.refresh(new_user)
+    print(f"An new user has been created !")
+    token = create_session(new_user.id_user)
+    return new_user, token
 
 # def verify_email()-> bool: # Implement email verification ? 
 #     return True

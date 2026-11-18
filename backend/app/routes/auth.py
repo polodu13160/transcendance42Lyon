@@ -4,8 +4,10 @@ from typing import Annotated
 from fastapi import HTTPException
 from app.models import Users
 import datetime
-from app.auth.auth import mailAuth, nicknameAuth
+from app.auth.auth import mailAuth, nicknameAuth, create_user
 from fastapi import APIRouter
+from sqlalchemy.exc import IntegrityError
+from app.models.base import SessionLocal
 
 
 
@@ -24,19 +26,21 @@ routerAuth = APIRouter(
 
 
 
-email_validator = TypeAdapter(EmailStr)
+Email_validator = TypeAdapter(EmailStr)
+Identifier= Annotated[str, Field(min_length=3, description="Email or nickname")]
+Password= Annotated[str ,Field(min_length=3, description="password")]
 
 
 
 class UserAuth(BaseModel):
-    identifier: EmailStr | str = Field(min_length=3, description="Email or nickname")
-    password: str = Field(min_length=3, description="password")
+    identifier: Identifier
+    password: Password
     _is_email: bool =  PrivateAttr(default=False)
 
     @model_validator(mode="after")
     def check_identifier_type(self) -> "UserAuth":
         try:
-          email_validator.validate_python(self.identifier)
+          Email_validator.validate_python(self.identifier)
           self._is_email = True
         except ValidationError:
           self._is_email = False
@@ -44,7 +48,6 @@ class UserAuth(BaseModel):
 
 
 class UserPost(BaseModel):
-    id_user: int
     id_user:int
     last_name:str
     first_name:str
@@ -54,14 +57,23 @@ class UserPost(BaseModel):
     date_free_pack: datetime.datetime
     user_email: str
     model_config = ConfigDict(from_attributes=True)
-    
+
+class UserRegister(BaseModel):
+    last_name:str
+    first_name:str
+    nick_name: str
+    id_wallet: int | None = None  
+    user_email: EmailStr
+    password: Password
+
+
 
 
 
 
 
 @routerAuth.post('/login', description="authentification user")
-async def register(body: UserAuth):
+async def login(body: UserAuth):
     try :
         if body._is_email == True:
             user, token = mailAuth(body.identifier, body.password)
@@ -70,6 +82,31 @@ async def register(body: UserAuth):
     except:
         raise HTTPException(status_code=401, detail="nickname/mail or password error")
     return {"user": UserPost.model_validate(user), "token": token}
+
+@routerAuth.post('/register', description="register user")
+async def register(body: UserRegister ):
+    with SessionLocal() as db:
+        try:
+            user, token = create_user(db, body.first_name, body.last_name, body.nick_name, body.user_email, body.password, body.id_wallet)
+        except IntegrityError as i:
+            # pos = 
+            if (i.args[0].find('user_email') != -1):
+                msg = "Email error"
+            elif (i.args[0].find('nick_name') != -1):
+                msg = "Nickname error"
+            else:
+                msg = "Error"
+
+
+            raise HTTPException(
+                status_code=409,
+                detail=msg)
+        return {"user": UserPost.model_validate(user), "token": token}
+        
+
+
+
+
 
     
 
