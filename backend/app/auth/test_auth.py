@@ -1,4 +1,4 @@
-from app.auth.auth import create_user, auth
+from app.auth.auth import create_user, mailAuth, nicknameAuth
 
 def test()-> None:
     create_user("Gautier", "Ducurtil", "gaducurt", "gaducurt@student.42lyon.fr", "password")
@@ -7,7 +7,7 @@ def test()-> None:
     create_user("Thais", "Ramirez", "karamire", "karamire@student.42lyon.fr", "password")
     create_user("Lucas", "Paysant", "lpaysant", "lpaysant@student.42lyon.fr", "password")
 
-    tab = {
+    tab_email = {
         "gaducurt@student.42lyon.fr":"password",
         "pde-petr": "password",
         "pde-petr@student.42lyon.fr": "poule",
@@ -15,13 +15,30 @@ def test()-> None:
         "paul-scam-350@arnaque.ru": "password",
         "alcool-faible@neuneu.be": "yellow_zal"
     }
+    tab_nick = {
+        "gaducurt":"password",
+        "pde-petr": "password",
+        "pde-pet": "poule",
+        "Gaducurt": "password",
+        "paul": "password",
+        "alcool-faible": "yellow_zal"
+    }
 
-    for k, v in tab.items():
+    print("-----login with enail-----")
+    for k, v in tab_email.items():
         try:
-            auth(k, v)
-            print(f"Authentification succes")
+            mailAuth(k, v)
+            print(k, ": Authentification succes")
         except:
-            print(f"Error")
+            print(k, ": Error")
+
+    print("\n-----login with nickname-----")
+    for k, v in tab_nick.items():
+        try:
+            nicknameAuth(k, v)
+            print(k, ": Authentification succes")
+        except:
+            print(k, ": Error")
 
     
 
