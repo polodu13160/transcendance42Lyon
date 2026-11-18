@@ -33,7 +33,7 @@ pip install uv
 
 cd ./transcendance42Lyon/bdd/server
 #create a file in new folder :
-mkdir -r srcs/secrets/
+mkdir srcs/secrets/
 echo -n 'password' > srcs/secrets/secretsPostGres_Password 
 #in this file create add pasword of the user ROOT of BDD(no return line)
 #for modif the user PostGreSql check the transcendance42Lyon/bdd/server/makefile
