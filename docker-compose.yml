@@ -1,0 +1,133 @@
+name: "transcendence"
+
+services:
+  backend:
+    container_name: backend
+    build: ./backend/.
+    env_file:
+      - ./backend/.env
+    ports:
+      - 127.0.0.1:8000:8000
+    networks:
+      - backend
+      - monitoring
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/')",
+        ]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    restart: unless-stopped
+
+  db:
+    image: postgres:14@sha256:c0e9c0e9bac7e4c1834b698217a03ee5c708de30d313c84a506972de0e24b059
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_pass
+      #do not touch the user name for the moment otherwise no database already made
+      POSTGRES_USER: user
+      POSTGRES_DB: postgre_db
+    secrets:
+      - pg_pass
+    volumes:
+      - ./bdd/server/srcs/data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    restart: unless-stopped
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./frontend
+      dockerfile: ../devops/nginx/Dockerfile
+      additional_contexts:
+        nginx-conf: ./devops/nginx
+    ports:
+      - 127.0.0.1:8081:8080
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:6.3.0@sha256:7605e298e5a2ac74d806283362fa253a4e0a42cfd881e8fa2c155f0631899f6c
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - backend
+
+  # --------------- OBSERVABILITY --------------
+  prometheus:
+    image: prom/prometheus:v3@sha256:e04987641b57704f408e31f6373ba4138ecf27cb4a165d24aabb6c38fddd0f06
+    container_name: prometheus
+    user: "${UID}:${GID}"
+    volumes:
+      - ./devops/prometheus:/etc/prometheus
+      - ./devops/prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+    ports:
+      - 127.0.0.1:9090:9090
+    networks:
+      - monitoring
+
+  node_exporter:
+    image: prom/node-exporter:v1@sha256:1b4e4438faca4dd7e001dd445d161a4a2091b0fededa84093b3a8dfeae1f1be0
+    container_name: node_exporter
+    user: "${UID}:${GID}"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:13.2-slim@sha256:51b67c3d350a27fc7a05ed958984522e367fe4764582ecdd5706a20e369fdac8
+    container_name: grafana
+    user: "${UID}:${GID}"
+    volumes:
+      - ./devops/grafana/provisioning:/etc/grafana/provisioning
+      - ./devops/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./devops/graf_data:/var/lib/grafana
+    ports:
+      - 127.0.0.1:3000:3000
+    env_file:
+      - ./devops/.env
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - monitoring
+
+  alertmanager:
+    image: prom/alertmanager:v0.35.0@sha256:e638797febd034838eca8b98cdbd46f951e9bf7f178777aa8669167406a9946c
+    container_name: alertmanager
+    volumes:
+      - ./devops/alertmanager:/etc/alertmanager
+    ports:
+      - 127.0.0.1:9093:9093
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+  backend:
+
+secrets:
+  pg_pass:
+    file: ./bdd/server/srcs/secrets/secretsPostGres_Password

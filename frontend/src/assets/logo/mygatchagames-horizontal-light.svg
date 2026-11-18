@@ -3,16 +3,16 @@
   <desc id="desc">Logo MyGatchaGames : cartes à collectionner superposées et étoile de rareté.</desc>
   <!-- Couleurs et formes modifiables : aucun bitmap n'est embarqué dans ce fichier. -->
   <g id="mark" transform="translate(16 16)">
-    <rect id="back-card" x="15" y="7" width="91" height="119" rx="18" fill="#A78BFA" transform="rotate(11 60.5 66.5)"/>
-    <rect id="middle-card" x="8" y="4" width="91" height="119" rx="18" fill="#7C3AED" transform="rotate(-8 53.5 63.5)"/>
-    <rect id="front-card" x="19" y="5" width="91" height="119" rx="18" fill="#5B21B6"/>
-    <rect id="front-card-inset" x="27" y="13" width="75" height="103" rx="12" fill="none" stroke="#C4B5FD" stroke-width="3"/>
-    <path id="rarity-star" d="M64.5 29.5 72.1 49l20.9 1.2-16.2 13.2 5.3 20.5-17.6-11.3-17.6 11.3 5.3-20.5L36 50.2 56.9 49Z" fill="#FDE68A"/>
-    <circle id="sparkle-one" cx="42" cy="96" r="4" fill="#DDD6FE"/>
-    <circle id="sparkle-two" cx="87" cy="96" r="4" fill="#DDD6FE"/>
+    <rect id="back-card" x="15" y="7" width="91" height="119" rx="18" fill="#62DBF5" transform="rotate(11 60.5 66.5)"/>
+    <rect id="middle-card" x="8" y="4" width="91" height="119" rx="18" fill="#63DFF8" transform="rotate(-8 53.5 63.5)"/>
+    <rect id="front-card" x="19" y="5" width="91" height="119" rx="18" fill="#253F70"/>
+    <rect id="front-card-inset" x="27" y="13" width="75" height="103" rx="12" fill="none" stroke="#B9EDFF" stroke-width="3"/>
+    <path id="rarity-star" d="M64.5 29.5 72.1 49l20.9 1.2-16.2 13.2 5.3 20.5-17.6-11.3-17.6 11.3 5.3-20.5L36 50.2 56.9 49Z" fill="#FFCF56"/>
+    <circle id="sparkle-one" cx="42" cy="96" r="4" fill="#D9F5FF"/>
+    <circle id="sparkle-two" cx="87" cy="96" r="4" fill="#D9F5FF"/>
   </g>
   <g id="wordmark" fill="#171429">
     <text x="165" y="99" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="55" font-weight="800" letter-spacing="-2.8">MyGatcha</text>
-    <text x="459" y="99" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="55" font-weight="800" letter-spacing="-2.8" fill="#7C3AED">Games</text>
+    <text x="459" y="99" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="55" font-weight="800" letter-spacing="-2.8" fill="#63DFF8">Games</text>
   </g>
 </svg>

@@ -11,8 +11,6 @@ from prometheus_fastapi_instrumentator import Instrumentator
 from app.routes.auth import routerAuth
 
 
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
 
@@ -39,8 +37,6 @@ Instrumentator().instrument(app).expose(app)
 prefix = '/api/v1'
 
 app.include_router(router=routerAuth, prefix=prefix, tags=["auth"])
-
-
 
 
 
