@@ -14,15 +14,22 @@ contract scoreContract is Ownable {
 	}
 
 	function recordScore(uint256 tournamentId, address player, uint32 cardCount) onlyAuthorized() external {
-
+		_tournamentScores[tournamentId].push(
+			Score({
+				player: player,
+				card_count: cardCount,
+				timestamp: uint64(block.timestamp)
+			})
+		);
 	}
 
 	function getScores(uint256 tournamentId) external view returns (Score[] memory){
-
+		return _tournamentScores[tournamentId];
 	}
 
 	modifier onlyAuthorized() {
-
+		require(msg.sender == authorizedCaller, "Unauthorized caller");
+		_;
 	}
 
 	struct Score {
@@ -31,9 +38,8 @@ contract scoreContract is Ownable {
 		uint64	timestamp;
 	}
 
-
+	mapping(uint256 => Score[]) private _tournamentScores;
 	address public authorizedCaller;
-
 
 }
 
