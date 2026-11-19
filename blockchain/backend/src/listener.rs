@@ -1,17 +1,15 @@
 use crate::config::Config;
 use crate::types::BlockchainEvent;
 use crate::types::TournamentScore;
-use std::time::Duration;
-use tokio::time::sleep;
 use alloy::providers::{Provider, ProviderBuilder};
-use alloy::rpc::client::WsConnect;
-use tokio_stream::StreamExt;
-use tokio::sync::broadcast;
-use alloy::rpc::types::eth::Filter;
-use anyhow::Result;
+use alloy::rpc::{client::WsConnect, types::eth::Filter};
 use alloy::sol;
+use anyhow::Result;
+use std::time::Duration;
 use std::sync::Arc;
-use tokio::sync::RwLock;
+use tokio::sync::{broadcast, RwLock};
+use tokio::time::sleep;
+use tokio_stream::StreamExt;
 
 sol! {
 	#[derive(Debug)]
@@ -42,7 +40,14 @@ pub async fn listener(config: Config, transmitter: broadcast::Sender<BlockchainE
 								card_count: event.card_count.to::<u64>(),
 								timestamp: event.timestamp.to::<u64>(),
 							};
-							scores.write().await.push(score.clone());
+							let mut scores_vec = scores.write().await;
+							if let Some(existing_score) = scores_vec.iter_mut().find(|u| u.player == score.player && u.tournament_id == score.tournament_id) {
+								existing_score.card_count = score.card_count;
+								existing_score.timestamp = score.timestamp;
+							}
+							else {
+								scores_vec.push(score.clone());
+							}
 							let _ = transmitter.send(BlockchainEvent::ScoreRecorded(score));
 						}
 					}

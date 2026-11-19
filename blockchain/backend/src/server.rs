@@ -1,17 +1,14 @@
 use crate::types::TournamentScore;
 use crate::config::Config;
-use std::sync::Arc;
-use tokio::sync::RwLock;
 use crate::types::BlockchainEvent;
-use tokio::sync::broadcast;
-use axum::extract::State;
+use axum::extract::{State, ws::WebSocket, ws::WebSocketUpgrade};
 use axum::Json;
-use axum::extract::ws::WebSocket;
-use axum::extract::ws::WebSocketUpgrade;
 use axum::response::IntoResponse;
 use axum::extract::ws::Message;
-use tokio::net::TcpListener;
 use axum::{routing::get, Router};
+use std::sync::Arc;
+use tokio::sync::{broadcast, RwLock};
+use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
 
 #[derive(Clone)]

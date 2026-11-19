@@ -1,7 +1,7 @@
-use std::env;
-use dotenvy::dotenv;
 use alloy::primitives::Address;
 use anyhow::{Context, Result};
+use dotenvy::dotenv;
+use std::env;
 
 #[derive(Clone)]
 pub struct Config {
