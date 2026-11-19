@@ -20,7 +20,7 @@ contract TournamentScores is Ownable {
 		uint256 timestamp
 	);
 
-	event authorizedCallerChanged(address indexed previousCaller, address indexed newCaller);
+	event AuthorizedCallerChanged(address indexed previousCaller, address indexed newCaller);
 
 	constructor(address firstCaller) Ownable(msg.sender) {
 		require(firstCaller != address(0), "Invalid address for TournamentScores constructor");
@@ -29,8 +29,9 @@ contract TournamentScores is Ownable {
 
 	function setAuthorizedCaller(address newCaller) external onlyOwner {
 		require(newCaller != address(0), "Invalid address for setAuthorizedCaller function");
+		address oldCaller = authorizedCaller;
 		authorizedCaller = newCaller;
-		emit authorizedCallerChanged(authorizedCaller, newCaller);
+		emit AuthorizedCallerChanged(oldCaller, newCaller);
 	}
 
 	function recordScore(uint256 tournamentId, address player, uint32 cardCount) external onlyAuthorized() {
