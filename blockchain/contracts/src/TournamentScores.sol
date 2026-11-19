@@ -1,9 +1,9 @@
-// SPDX-License-identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import {Ownable} from "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract ScoreContract is Ownable {
+contract TournamentScores is Ownable {
 	struct Score {
 		address	player;
 		uint32	card_count;
@@ -20,13 +20,17 @@ contract ScoreContract is Ownable {
 		uint256 timestamp
 	);
 
+	event authorizedCallerChanged(address indexed previousCaller, address indexed newCaller);
+
 	constructor(address firstCaller) Ownable(msg.sender) {
+		require(firstCaller != address(0), "Invalid address for TournamentScores constructor");
 		authorizedCaller = firstCaller;
 	}
 
 	function setAuthorizedCaller(address newCaller) external onlyOwner {
-		require(newCaller != address(0), "Invalid address");
+		require(newCaller != address(0), "Invalid address for setAuthorizedCaller function");
 		authorizedCaller = newCaller;
+		emit authorizedCallerChanged(authorizedCaller, newCaller);
 	}
 
 	function recordScore(uint256 tournamentId, address player, uint32 cardCount) external onlyAuthorized() {
@@ -34,6 +38,8 @@ contract ScoreContract is Ownable {
 			Score({
 				player: player,
 				card_count: cardCount,
+				// casting to 'uint64' is safe because timestamp will not overflow an uint64
+				// forge-lint: disable-next-line(unsafe-typecast)
 				timestamp: uint64(block.timestamp)
 			})
 		);
