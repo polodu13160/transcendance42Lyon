@@ -1,17 +1,15 @@
 use crate::config::Config;
 use crate::types::BlockchainEvent;
 use crate::types::TournamentScore;
-use std::time::Duration;
-use tokio::time::sleep;
 use alloy::providers::{Provider, ProviderBuilder};
-use alloy::rpc::client::WsConnect;
-use tokio_stream::StreamExt;
-use tokio::sync::broadcast;
-use alloy::rpc::types::eth::Filter;
-use anyhow::Result;
+use alloy::rpc::{client::WsConnect, types::eth::Filter};
 use alloy::sol;
+use anyhow::Result;
+use std::time::Duration;
 use std::sync::Arc;
-use tokio::sync::RwLock;
+use tokio::sync::{broadcast, RwLock};
+use tokio::time::sleep;
+use tokio_stream::StreamExt;
 
 sol! {
 	#[derive(Debug)]
