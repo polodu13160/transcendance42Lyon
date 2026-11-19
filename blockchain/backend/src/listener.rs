@@ -42,7 +42,14 @@ pub async fn listener(config: Config, transmitter: broadcast::Sender<BlockchainE
 								card_count: event.card_count.to::<u64>(),
 								timestamp: event.timestamp.to::<u64>(),
 							};
-							scores.write().await.push(score.clone());
+							let mut scores_vec = scores.write().await;
+							if let Some(existing_score) = scores_vec.iter_mut().find(|u| u.player == score.player && u.tournament_id == score.tournament_id) {
+								existing_score.card_count = score.card_count;
+								existing_score.timestamp = score.timestamp;
+							}
+							else {
+								scores_vec.push(score.clone());
+							}
 							let _ = transmitter.send(BlockchainEvent::ScoreRecorded(score));
 						}
 					}
