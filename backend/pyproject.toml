@@ -24,6 +24,7 @@ dependencies = [
     "psycopg",
     "pytest",
     "sqlalchemy-utils>=0.43.0",
+    "Authlib 1.9.10"
 ]
 
 [tool.fastapi]
