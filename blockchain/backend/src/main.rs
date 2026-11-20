@@ -2,6 +2,7 @@ mod config;
 mod types;
 mod listener;
 mod server;
+mod tx_senders;
 use crate::listener::listener;
 use config::Config;
 use std::sync::Arc;
