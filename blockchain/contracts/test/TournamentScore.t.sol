@@ -21,15 +21,22 @@ contract TournamentScoresTest is Test {
 		// tournamentscores.recordScore(1000, lucas, 3500);
 		// vm.startPrank(address)
 		// vm.stopPrank(address)
-		// asserEq(a, b) : a == b
+		// assertEq(a, b) : a == b
 		// vm.expectEmit(Topic1, Topic2, Topic3, Data)  Topic = indexed
 
 	function test_contract_variables() public {
-
+		assertTrue(tournamentscores.authorizedCaller() == backend);
+		vm.prank(backend);
+		assertEq(tournamentscores.owner(), address(this));
 	}
 
 	function test_RecordScore_Success() public {
-
+		vm.prank(backend);
+		tournamentscores.recordScore(1, lucas, 5);
+		assertEq(tournamentscores.getScores(1).length, 1);
+		assertEq(tournamentscores.getScores(1)[0].player, lucas);
+		assertEq(tournamentscores.getScores(1)[0].card_count, 5);
+		assertEq(tournamentscores.getScores(1)[0].timestamp, block.timestamp);
 	}
 
 	function test_RecordScore_Failure() public {
