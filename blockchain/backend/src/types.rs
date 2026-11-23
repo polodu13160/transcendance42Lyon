@@ -13,3 +13,10 @@ pub struct TournamentScore {
 pub enum BlockchainEvent {
 	ScoreRecorded(TournamentScore),
 }
+
+#[derive(Deserialize)]
+pub struct RecordScoreRequest {
+	tournament_id: u64,
+	player: Address,
+	card_count: u32,
+}
