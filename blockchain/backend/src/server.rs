@@ -1,6 +1,9 @@
 use crate::types::TournamentScore;
 use crate::config::Config;
 use crate::types::BlockchainEvent;
+use crate::types::RecordScoreRequest;
+use crate::tx_senders::send_record_score;
+use axum::http::StatusCode;
 use axum::extract::{State, ws::WebSocket, ws::WebSocketUpgrade};
 use axum::Json;
 use axum::response::IntoResponse;
@@ -14,7 +17,20 @@ use tower_http::cors::CorsLayer;
 #[derive(Clone)]
 pub struct SharedScores {
 	pub scores: Arc<RwLock<Vec<TournamentScore>>>,
+	pub config: Arc<Config>,
 	pub transmitter: broadcast::Sender<BlockchainEvent>,
+}
+
+pub async fn record_score_handler(State(state): State<SharedScores>, Json(data): Json<RecordScoreRequest>) -> impl IntoResponse {
+	match send_record_score(&state.config, data.tournament_id, data.player, data.card_count).await {
+		Ok(transaction_hash) => {
+			(StatusCode::OK, Json(serde_json::json!({ "status": "success", "transaction_hash": format!("{:#x}", transaction_hash) })))
+		}
+		Err(e) => {
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
+		}
+	}
+
 }
 
 pub async fn get_leaderboard(State(state): State<SharedScores>) -> Json<Vec<TournamentScore>> {

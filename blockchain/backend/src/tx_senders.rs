@@ -5,6 +5,7 @@ use alloy::signers::local::PrivateKeySigner;
 use alloy::network::EthereumWallet;
 use alloy::providers::{ProviderBuilder, Provider};
 use alloy::sol;
+use std::sync::Arc;
 
 sol! {
 	#[sol(rpc)]

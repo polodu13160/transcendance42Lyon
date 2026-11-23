@@ -21,7 +21,7 @@ sol! {
 	);
 }
 
-pub async fn listener(config: Config, transmitter: broadcast::Sender<BlockchainEvent>, scores: Arc<RwLock<Vec<TournamentScore>>>) -> Result<()> {
+pub async fn listener(config: Arc<Config>, transmitter: broadcast::Sender<BlockchainEvent>, scores: Arc<RwLock<Vec<TournamentScore>>>) -> Result<()> {
 	let mut delay = Duration::from_secs(1);
 	let filter = Filter::new().address(config.contract_address);
 	loop {

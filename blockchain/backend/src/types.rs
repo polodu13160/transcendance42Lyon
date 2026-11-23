@@ -16,7 +16,7 @@ pub enum BlockchainEvent {
 
 #[derive(Deserialize)]
 pub struct RecordScoreRequest {
-	tournament_id: u64,
-	player: Address,
-	card_count: u32,
+	pub tournament_id: u64,
+	pub player: Address,
+	pub card_count: u32,
 }
