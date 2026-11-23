@@ -5,8 +5,7 @@ import statistics
 from app.models import Wrapper, Cards
 from app.models.base import SessionLocal
 from sqlalchemy import select, delete
-from pydantic import BaseModel
-import enum
+from app.schemas.colors import Colors
 from rich.progress import Progress
 from rich.console import Console
 
@@ -204,13 +203,6 @@ def select_min_name_by_id(value: Wrapper):
             name_min = v['name']
     return name_min
     
-
-class Colors(enum.Enum):
-    GREEN = {"id": 1, "min_bayesian": 70, "value": 400} 
-    BLUE = {"id": 2, "min_bayesian": 73, "value": 800} 
-    PURPLE = {"id" : 3, "min_bayesian": 76, "value": 1300}
-    GOLD = {"id" : 4, "min_bayesian": 81, "value": 2300} 
-    GREY = {"id" : 0, "min_bayesian": None, "value": 200} 
 
 def awarding_color_card(wrapper, card):
 

@@ -8,6 +8,7 @@ from app.auth.auth import mailAuth, nicknameAuth, create_user
 from fastapi import APIRouter
 from sqlalchemy.exc import IntegrityError
 from app.models.base import SessionLocal
+from app.schemas.Error import HttpErrorSchema
 
 
 
@@ -18,7 +19,7 @@ from app.models.base import SessionLocal
 
 routerAuth = APIRouter(
     prefix="/auth",
-    responses={404: {"page": "Not found"}},
+    responses=HttpErrorSchema(code=404, reason="page not found").model_json_schema(),
 )
 
 
@@ -62,7 +63,7 @@ class UserPost(BaseModel):
 class UserRegister(BaseModel):
     last_name:str
     first_name:str
-    nick_name: Annotated[str, Field(min_length=3,pattern=, description="Email or nickname")]
+    nick_name: Annotated[str, Field(min_length=3, description="Email or nickname")]
     id_wallet: int | None = None  
     user_email: EmailStr
     password: Password
