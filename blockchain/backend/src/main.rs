@@ -11,7 +11,7 @@ use tokio::sync::broadcast;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-	let config = Config::load()?;
+	let config = Arc::new(Config::load()?);
 	println!("ws url : {}", config.rpc_ws_url);
 	println!("http url : {}", config.rpc_http_url);
 	println!("contract addr : {}", config.contract_address);
@@ -29,6 +29,7 @@ async fn main() -> anyhow::Result<()> {
 	});
 	let state = server::SharedScores {
 		scores: scores.clone(),
+		config: config.clone(),
 		transmitter: transmitter.clone(),
 	};
 	server::start_server(&config, state).await?;
