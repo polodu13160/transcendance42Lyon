@@ -8,7 +8,7 @@ use axum::extract::{State, ws::WebSocket, ws::WebSocketUpgrade};
 use axum::Json;
 use axum::response::IntoResponse;
 use axum::extract::ws::Message;
-use axum::{routing::get, Router};
+use axum::{routing::get, Router, routing::post};
 use std::sync::Arc;
 use tokio::sync::{broadcast, RwLock};
 use tokio::net::TcpListener;
@@ -59,6 +59,7 @@ pub async fn start_server(config: &Config, scores: SharedScores) -> anyhow::Resu
 	let app = Router::new()
 	.route("/api/leaderboard", get(get_leaderboard))
 	.route("/ws", get(ws_handler))
+	.route("/api/scores/record", post(record_score_handler))
 	.layer(CorsLayer::permissive())
 	.with_state(scores);
 	let addr = format!("0.0.0.0:{}", config.server_port);
