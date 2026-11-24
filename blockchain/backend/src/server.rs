@@ -3,8 +3,10 @@ use crate::config::Config;
 use crate::types::BlockchainEvent;
 use crate::types::RecordScoreRequest;
 use crate::tx_senders::send_record_score;
+use crate::token::get_token_balance;
+use alloy::primitives::Address;
 use axum::http::StatusCode;
-use axum::extract::{State, ws::WebSocket, ws::WebSocketUpgrade};
+use axum::extract::{State, ws::WebSocket, ws::WebSocketUpgrade, Path};
 use axum::Json;
 use axum::response::IntoResponse;
 use axum::extract::ws::Message;
@@ -30,7 +32,17 @@ pub async fn record_score_handler(State(state): State<SharedScores>, Json(data):
 			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
 		}
 	}
+}
 
+pub async fn get_balance_handler(State(state): State<SharedScores>, Path(player): Path<Address>) -> impl IntoResponse {
+	match get_token_balance(&state.config, player).await {
+		Ok(balance) => {
+			(StatusCode::OK, Json(serde_json::json!({"player": format!("{:#x}", player), "balance": balance.to_string() })))
+		}
+		Err(e) => {
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({"error": e.to_string() })))
+		}
+	}
 }
 
 pub async fn get_leaderboard(State(state): State<SharedScores>) -> Json<Vec<TournamentScore>> {
@@ -60,6 +72,7 @@ pub async fn start_server(config: &Config, scores: SharedScores) -> anyhow::Resu
 	.route("/api/leaderboard", get(get_leaderboard))
 	.route("/ws", get(ws_handler))
 	.route("/api/scores/record", post(record_score_handler))
+	.route("/api/token/balance/:player", get(get_balance_handler))
 	.layer(CorsLayer::permissive())
 	.with_state(scores);
 	let addr = format!("0.0.0.0:{}", config.server_port);
