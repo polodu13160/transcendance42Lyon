@@ -1,0 +1,27 @@
+groups:
+  - name: postgres
+    rules:
+      - alert: PostgresDown
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "PostgreSQL is unreachable"
+          # description: "L'exporter n'arrive plus à se connecter à la base depuis 1 minute."
+
+      - alert: PostgresTooManyConnections
+        expr: sum(pg_stat_database_numbackends) / max(pg_settings_max_connections) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Connection Postgres at {{ $value }}%"
+
+      - alert: PostgresIdleInTransaction
+        expr: sum(pg_stat_activity_count{datname="postgre_db", state=~"idle in transaction.*"}) > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Transaction open and forget for more than 2 minutes"

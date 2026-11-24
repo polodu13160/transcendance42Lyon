@@ -21,7 +21,7 @@ dependencies = [
     "sqlalchemy>=2.0.54",
     "argon2-cffi>=25.1.0",
     "zon>=3.0.1",
-    "psycopg",
+    "psycopg[binary]",
     "pytest",
     "sqlalchemy-utils>=0.43.0",
 ]

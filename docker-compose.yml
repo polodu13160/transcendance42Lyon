@@ -20,7 +20,7 @@ services:
           "CMD",
           "python",
           "-c",
-          "import urllib.request; urllib.request.urlopen('http://localhost:8000/')",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/metrics')",
         ]
       interval: 30s
       timeout: 5s
@@ -41,6 +41,7 @@ services:
       - ./bdd/server/srcs/data:/var/lib/postgresql/data
     networks:
       - backend
+      - monitoring
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 30s
@@ -93,6 +94,21 @@ services:
     image: prom/node-exporter:v1@sha256:1b4e4438faca4dd7e001dd445d161a4a2091b0fededa84093b3a8dfeae1f1be0
     container_name: node_exporter
     user: "${UID}:${GID}"
+    networks:
+      - monitoring
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:v0.21.1@sha256:3b8e05a84282cd1199ad2fb6c66f362738bf4c68c1547d8f4226a34a7dd6d8d7
+    container_name: postgres-exporter
+    environment:
+      DATA_SOURCE_URI: "db:5432/postgre_db?sslmode=disable"
+      DATA_SOURCE_USER: user
+      DATA_SOURCE_PASS_FILE: /run/secrets/pg_pass
+    secrets:
+      - pg_pass
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - monitoring
 

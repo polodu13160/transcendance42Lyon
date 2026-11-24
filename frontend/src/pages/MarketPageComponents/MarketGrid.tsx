@@ -1,4 +1,3 @@
-import MarketItem from "./MarketItem"
 
 
 // interface gridProps {
