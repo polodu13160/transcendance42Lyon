@@ -37,7 +37,7 @@ app.add_middleware(SessionMiddleware, secret_key="some-random-key")
 async def login_via_github(request: Request): # Prend la requette en arg, crée un client et lui envoie la requette pour avoir un token en retour.
     # github = oauth.create_client('github')
     # redirect_uri = 'https://example.com/authorize'
-    redirect_uri = request.url_for('login_via_github')
+    redirect_uri = request.url_for('github_callback')
     # return await github.authorize_redirect(request, redirect_uri)
     return await oauth.authorize_redirect(request, redirect_uri)
 
