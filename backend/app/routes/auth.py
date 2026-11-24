@@ -1,14 +1,16 @@
 
 from pydantic import BaseModel, EmailStr, Field, ConfigDict,TypeAdapter,PrivateAttr, ValidationError, model_validator
 from typing import Annotated
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from app.models import Users
 import datetime
 from app.auth.auth import mailAuth, nicknameAuth, create_user
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from sqlalchemy.exc import IntegrityError
 from app.models.base import SessionLocal
 from app.schemas.Error import HttpErrorSchema
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from app.auth.sessions import get_user_from_token
 
 
 
@@ -18,9 +20,23 @@ from app.schemas.Error import HttpErrorSchema
 
 
 routerAuth = APIRouter(
-    prefix="/auth",
-    responses=HttpErrorSchema(code=404, reason="page not found").model_json_schema(),
+    prefix="/auth"
 )
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    user = get_user_from_token(token)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return user
+
+
 
 
 
@@ -75,16 +91,21 @@ class UserRegister(BaseModel):
 
 
 @routerAuth.post('/login', description="authentification user")
-async def login(body: UserAuth):
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    try:
+              Email_validator.validate_python(form_data.username)
+              is_email = True
+    except ValidationError:
+              is_email = False
     try :
-        if body._is_email == True:
-            user, token = mailAuth(body.identifier, body.password)
+        if is_email == True:
+            user, token = mailAuth(form_data.username, form_data.password)
         else:
             
-            user, token = nicknameAuth(body.identifier, body.password)
+            user, token = nicknameAuth(form_data.username, form_data.password)
     except:
         raise HTTPException(status_code=401, detail="nickname/mail or password error")
-    return {"user": UserPost.model_validate(user), "token": token}
+    return {"user": UserPost.model_validate(user), "access_token": token, "token_type": "bearer"}
 
 @routerAuth.post('/register', description="register user")
 async def register(body: UserRegister ):
@@ -92,6 +113,8 @@ async def register(body: UserRegister ):
         try:
             user, token = create_user(db, body.first_name, body.last_name, body.nick_name, body.user_email, body.password, body.id_wallet)
         except IntegrityError as i:
+            error_msg = str(i.orig).lower()
+            print("DEBUG INTEGRITY ERROR:", error_msg)
             # pos = 
             if (i.args[0].find('user_email') != -1):
                 msg = "Email error"
@@ -104,7 +127,7 @@ async def register(body: UserRegister ):
             raise HTTPException(
                 status_code=409,
                 detail=msg)
-        return {"user": UserPost.model_validate(user), "token": token}
+        return {"user": UserPost.model_validate(user), "access_token": token, "token_type": "bearer"}
 
 
         

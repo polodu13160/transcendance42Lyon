@@ -295,8 +295,7 @@ def run():
                             if (value.game_type != 1):
                                 awarding_color_card(value ,card)
                             session.add(card)
-                            session.delete(value)
-                            
+                        session.delete(value)          
                 session.commit()
                 progressBar.console.log("[bold green]✔Finish")
                 session.expunge_all()

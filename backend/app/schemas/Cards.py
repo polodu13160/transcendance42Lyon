@@ -10,23 +10,41 @@ import datetime
 
 
 class Get_exchange_schema(BaseModel):
-    collection_name: str | None 
-    is_auction: bool
-    is_favorite: bool
-    id_user_auction: int | None
-    auction_bet: int
-    time_limit_auction: datetime.datetime | None
-    time_created_auction:  datetime.datetime | None
-    time_acquisition: datetime.datetime
-    is_finish_auction: bool
+    collection_name: str | None = None
+    is_auction: bool | None = False
+    is_favorite: bool | None = False
+    id_user_auction: int | None = None
+    auction_bet: int | None = 0
+    time_limit_auction: datetime.datetime | None = None
+    time_created_auction: datetime.datetime | None = None
+    time_acquisition: datetime.datetime | None = None
+    is_finish_auction: bool | None = False
     is_shiny: bool
     model_config = ConfigDict(from_attributes=True)
 
+class Card_schema(BaseModel):
+    id_card:int
+    
+    atk: float
+    def_: float
+    value_exchange: int
+    covers_urls: list[str]
+    description: str | None = None
+    urlExtern: list[str] | None = None
+    urlIgdb: str | None = None
+    name: str
+    name_franchise:str | None = None
+    game_type:int
+    colors: int | None = None
+    parent_game_id: int | None = None
+    genre:list[str] | None = None
+    company_game:list[str] | None = None
+    model_config = ConfigDict(from_attributes=True)
 
     
 
 class Card_user_schema(BaseModel):
-    card: Cards
+    card: Card_schema
     card_user: Get_exchange_schema
 
 
