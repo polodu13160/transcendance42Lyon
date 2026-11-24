@@ -14,7 +14,7 @@ async fn main() -> anyhow::Result<()> {
 	let config = Arc::new(Config::load()?);
 	println!("ws url : {}", config.rpc_ws_url);
 	println!("http url : {}", config.rpc_http_url);
-	println!("contract addr : {}", config.contract_address);
+	println!("contract addr : {}", config.lb_contract_address);
 	println!("server port : {}", config.server_port);
 	println!("private key : {}", config.backend_private_key);
 	let (transmitter, _receiver) = broadcast::channel(100);

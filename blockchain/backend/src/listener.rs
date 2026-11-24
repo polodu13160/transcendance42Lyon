@@ -23,7 +23,7 @@ sol! {
 
 pub async fn listener(config: Arc<Config>, transmitter: broadcast::Sender<BlockchainEvent>, scores: Arc<RwLock<Vec<TournamentScore>>>) -> Result<()> {
 	let mut delay = Duration::from_secs(1);
-	let filter = Filter::new().address(config.contract_address);
+	let filter = Filter::new().address(config.lb_contract_address);
 	loop {
 		let wsocket = WsConnect::new(config.rpc_ws_url.clone());
 		match ProviderBuilder::new().connect_ws(wsocket).await {

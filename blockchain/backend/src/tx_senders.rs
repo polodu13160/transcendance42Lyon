@@ -19,7 +19,7 @@ pub async fn send_record_score(config: &Config, tournament_id: u64, player: Addr
 	let wallet = EthereumWallet::new(signer);
 	let rpc_url = config.rpc_http_url.parse().context("Wrong http url format")?;
 	let provider = ProviderBuilder::new().wallet(wallet).connect_http(rpc_url);
-	let contract = TournamentScoresContract::new(config.contract_address, provider);
+	let contract = TournamentScoresContract::new(config.lb_contract_address, provider);
 	let pending_tx = contract.recordScore(U256::from(tournament_id), player, card_count).send().await.context("Failed to send transaction")?;
 	let receipt = pending_tx.get_receipt().await.context("Failed to get transaction receipt")?;
 	Ok(receipt.transaction_hash)
