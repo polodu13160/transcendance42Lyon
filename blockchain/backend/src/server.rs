@@ -3,7 +3,9 @@ use crate::config::Config;
 use crate::types::BlockchainEvent;
 use crate::types::RecordScoreRequest;
 use crate::types::MintRequest;
+use crate::types::BurnRequest;
 use crate::tx_senders::send_record_score;
+use crate::token::check_burn_transaction;
 use crate::token::{get_token_balance, send_mint};
 use alloy::primitives::Address;
 use axum::http::StatusCode;
@@ -57,6 +59,20 @@ pub async fn mint_handler(State(state): State<SharedScores>, Json(data): Json<Mi
 	}
 }
 
+pub async fn burn_handler(State(state): State<SharedScores>, Json(data): Json<BurnRequest>) -> impl IntoResponse {
+	match check_burn_transaction(&state.config, data.tx_hash, data.player, data.amount).await {
+		Ok(true) => {
+			(StatusCode::OK, Json(serde_json::json!({ "check": "true" })))
+		}
+		Ok(false) => {
+			(StatusCode::BAD_REQUEST, Json(serde_json::json!({ "check": "false" })))
+		}
+		Err(e) => {
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
+		}
+	}
+}
+
 pub async fn get_leaderboard(State(state): State<SharedScores>) -> Json<Vec<TournamentScore>> {
 	let scores = state.scores.read().await;
 	Json(scores.clone())
@@ -86,6 +102,7 @@ pub async fn start_server(config: &Config, scores: SharedScores) -> anyhow::Resu
 	.route("/api/scores/record", post(record_score_handler))
 	.route("/api/token/balance/:player", get(get_balance_handler))
 	.route("/api/token/mint", post(mint_handler))
+	.route("/api/token/burn", post(burn_handler))
 	.layer(CorsLayer::permissive())
 	.with_state(scores);
 	let addr = format!("0.0.0.0:{}", config.server_port);
