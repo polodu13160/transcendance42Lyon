@@ -90,7 +90,7 @@ class UserRegister(BaseModel):
 
 
 
-@routerAuth.post('/login', description="authentification user")
+@routerAuth.post('/login')
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     try:
               Email_validator.validate_python(form_data.username)
@@ -107,7 +107,10 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
         raise HTTPException(status_code=401, detail="nickname/mail or password error")
     return {"user": UserPost.model_validate(user), "access_token": token, "token_type": "bearer"}
 
-@routerAuth.post('/register', description="register user")
+@routerAuth.post('/register', description="""
+> [WARNING]\n
+> ne pas mettre le meme nickname, mail ou id wallet,
+ps **je temmerde kais** """)
 async def register(body: UserRegister ):
     with SessionLocal() as db:
         try:

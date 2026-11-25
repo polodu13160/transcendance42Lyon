@@ -56,10 +56,7 @@ def unpack(request : Request, user: Users, if_first_pack: bool):
                     else:
                         card = range_no_duplicate_in_list(request.app.state.list_cards, cards_selected)    
 
-                    if (random.randrange(20) == 5):
-                        card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = True, auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
-                    else:
-                        card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = False, auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
+                    card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
                     session.add(card_get_exchange)
                     cards_selected.append(Card_user_schema(card=card, card_user=card_get_exchange))
                     
@@ -67,10 +64,7 @@ def unpack(request : Request, user: Users, if_first_pack: bool):
               
                 for i in range(10):
                     card = range_no_duplicate_in_list(request.app.state.list_cards, cards_selected)       
-                    if (random.randrange(20) == 5):
-                        card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = True, auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
-                    else:
-                        card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = False, auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
+                    card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
                     session.add(card_get_exchange)
                     cards_selected.append(Card_user_schema(card=card, card_user=card_get_exchange))
             user.date_free_pack = datetime.datetime.now(timezone.utc) + +datetime.timedelta(days=1)
@@ -88,7 +82,13 @@ def unpack(request : Request, user: Users, if_first_pack: bool):
 
 
 
-@routerPack.post('/free', description="authentification user")
+@routerPack.post(
+    "/free",
+    description="""Give 10 cards in sorted of 0 to 4, one pack per day per account.
+
+**Header required:**
+`Authorization: Bearer <TOKENSHASH>`"""
+)
 async def free_pack(request: Request, current_user: Annotated[Users, Depends(get_current_user)]):
     cards = None
     if (current_user.date_free_pack == current_user.date_created):
@@ -109,7 +109,13 @@ async def free_pack(request: Request, current_user: Annotated[Users, Depends(get
 
 
 
-@routerPack.post('/buy', description="authentification user")
+@routerPack.post(
+    "/buy",
+    description="""Give 10 cards in sorted of 0 to 4. no required money
+
+**Header required:**
+`Authorization: Bearer <TOKENSHASH>`"""
+)
 async def buy_pack(request:Request, current_user: Annotated[Users, Depends(get_current_user)]):
     #api crypto
     cards = unpack(request, current_user, False)

@@ -10,6 +10,7 @@ from app.models.base import engine, SessionLocal
 from prometheus_fastapi_instrumentator import Instrumentator
 from app.routes.auth import routerAuth
 from app.routes.packs import routerPack
+from app.routes.collections import routerCollection
 from app.models import Cards
 from sqlalchemy import select
 from app.schemas.colors import Colors
@@ -52,7 +53,7 @@ prefix = '/api/v1'
 
 app.include_router(router=routerAuth, prefix=prefix, tags=["auth"])
 app.include_router(router=routerPack, prefix=prefix, tags=["pack"])
-
+app.include_router(router=routerCollection, prefix=prefix, tags=["collection"])
 
 
 
