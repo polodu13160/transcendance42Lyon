@@ -127,6 +127,7 @@ services:
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=false
       - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_FEATURE_TOGGLES_DISABLE=dashboardNewLayouts
     networks:
       - monitoring
 

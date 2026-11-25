@@ -15,7 +15,7 @@
       }
     ]
   },
-  "description": "",
+  "description": "Dashboard for PostGres exporter",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -492,7 +492,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "postgres-exporter",
+  "title": "Postgres",
   "version": 1,
   "uid": "jo8d2xq",
   "id": 4100075363737600

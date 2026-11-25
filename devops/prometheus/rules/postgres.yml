@@ -8,7 +8,6 @@ groups:
           severity: critical
         annotations:
           summary: "PostgreSQL is unreachable"
-          # description: "L'exporter n'arrive plus à se connecter à la base depuis 1 minute."
 
       - alert: PostgresTooManyConnections
         expr: sum(pg_stat_database_numbackends) / max(pg_settings_max_connections) * 100 > 80
