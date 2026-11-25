@@ -3,7 +3,7 @@ use anyhow::{Context, Result};
 use alloy::primitives::{Address, B256, U256};
 use alloy::signers::local::PrivateKeySigner;
 use alloy::network::EthereumWallet;
-use alloy::providers::{ProviderBuilder, Provider};
+use alloy::providers::{ProviderBuilder};
 use alloy::sol;
 
 sol! {

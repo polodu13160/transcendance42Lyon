@@ -11,6 +11,32 @@ sol! {
 	contract MyTokenContract {
 		function balanceOf(address account) external view returns (uint256);
 		function mint(address to, uint256 amount) external;
+		event Transfer(address indexed from, address indexed to, uint256 value);
+	}
+}
+
+pub async fn check_burn_transaction(config: &Config, tx_hash: B256,player: Address, amount: U256) -> Result<bool> {
+	let rpc_url = config.rpc_http_url.parse().context("Wrong http url format")?;
+	let provider = ProviderBuilder::new().connect_http(rpc_url);
+	match provider.get_transaction_receipt(tx_hash).await? {
+		Some(receipt) => {
+			if receipt.status() {
+				for logs in receipt.inner.logs() {
+					if logs.address() == config.token_contract_address {
+						if let Ok(decoded) = logs.log_decode::<MyTokenContract::Transfer>() {
+							let event = decoded.data();
+							if event.from == player && event.to == Address::ZERO && event.value == amount {
+								return Ok(true);
+							}
+						}
+					}
+				}
+			}
+			return Ok(false);
+		}
+		None => {
+			return Ok(false);
+		}
 	}
 }
 
