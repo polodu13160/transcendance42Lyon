@@ -26,3 +26,10 @@ pub struct MintRequest {
 	pub player: Address,
 	pub amount: U256,
 }
+
+#[derive(Deserialize)]
+pub struct BurnRequest {
+	pub tx_hash: B256,
+	pub player: Address,
+	pub amount: U256,
+}
