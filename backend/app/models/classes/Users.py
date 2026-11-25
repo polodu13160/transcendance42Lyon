@@ -13,10 +13,10 @@ class Users(Base):
     purchases: Mapped[list["Purchases"]]= relationship(secondary= "buy",back_populates="users")
 
     #column
-    id_user: Mapped[int] = mapped_column(primary_key=True, type_= BigInteger)
+    id_user: Mapped[int] = mapped_column(primary_key=True, type_= BigInteger, autoincrement=True)
     last_name: Mapped[str] = mapped_column(type_= String(100), nullable=False)
     first_name: Mapped[str] = mapped_column(type_= String(100), nullable=False)
-    nick_name: Mapped[str] = mapped_column(type_=String(100), nullable= False)
+    nick_name: Mapped[str] = mapped_column(type_=String(100), nullable= False, unique=True)
     date_created: Mapped[datetime.datetime] = mapped_column(type_= DateTime(timezone=True), default=func.now())
     id_wallet: Mapped[int | None] = mapped_column(type_= Integer, nullable= True, unique=True)
     date_free_pack: Mapped[datetime.datetime] = mapped_column(type_= DateTime(True), default=func.now())

@@ -2,7 +2,7 @@ from pydantic import BaseModel, AwareDatetime
 from typing import Annotated
 from app.schemas import string_size100
 from pydantic import AfterValidator
-from datetime import timezone
+from datetime import timezone, datetime
 
 
 def setTimeTimezone0(value: AwareDatetime):
@@ -17,6 +17,6 @@ class User_schema(BaseModel):
     date_created: Annotated[AwareDatetime, AfterValidator(setTimeTimezone0)]
     id_wallet: int
     amount_crypto: float
-    date_free_pack: timetampz
+    date_free_pack: datetime
 
 

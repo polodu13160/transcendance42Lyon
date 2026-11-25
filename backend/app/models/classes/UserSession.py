@@ -11,3 +11,4 @@ class UserSession(Base):
     token_hash: Mapped[str] = mapped_column(unique=True, index=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id_user"))
     expires_at: Mapped[datetime.datetime]
+    apiToken_id_user_unique: Mapped[int | None] = mapped_column(unique=True)
