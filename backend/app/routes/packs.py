@@ -67,7 +67,7 @@ def unpack(request : Request, user: Users, if_first_pack: bool):
                     card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
                     session.add(card_get_exchange)
                     cards_selected.append(Card_user_schema(card=card, card_user=card_get_exchange))
-            user.date_free_pack = datetime.datetime.now(timezone.utc) + +datetime.timedelta(minutes=1)
+            user.date_free_pack = datetime.datetime.now(timezone.utc) + datetime.timedelta(milliseconds=10000)
             session.add(user)
             session.commit()
             return cards_selected
