@@ -86,6 +86,12 @@ class UserRegister(BaseModel):
 
 
 
+@routerAuth.get('verif-token', description="""verif token is good
+**Header required:**
+`Authorization: Bearer <TOKENSHASH>`"""
+)
+async def verif(current_user: Annotated[Users, Depends(get_current_user)]):
+    return {"message": "user connected", "user": UserPost.model_validate(current_user)}
 
 
 

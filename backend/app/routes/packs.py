@@ -67,13 +67,26 @@ def unpack(request : Request, user: Users, if_first_pack: bool):
                     card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
                     session.add(card_get_exchange)
                     cards_selected.append(Card_user_schema(card=card, card_user=card_get_exchange))
-            user.date_free_pack = datetime.datetime.now(timezone.utc) + +datetime.timedelta(days=1)
+            user.date_free_pack = datetime.datetime.now(timezone.utc) + +datetime.timedelta(minutes=1)
             session.add(user)
             session.commit()
             return cards_selected
 
 
 
+    
+
+@routerPack.get("/", description="""if is good time for open pack
+**Header required:**
+`Authorization: Bearer <TOKENSHASH>`"""
+)
+async def check_free_pack(current_user: Annotated[Users, Depends(get_current_user)]):
+    if (current_user.date_free_pack == current_user.date_created):
+        return {"get": {"get_free_pack": True, "date_new_pack": current_user.date_free_pack.strftime("%d/%m/%Y, %H:%M:%S")}}        
+    elif (current_user.date_free_pack < datetime.datetime.now(timezone.utc)):
+        return {"get": {"get_free_pack": False, "date_new_pack": current_user.date_free_pack.strftime("%d/%m/%Y, %H:%M:%S")}} 
+    else:
+        return {"get": {"get_free_pack": False, "date_new_pack": current_user.date_free_pack.strftime("%d/%m/%Y, %H:%M:%S")}}
     
 
 
@@ -95,11 +108,11 @@ async def free_pack(request: Request, current_user: Annotated[Users, Depends(get
         cards = unpack(request, current_user, True)
     elif (current_user.date_free_pack < datetime.datetime.now(timezone.utc)):
         cards = unpack(request, current_user, False)
-    elif cards == None:
+    else:
         raise HTTPException(403, {'detail' :"user can not longer open free pack today", 
                                   'date_new_pack' : current_user.date_free_pack.strftime("%d/%m/%Y, %H:%M:%S")})  
     cards.sort(key=lambda x: x.card.colors)
-    return cards
+    return {"pack": cards, "get": {"get_free_pack": False, "date_new_pack": current_user.date_free_pack.strftime("%d/%m/%Y, %H:%M:%S")}}
 
     
 
@@ -120,7 +133,7 @@ async def buy_pack(request:Request, current_user: Annotated[Users, Depends(get_c
     #api crypto
     cards = unpack(request, current_user, False)
     cards.sort(key=lambda x: x.card.colors)
-    return cards
+    return {"pack": cards, "get": {"get_free_pack": False, "date_new_pack": current_user.date_free_pack.strftime("%d/%m/%Y, %H:%M:%S")}}
 
 
 

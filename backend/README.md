@@ -72,6 +72,7 @@ cd ./transcendance42Lyon/backend/
 uv sync
 # userRoot is root, passwordRoot is the password, ip is localhost and port is 5432 and nameDB is the name of your new database 
 cat .env.exemple > .env
+uv sync
 #run the dev server 
 ```
 
