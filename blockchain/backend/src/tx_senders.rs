@@ -3,9 +3,8 @@ use anyhow::{Context, Result};
 use alloy::primitives::{Address, B256, U256};
 use alloy::signers::local::PrivateKeySigner;
 use alloy::network::EthereumWallet;
-use alloy::providers::{ProviderBuilder, Provider};
+use alloy::providers::{ProviderBuilder};
 use alloy::sol;
-use std::sync::Arc;
 
 sol! {
 	#[sol(rpc)]
@@ -19,8 +18,8 @@ pub async fn send_record_score(config: &Config, tournament_id: u64, player: Addr
 	let wallet = EthereumWallet::new(signer);
 	let rpc_url = config.rpc_http_url.parse().context("Wrong http url format")?;
 	let provider = ProviderBuilder::new().wallet(wallet).connect_http(rpc_url);
-	let contract = TournamentScoresContract::new(config.contract_address, provider);
-	let pending_tx = contract.recordScore(U256::from(tournament_id), player, card_count).send().await.context("Failed to send transaction")?;
-	let receipt = pending_tx.get_receipt().await.context("Failed to get transaction receipt")?;
+	let contract = TournamentScoresContract::new(config.lb_contract_address, provider);
+	let pending_tx = contract.recordScore(U256::from(tournament_id), player, card_count).send().await.context("Failed to send recordScore transaction")?;
+	let receipt = pending_tx.get_receipt().await.context("Failed to get recordScore transaction receipt")?;
 	Ok(receipt.transaction_hash)
 }

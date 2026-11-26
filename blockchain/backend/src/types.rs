@@ -1,4 +1,4 @@
-use alloy::primitives::Address;
+use alloy::primitives::{Address, U256, B256};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -19,4 +19,17 @@ pub struct RecordScoreRequest {
 	pub tournament_id: u64,
 	pub player: Address,
 	pub card_count: u32,
+}
+
+#[derive(Deserialize)]
+pub struct MintRequest {
+	pub player: Address,
+	pub amount: U256,
+}
+
+#[derive(Deserialize)]
+pub struct BurnRequest {
+	pub tx_hash: B256,
+	pub player: Address,
+	pub amount: U256,
 }

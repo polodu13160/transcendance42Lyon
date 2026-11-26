@@ -1,14 +1,14 @@
-use crate::types::TournamentScore;
 use crate::config::Config;
-use crate::types::BlockchainEvent;
-use crate::types::RecordScoreRequest;
+use crate::types::{TournamentScore, BlockchainEvent, RecordScoreRequest, MintRequest, BurnRequest};
 use crate::tx_senders::send_record_score;
+use crate::token::{get_token_balance, send_mint, check_burn_transaction};
+use alloy::primitives::Address;
 use axum::http::StatusCode;
-use axum::extract::{State, ws::WebSocket, ws::WebSocketUpgrade};
-use axum::Json;
+use axum::extract::{State, ws::WebSocket, ws::WebSocketUpgrade, Path};
+use axum::{Json, Router};
 use axum::response::IntoResponse;
 use axum::extract::ws::Message;
-use axum::{routing::get, Router, routing::post};
+use axum::routing::{get, post};
 use std::sync::Arc;
 use tokio::sync::{broadcast, RwLock};
 use tokio::net::TcpListener;
@@ -30,7 +30,42 @@ pub async fn record_score_handler(State(state): State<SharedScores>, Json(data):
 			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
 		}
 	}
+}
 
+pub async fn get_balance_handler(State(state): State<SharedScores>, Path(player): Path<Address>) -> impl IntoResponse {
+	match get_token_balance(&state.config, player).await {
+		Ok(balance) => {
+			(StatusCode::OK, Json(serde_json::json!({"player": format!("{:#x}", player), "balance": balance.to_string() })))
+		}
+		Err(e) => {
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({"error": e.to_string() })))
+		}
+	}
+}
+
+pub async fn mint_handler(State(state): State<SharedScores>, Json(data): Json<MintRequest>) -> impl IntoResponse {
+	match send_mint(&state.config, data.player, data.amount).await {
+		Ok(transaction_hash) => {
+			(StatusCode::OK, Json(serde_json::json!({ "status": "success", "transaction_hash": format!("{:#x}", transaction_hash) })))
+		}
+		Err(e) => {
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
+		}
+	}
+}
+
+pub async fn burn_handler(State(state): State<SharedScores>, Json(data): Json<BurnRequest>) -> impl IntoResponse {
+	match check_burn_transaction(&state.config, data.tx_hash, data.player, data.amount).await {
+		Ok(true) => {
+			(StatusCode::OK, Json(serde_json::json!({ "check": "true" })))
+		}
+		Ok(false) => {
+			(StatusCode::BAD_REQUEST, Json(serde_json::json!({ "check": "false" })))
+		}
+		Err(e) => {
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
+		}
+	}
 }
 
 pub async fn get_leaderboard(State(state): State<SharedScores>) -> Json<Vec<TournamentScore>> {
@@ -60,6 +95,9 @@ pub async fn start_server(config: &Config, scores: SharedScores) -> anyhow::Resu
 	.route("/api/leaderboard", get(get_leaderboard))
 	.route("/ws", get(ws_handler))
 	.route("/api/scores/record", post(record_score_handler))
+	.route("/api/token/balance/{player}", get(get_balance_handler))
+	.route("/api/token/mint", post(mint_handler))
+	.route("/api/token/burn", post(burn_handler))
 	.layer(CorsLayer::permissive())
 	.with_state(scores);
 	let addr = format!("0.0.0.0:{}", config.server_port);
