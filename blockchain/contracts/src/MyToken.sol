@@ -4,8 +4,8 @@ pragma solidity ^0.8.20;
 import {Ownable} from "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 import {ERC20} from "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
 
-contract MyTestToken is ERC20, Ownable {
-	constructor() ERC20("TestGatchaGameCoin", "TGGC") Ownable(msg.sender) {
+contract MyToken is ERC20, Ownable {
+	constructor() ERC20("GachaGameCoin", "GGC") Ownable(msg.sender) {
 		_mint(msg.sender, 1_000_000 * 10 ** decimals());
 	}
 
