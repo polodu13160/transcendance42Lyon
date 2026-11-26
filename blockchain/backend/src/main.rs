@@ -18,7 +18,6 @@ async fn main() -> anyhow::Result<()> {
 	println!("leaderboard contract addr : {}", config.lb_contract_address);
 	println!("token contract addr : {}", config.token_contract_address);
 	println!("server port : {}", config.server_port);
-	println!("private key : {}", config.backend_private_key);
 	let (transmitter, _receiver) = broadcast::channel(100);
 	let scores = Arc::new(RwLock::new(Vec::new()));
 	let listener_config = config.clone();
