@@ -1,6 +1,6 @@
 use crate::config::Config;
 use crate::types::{TournamentScore, BlockchainEvent, RecordScoreRequest, MintRequest, BurnRequest};
-use crate::tx_senders::send_record_score;
+use crate::tx_senders::{send_record_score, get_initial_scores};
 use crate::token::{get_token_balance, send_mint, check_burn_transaction};
 use alloy::primitives::Address;
 use axum::http::StatusCode;
@@ -10,6 +10,7 @@ use axum::response::IntoResponse;
 use axum::extract::ws::Message;
 use axum::routing::{get, post};
 use std::sync::Arc;
+use std::collections::HashSet;
 use tokio::sync::{broadcast, RwLock};
 use tokio::net::TcpListener;
 use tower_http::cors::CorsLayer;
@@ -19,6 +20,30 @@ pub struct SharedScores {
 	pub scores: Arc<RwLock<Vec<TournamentScore>>>,
 	pub config: Arc<Config>,
 	pub transmitter: broadcast::Sender<BlockchainEvent>,
+	pub existing_tournaments: Arc<RwLock<HashSet<u64>>>,
+}
+
+async fn check_existing_score(state: &SharedScores, tournament_id: u64) -> anyhow::Result<()> {
+	let read_guard = state.existing_tournaments.read().await;
+	if read_guard.contains(&tournament_id) {
+		return Ok(());
+	}
+	drop(read_guard);
+	let initial_scores = get_initial_scores(&state.config, tournament_id).await?;
+	let mut scores_vec = state.scores.write().await;
+	for i in initial_scores {
+		if let Some(existing_score) = scores_vec.iter_mut().find(|u| u.player == i.player) {
+			existing_score.card_count = i.card_count;
+			existing_score.timestamp = i.timestamp;
+		}
+		else {
+			scores_vec.push(i.clone());
+		}
+	}
+	drop(scores_vec);
+	let mut scores_set = state.existing_tournaments.write().await;
+	scores_set.insert(tournament_id);
+	Ok(())
 }
 
 pub async fn record_score_handler(State(state): State<SharedScores>, Json(data): Json<RecordScoreRequest>) -> impl IntoResponse {

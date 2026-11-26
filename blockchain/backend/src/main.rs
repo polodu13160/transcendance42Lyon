@@ -7,6 +7,7 @@ mod token;
 use crate::listener::listener;
 use config::Config;
 use std::sync::Arc;
+use std::collections::HashSet;
 use tokio::sync::RwLock;
 use tokio::sync::broadcast;
 
@@ -29,10 +30,12 @@ async fn main() -> anyhow::Result<()> {
 			eprintln!("Error on listener: {e}");
 		}
 	});
+	let existing_tournaments = Arc::new(RwLock::new(HashSet::new()));
 	let state = server::SharedScores {
 		scores: scores.clone(),
 		config: config.clone(),
 		transmitter: transmitter.clone(),
+		existing_tournaments: existing_tournaments.clone(),
 	};
 	server::start_server(&config, state).await?;
 	Ok(())
