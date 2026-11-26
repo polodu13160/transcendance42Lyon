@@ -95,7 +95,7 @@ pub async fn start_server(config: &Config, scores: SharedScores) -> anyhow::Resu
 	.route("/api/leaderboard", get(get_leaderboard))
 	.route("/ws", get(ws_handler))
 	.route("/api/scores/record", post(record_score_handler))
-	.route("/api/token/balance/:player", get(get_balance_handler))
+	.route("/api/token/balance/{player}", get(get_balance_handler))
 	.route("/api/token/mint", post(mint_handler))
 	.route("/api/token/burn", post(burn_handler))
 	.layer(CorsLayer::permissive())
