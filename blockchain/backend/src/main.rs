@@ -19,7 +19,8 @@ async fn main() -> anyhow::Result<()> {
 	println!("token contract addr : {}", config.token_contract_address);
 	println!("server port : {}", config.server_port);
 	let (transmitter, _receiver) = broadcast::channel(100);
-	let scores = Arc::new(RwLock::new(Vec::new()));
+	let initial_scores = tx_senders::get_initial_scores(&config, 1).await.unwrap_or_else(|e| {eprintln!("Warning: failed to get initial scores: {e}"); Vec::new()});
+	let scores = Arc::new(RwLock::new(initial_scores));
 	let listener_config = config.clone();
 	let listener_transmit = transmitter.clone();
 	let listener_scores  = scores.clone();
