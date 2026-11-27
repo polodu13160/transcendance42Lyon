@@ -19,16 +19,6 @@ import random
 from datetime import timezone
 
 
-from enum import StrEnum
-
-class ModelSort(StrEnum):
-    franchise = "franchise"
-    name_card = "name_card"
-    genre = ""
-
-class EnumWay(StrEnum):
-    asc = 'asc'
-    desc = 'desc'
 
 
 routerUtils= APIRouter(
@@ -38,11 +28,51 @@ routerUtils= APIRouter(
 
 @routerUtils.get("/me/genres")
 def me_genres(current_user: Annotated[Users, Depends(get_current_user)]):
-    pass
+    with SessionLocal() as session:
+        genres_cards = session.scalars(select(Cards.genre).join(Get_Exchanges, Get_Exchanges.id_card == Cards.id_card).filter(Get_Exchanges.id_user == current_user.id_user).group_by(Cards.genre)).all()
+    genres: list[str] = []
+    for genres_card in genres_cards:
+        if genres_card is not None:
+            for genre in genres_card:
+                if (genre not in genres):
+                    genres.append(genre)
+    return genres
+
+    
 @routerUtils.get("/me/colors")
 def me_colors(current_user: Annotated[Users, Depends(get_current_user)]):
-    pass
+    with SessionLocal() as session:
+        colors = session.scalars(select(Cards.colors).join(Get_Exchanges, Get_Exchanges.id_card == Cards.id_card).filter(Get_Exchanges.id_user == current_user.id_user).group_by(Cards.colors)).all()
+    return colors
+
 @routerUtils.get("/me/franchises")
 def me_franchises(current_user: Annotated[Users, Depends(get_current_user)]):
-    pass
+    with SessionLocal() as session:
+        franchises = session.scalars(select(Cards.name_franchise).join(Get_Exchanges, Get_Exchanges.id_card == Cards.id_card).filter(Get_Exchanges.id_user == current_user.id_user).group_by(Cards.name_franchise)).all()
+    return franchises
+
+
+@routerUtils.get("/all/genres")
+def genres():
+    with SessionLocal() as session:
+        genres_cards = session.scalars(select(Cards.genre).group_by(Cards.genre)).all()
+    genres: list[str] = []
+    for genres_card in genres_cards:
+        if genres_card is not None:
+            for genre in genres_card:
+                if (genre not in genres):
+                    genres.append(genre)
+    return genres
+  
+@routerUtils.get("/all/colors")
+def colors(current_user: Annotated[Users, Depends(get_current_user)]):
+    with SessionLocal() as session:
+        colors = session.scalars(select(Cards.colors).group_by(Cards.colors)).all()
+    return colors
+
+@routerUtils.get("/all/franchises")
+def franchises(current_user: Annotated[Users, Depends(get_current_user)]):
+    with SessionLocal() as session:
+        franchises = session.scalars(select(Cards.name_franchise).group_by(Cards.name_franchise)).all()
+    return franchises
 
