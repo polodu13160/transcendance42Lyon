@@ -28,49 +28,53 @@ routerPack = APIRouter(
     responses={404: {"page": "Not found"}},
 )
 
-def range_no_duplicate_in_list(list_selected: list[Cards], list_no_duplicate: list[Get_Exchanges]):
+def range_no_duplicate_in_list(list_selected: list[Cards], list_no_duplicate: list[Cards]):
     value_selected = random.randrange(len(list_selected))
-    try:
-        while (1):
-            list_no_duplicate[value_selected]
+    while (1):
+        if (list_selected[value_selected] in list_no_duplicate):
             value_selected = random.randrange(len(list_selected))
-    except:
-        return list_selected[value_selected]
+        else:
+            break
+    
+    return list_selected[value_selected]
 
 
 
 def unpack(request : Request, user: Users, if_first_pack: bool):
         
-        cards_selected: list[Card_user_schema] = [] 
+    cards_user: list[Card_user_schema] = []
+    cards_selected: list[Cards] = [] 
+    card: Cards
+    with SessionLocal() as session:
         card: Cards
-        with SessionLocal() as session:
-            card:Cards
-            if if_first_pack == True: #10 : 1 gold, 2 violet, 3 rare, 4 aleatoires 
-                for i in range(10):
-                    if i == 0:
-                        card = range_no_duplicate_in_list(request.app.state.list_gold, cards_selected)
-                    elif i < 3:
-                        card = range_no_duplicate_in_list(request.app.state.list_purple, cards_selected)
-                    elif i < 6:
-                        card = range_no_duplicate_in_list(request.app.state.list_blue, cards_selected)
-                    else:
-                        card = range_no_duplicate_in_list(request.app.state.list_cards, cards_selected)    
-
-                    card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
-                    session.add(card_get_exchange)
-                    cards_selected.append(Card_user_schema(card=card, card_user=card_get_exchange))
-                    
-            else:
-              
-                for i in range(10):
-                    card = range_no_duplicate_in_list(request.app.state.list_cards, cards_selected)       
-                    card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
-                    session.add(card_get_exchange)
-                    cards_selected.append(Card_user_schema(card=card, card_user=card_get_exchange))
-            user.date_free_pack = datetime.datetime.now(timezone.utc) + datetime.timedelta(milliseconds=10000)
-            session.add(user)
-            session.commit()
-            return cards_selected
+        if if_first_pack: 
+            #10 : 1 gold, 2 violet, 3 rare, 4 aleatoires 
+            for i in range(10):
+                if i == 0:
+                    card = range_no_duplicate_in_list(request.app.state.list_gold, cards_selected)
+                elif i < 3:
+                    card = range_no_duplicate_in_list(request.app.state.list_purple, cards_selected)
+                elif i < 6:
+                    card = range_no_duplicate_in_list(request.app.state.list_blue, cards_selected)
+                else:
+                    card = range_no_duplicate_in_list(request.app.state.list_cards, cards_selected)    
+                card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
+                session.add(card_get_exchange)
+                cards_user.append(Card_user_schema(card=card, card_user=card_get_exchange))
+                cards_selected.append(card)
+                
+        else:
+          
+            for i in range(10):
+                card = range_no_duplicate_in_list(request.app.state.list_cards, cards_selected)       
+                card_get_exchange = Get_Exchanges(id_card = card.id_card, id_user = user.id_user, is_shiny = (random.randrange(20) == 5) , auction_bet = card.value_exchange, time_acquisition = datetime.datetime.now(timezone.utc))
+                session.add(card_get_exchange)
+                cards_user.append(Card_user_schema(card=card, card_user=card_get_exchange))
+                cards_selected.append(card)
+        user.date_free_pack = datetime.datetime.now(timezone.utc) + datetime.timedelta(milliseconds=10000)
+        session.add(user)
+        session.commit()
+        return cards_user
 
 
 
