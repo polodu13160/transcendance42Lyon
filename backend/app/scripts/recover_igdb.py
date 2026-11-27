@@ -278,7 +278,7 @@ def run():
                                 id_card = value.id_igdb,
                                 atk = (1.5 if  value.game_type == 1 else int((value.rating or 50) * 100)),
                                 def_ = (1.5 if  value.game_type == 1 else int((value.aggregated_rating or 50) * 100)),
-                                company_game = ([d['company']['name'] for d in value.involved_companies_company_name ] if value.game_type != 1 and value.involved_companies_company_name is not None else None),
+                                company_game = ([d['company']['name'] for d in value.involved_companies_company_name ] if value.involved_companies_company_name is not None else None),
                                 covers_urls = create_urls_images(value),
                                 description = value.summary,
                                 parent_game_id = (value.dlcs_parent_game_id if value.game_type == 1 else None),
@@ -286,7 +286,7 @@ def run():
                                 urlIgdb = value.url,
                                 genre = transform_to_list(value.genres_name, 'name') or transform_to_list(value.themes_name, 'name'),
                                 name = value.name,
-                                name_franchise = (value.franchise_name or select_min_name_by_id(value)) if value.game_type != 1 else None,
+                                name_franchise = (value.franchise_name or select_min_name_by_id(value)),
                                 game_type = value.game_type,
                                 value_exchange = (Colors.GREY.value['value'] if value.game_type == 1 else 0),
                                 colors = (Colors.GREY.value['id'] if value.game_type == 1 else 0)                              

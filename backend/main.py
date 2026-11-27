@@ -54,7 +54,7 @@ prefix = '/api/v1'
 
 app.include_router(router=routerAuth, prefix=prefix, tags=["auth"])
 app.include_router(router=routerPack, prefix=prefix, tags=["pack"])
-app.include_router(router=routerUtils)
+app.include_router(router=routerUtils, prefix=prefix, tags=["utils"])
 # app.include_router(router=routerCollection, prefix=prefix, tags=["collection"])
 
 

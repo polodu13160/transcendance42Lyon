@@ -11,6 +11,9 @@ from app.models.base import SessionLocal
 from app.schemas.Error import HttpErrorSchema
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from app.auth.sessions import get_user_from_token
+from sqlalchemy.orm import Session
+from app.models.base import get_db
+from argon2.exceptions import VerifyMismatchError
 
 
 
@@ -26,15 +29,16 @@ routerAuth = APIRouter(
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-    user = get_user_from_token(token)
-    if not user:
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Annotated[Session, Depends(get_db)]):
+
+    current_user = get_user_from_token(token, db)
+    if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Not authenticated",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return user
+    return current_user
 
 
 
@@ -97,7 +101,7 @@ async def verif(current_user: Annotated[Users, Depends(get_current_user)]):
 
 
 @routerAuth.post('/login')
-async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Annotated[Session, Depends(get_db)]):
     try:
               Email_validator.validate_python(form_data.username)
               is_email = True
@@ -105,11 +109,11 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
               is_email = False
     try :
         if is_email == True:
-            user, token = mailAuth(form_data.username, form_data.password)
+            user, token = mailAuth(form_data.username, form_data.password, db)
         else:
             
-            user, token = nicknameAuth(form_data.username, form_data.password)
-    except:
+            user, token = nicknameAuth(form_data.username, form_data.password, db)
+    except VerifyMismatchError:
         raise HTTPException(status_code=401, detail="nickname/mail or password error")
     return {"user": UserPost.model_validate(user), "access_token": token, "token_type": "bearer"}
 
@@ -117,26 +121,24 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
 > [WARNING]\n
 > ne pas mettre le meme nickname, mail ou id wallet,
 ps **je temmerde kais** """)
-async def register(body: UserRegister ):
-    with SessionLocal() as db:
-        try:
-            user, token = create_user(db, body.first_name, body.last_name, body.nick_name, body.user_email, body.password, body.id_wallet)
-        except IntegrityError as i:
-            error_msg = str(i.orig).lower()
-            print("DEBUG INTEGRITY ERROR:", error_msg)
-            # pos = 
-            if (i.args[0].find('user_email') != -1):
-                msg = "Email error"
-            elif (i.args[0].find('nick_name') != -1):
-                msg = "Nickname error"
-            else:
-                msg = "Error"
-
-
-            raise HTTPException(
-                status_code=409,
-                detail=msg)
-        return {"user": UserPost.model_validate(user), "access_token": token, "token_type": "bearer"}
+async def register(body: UserRegister, db: Annotated[Session, Depends(get_db)] ):
+   
+    try:
+        user, token = create_user(db, body.first_name, body.last_name, body.nick_name, body.user_email, body.password, body.id_wallet)
+    except IntegrityError as i:
+        error_msg = str(i.orig).lower()
+        print("DEBUG INTEGRITY ERROR:", error_msg)
+        # pos = 
+        if (i.args[0].find('user_email') != -1):
+            msg = "Email error"
+        elif (i.args[0].find('nick_name') != -1):
+            msg = "Nickname error"
+        else:
+            msg = "Error"
+        raise HTTPException(
+            status_code=409,
+            detail=msg)
+    return {"user": UserPost.model_validate(user), "access_token": token, "token_type": "bearer"}
 
 
         

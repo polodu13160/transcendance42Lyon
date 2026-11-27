@@ -27,36 +27,36 @@ def create_user(db: Session, firstname : str, lastname : str, nickname : str, em
     # Check double emails
     db.refresh(new_user)
     print(f"An new user has been created !")
-    token = create_session(new_user.id_user)
+    token = create_session(new_user.id_user, db)
     return new_user, token
 
 # def verify_email()-> bool: # Implement email verification ? 
 #     return True
 
-def mailAuth(mail: str, password: str) ->tuple[Users, str]:
+def mailAuth(mail: str, password: str, db : Session) ->tuple[Users, str]:
     ph = PasswordHasher()
     user = None
-    with SessionLocal() as db: # To have an instance of SessionLocal
-            user = db.scalar(
-                select(Users).where(Users.user_email == mail)
-            )
+   
+    user = db.scalar(
+        select(Users).where(Users.user_email == mail)
+    )
     if user is None:
-        raise(VerifyMismatchError())   
+        raise (VerifyMismatchError())  
     ph.verify(user.password_hash, password) 
-    token = create_session(user.id_user)
+    token = create_session(user.id_user, db)
     return user, token
     
-def nicknameAuth(nickname: str, password: str) ->tuple[Users, str]:
+def nicknameAuth(nickname: str, password: str, db:Session) ->tuple[Users, str]:
     ph = PasswordHasher()
     user = None
-    with SessionLocal() as db: # To have an instance of SessionLocal
-            user = db.scalar(
-                select(Users).where(Users.nick_name == nickname)
-            )
+   
+    user = db.scalar(
+        select(Users).where(Users.nick_name == nickname)
+    )
     if user is None:
         raise(VerifyMismatchError())   
     ph.verify(user.password_hash, password) 
-    token = create_session(user.id_user)
+    token = create_session(user.id_user, db)
     return user, token
     
             
