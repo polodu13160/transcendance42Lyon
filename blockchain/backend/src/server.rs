@@ -47,21 +47,28 @@ async fn check_existing_score(state: &SharedScores, tournament_id: u64) -> anyho
 }
 
 pub async fn record_score_handler(State(state): State<SharedScores>, Json(data): Json<RecordScoreRequest>) -> impl IntoResponse {
-	let new_total = {
-		let read_guard = state.scores.read().await;
-		if let Some(existing_score) = read_guard.iter().find(|u| u.player == data.player && u.tournament_id == data.tournament_id) {
-			data.card_count + existing_score.card_count as u32
+	match check_existing_score(&state, data.tournament_id).await {
+		Ok(()) => {
+			let new_total = {
+				let read_guard = state.scores.read().await;
+				if let Some(existing_score) = read_guard.iter().find(|u| u.player == data.player && u.tournament_id == data.tournament_id) {
+					data.card_count + existing_score.card_count as u32
+					}
+				else {
+					data.card_count
+					}
+			};
+			match send_record_score(&state.config, data.tournament_id, data.player, new_total).await {
+				Ok(transaction_hash) => {
+					(StatusCode::OK, Json(serde_json::json!({ "status": "success", "transaction_hash": format!("{:#x}", transaction_hash) })))
+				}
+				Err(e) => {
+					(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
+				}
 			}
-		else {
-			data.card_count
-			}
-	};
-	match send_record_score(&state.config, data.tournament_id, data.player, new_total).await {
-		Ok(transaction_hash) => {
-			(StatusCode::OK, Json(serde_json::json!({ "status": "success", "transaction_hash": format!("{:#x}", transaction_hash) })))
 		}
 		Err(e) => {
-			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({"error": e.to_string() })))
 		}
 	}
 }
