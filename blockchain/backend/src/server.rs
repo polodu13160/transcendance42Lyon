@@ -66,6 +66,24 @@ pub async fn record_score_handler(State(state): State<SharedScores>, Json(data):
 	}
 }
 
+pub async fn get_tournament_leaderboard(State(state): State<SharedScores>, Path(tournament_id): Path<u64>) -> impl IntoResponse {
+	match check_existing_score(&state, tournament_id).await {
+		Ok(()) => {
+			let mut leaderboard: Vec<TournamentScore> = {
+				let read_guard = state.scores.read().await;
+				read_guard.iter().filter(|s| s.tournament_id == tournament_id).cloned().collect()
+			};
+			leaderboard.sort_by(|a, b| {
+				b.card_count.cmp(&a.card_count).then(a.timestamp.cmp(&b.timestamp))
+			});
+			(StatusCode::OK, Json(serde_json::json!(leaderboard)))
+		}
+		Err(e) => {
+			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({"error": e.to_string() })))
+		}
+	}
+}
+
 pub async fn get_balance_handler(State(state): State<SharedScores>, Path(player): Path<Address>) -> impl IntoResponse {
 	match get_token_balance(&state.config, player).await {
 		Ok(balance) => {
@@ -100,11 +118,6 @@ pub async fn burn_handler(State(state): State<SharedScores>, Json(data): Json<Bu
 			(StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() })))
 		}
 	}
-}
-
-pub async fn get_leaderboard(State(state): State<SharedScores>) -> Json<Vec<TournamentScore>> {
-	let scores = state.scores.read().await;
-	Json(scores.clone())
 }
 
 pub async fn ws_handler(ws: WebSocketUpgrade, State(scores): State<SharedScores>) -> impl IntoResponse {
