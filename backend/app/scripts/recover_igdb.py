@@ -132,8 +132,8 @@ def fetch_and_add_in_wrapper(lastid: int, session):
                                    or None),
                         url=dlc.get("url"),
                         version_title=dlc.get("version_title"),
-                        franchise_name=((dlc.get("franchise") or {})
-                                        .get("name") or None),
+                        franchise_name=((jsonV.get("franchise") or
+                                 {}).get("name") or None),
                         dlcs_parent_game_id=dlc.get("parent_game"),
                          #Notation
                         aggregated_rating=(dlc.get("aggregated_rating") 
@@ -153,12 +153,11 @@ def fetch_and_add_in_wrapper(lastid: int, session):
                         summary=(dlc.get("summary") or None),
                         storyline=(dlc.get("storyline") or None),
                          #json
-                        genres_name=(dlc.get("genres") or None),
-                        themes_name=(dlc.get("themes") or None),
+                        genres_name=(jsonV.get("genres") or None),
+                        themes_name=(jsonV.get("themes") or None),
                         artworks_url=(dlc.get("artworks") or None),
                         websites_url=(dlc.get("websites") or None),
-                        collections_name=(dlc.get("franchises")
-                                          or dlc.get("collections")),
+                        collections_name=(jsonV.get("franchises") or jsonV.get("collections")),
                         involved_companies_company_name=(dlc
                                                          .get("involved_companies")
                                                          or None))
