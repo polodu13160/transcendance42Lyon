@@ -66,7 +66,7 @@ pub async fn record_score_handler(State(state): State<SharedScores>, Json(data):
 	}
 }
 
-pub async fn get_tournament_leaderboard(State(state): State<SharedScores>, Path(tournament_id): Path<u64>) -> impl IntoResponse {
+pub async fn get_leaderboard(State(state): State<SharedScores>, Path(tournament_id): Path<u64>) -> impl IntoResponse {
 	match check_existing_score(&state, tournament_id).await {
 		Ok(()) => {
 			let mut leaderboard: Vec<TournamentScore> = {
@@ -139,7 +139,7 @@ pub async fn handle_socket(mut socket: WebSocket, scores: SharedScores) {
 
 pub async fn start_server(config: &Config, scores: SharedScores) -> anyhow::Result<()> {
 	let app = Router::new()
-	.route("/api/leaderboard", get(get_leaderboard))
+	.route("/api/leaderboard/{tournament_id}", get(get_leaderboard))
 	.route("/ws", get(ws_handler))
 	.route("/api/scores/record", post(record_score_handler))
 	.route("/api/token/balance/{player}", get(get_balance_handler))
